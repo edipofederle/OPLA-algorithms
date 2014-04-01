@@ -20,9 +20,11 @@ import jmetal.operators.selection.SelectionFactory;
 import jmetal.problems.OPLA;
 import jmetal.util.JMException;
 import metrics.AllMetrics;
+import persistence.AllMetricsPersistenceDependency;
 import persistence.ExecutionPersistence;
 import persistence.FunsResultPersistence;
 import persistence.InfosResultPersistence;
+import persistence.MetricsPersistence;
 import results.Execution;
 import results.Experiment;
 import results.FunResults;
@@ -35,6 +37,7 @@ public class NSGAII_OPLA_FeatMut {
 	
 	private static final String PATH_TO_DB = "src/test/resources/opla_test.db";
     private static Statement connection;
+    private static AllMetricsPersistenceDependency allMetricsPersistenceDependencies;
     private static Result result;
 
 	public static int populationSize_;
@@ -46,6 +49,7 @@ public class NSGAII_OPLA_FeatMut {
 		
 		
 		intializeDependencies();
+		
 
 		int runsNumber = 5; // 30;
 		populationSize_ = 10; // 100;
@@ -158,16 +162,16 @@ public class NSGAII_OPLA_FeatMut {
 
 				List<FunResults> funResults = result.getObjectives(resultFront.getSolutionSet(), execution, experiement); // Édipo...
 				List<InfoResult> infoResults = result.getInformations(resultFront.getSolutionSet(), execution, experiement); // Édipo...
-				AllMetrics allMetrics = result.getMetrics(resultFront.getSolutionSet(), execution);
+				AllMetrics allMetrics = result.getMetrics(resultFront.getSolutionSet(), execution, experiement);
 				
 				execution.setFuns(funResults);
 				execution.setInfos(infoResults);
 				execution.setAllMetrics(allMetrics);
 				
-			    ExecutionPersistence persistence = new ExecutionPersistence(connection);
-			    
+			    ExecutionPersistence persistence = new ExecutionPersistence(allMetricsPersistenceDependencies);
 			    try {
 					persistence.persist(execution);
+					persistence = null;
 				} catch (SQLException e) {
 					e.printStackTrace();
 				}
@@ -201,14 +205,16 @@ public class NSGAII_OPLA_FeatMut {
 			List<InfoResult> infoResults = result.getInformations(todasRuns.getSolutionSet(), null, experiement);
 			saveInfoAll(infoResults);
 			
-			
-			
-			todasRuns.printInformationToFile(directory + "/INFO_All_" + PLAName	+ ".txt");
 			todasRuns.saveVariablesToFile("VAR_All_");
 
 			// Thelma - Dez2013
 			todasRuns.printMetricsToFile(directory + "/Metrics_All_" + PLAName + ".txt");
-			todasRuns.printAllMetricsToFile(directory + "/FUN_Metrics_All_"	+ PLAName + ".txt"); // ignorar escrita
+			AllMetrics allMetrics = result.getMetrics(todasRuns.getSolutionSet(), null, experiement);
+			MetricsPersistence mp = new MetricsPersistence(allMetricsPersistenceDependencies);
+			mp.persisteMetrics(allMetrics);
+			mp = null;
+			
+			//todasRuns.printAllMetricsToFile(directory + "/FUN_Metrics_All_"	+ PLAName + ".txt"); // ignorar escrita
 
 		}
 	}
@@ -252,6 +258,7 @@ public class NSGAII_OPLA_FeatMut {
 		
 		try {
 			connection = Database.getInstance().getConnection();
+			allMetricsPersistenceDependencies = new AllMetricsPersistenceDependency(connection);
 		} catch (ClassNotFoundException | MissingConfigurationException	| SQLException e) {
 			e.printStackTrace();
 		}

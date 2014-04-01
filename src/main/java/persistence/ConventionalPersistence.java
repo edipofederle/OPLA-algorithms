@@ -18,11 +18,16 @@ public class ConventionalPersistence {
 	}
 	
 	public void save(Conventional conventional) {
+		
+    	String executionID = "''";
+    	if(conventional.getExecution() != null)
+    		executionID = conventional.getExecution().getId();
+    	
 		StringBuilder query = new StringBuilder();
 
 		query.append("insert into ConventionalMetrics (choesion,"
 				+ " macAggregation, meanDepComps, meanNumOps, sumClassesDepIn,"
-				+ " sumClassesDepOut, sumDepIn, sumDepOut, execution_id)"
+				+ " sumClassesDepOut, sumDepIn, sumDepOut, execution_id, is_all, experiement_id)"
 				+ " values (");
 
 		query.append(conventional.getChoesion());
@@ -41,7 +46,14 @@ public class ConventionalPersistence {
 		query.append(",");
 		query.append(conventional.getSumDepOut());
 		query.append(",");
-		query.append(conventional.getExecution().getId());
+		query.append(executionID);
+		query.append(",");
+		if(conventional.getExecution() == null)
+			query.append("1");
+		else
+			query.append("2");
+		query.append(",");
+		query.append(conventional.getExperiement().getId());
 		query.append(")");
 
 		try {

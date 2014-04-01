@@ -6,6 +6,7 @@
 package metrics;
 
 import results.Execution;
+import results.Experiment;
 
 /**
  *
@@ -20,11 +21,13 @@ public class Conventional {
     private double sumClassesDepOut;
     private double sumDepIn;
     private double sumDepOut;
-
+    
+    private Experiment experiement;
     private final Execution execution;
 
-    public Conventional(Execution execution) {
+    public Conventional(Execution execution, Experiment experiement) {
         this.execution = execution;
+        this.experiement = experiement;
     }
 
     public double getMacAggregation() {
@@ -91,4 +94,8 @@ public class Conventional {
     	return this.execution;
     }
 
+	public Experiment getExperiement() {
+		return experiement;
+	}
+    
 }

@@ -18,6 +18,7 @@ import org.junit.Test;
 
 import persistence.ConventionalPersistence;
 import results.Execution;
+import results.Experiment;
 import database.Database;
 
 /**
@@ -28,16 +29,17 @@ public class ConventionalPersistenceTest {
     
     @Test
     public void saveConventionalMetrics() throws  Exception{
-         Database db     = mock(Database.class);
+        Database db     = mock(Database.class);
         Statement st    = mock(Statement.class);
-        Execution exec  = mock(Execution.class);                      
+        Execution exec  = mock(Execution.class);
+        Experiment exp = mock(Experiment.class);
         
         when(exec.getId()).thenReturn("1");
         when(db.getConnection()).thenReturn(st);
         
         ConventionalPersistence persistence = new ConventionalPersistence(st);
         
-        Conventional conventionalMetrics = new Conventional(exec);
+        Conventional conventionalMetrics = new Conventional(exec, exp);
         conventionalMetrics.setChoesion(10d);
         conventionalMetrics.setMeanDepComps(10d);
         conventionalMetrics.setMeanNumOps(10d);
@@ -48,8 +50,8 @@ public class ConventionalPersistenceTest {
         
         String expectedQuery = "insert into ConventionalMetrics (choesion,"
                 + " macAggregation, meanDepComps, meanNumOps, sumClassesDepIn,"
-                + " sumClassesDepOut, sumDepIn, sumDepOut, execution_id)"
-                + " values (10.0,47.1,10.0,10.0,11.0,12.0,1.0,3.0,1)";
+                + " sumClassesDepOut, sumDepIn, sumDepOut, execution_id, is_all, experiement_id)"
+                + " values (10.0,47.1,10.0,10.0,11.0,12.0,1.0,3.0,1,2,null)";
         
         persistence.save(conventionalMetrics);
                

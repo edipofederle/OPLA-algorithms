@@ -12,6 +12,7 @@ import org.junit.Test;
 
 import persistence.FeatureDrivenPersistence;
 import results.Execution;
+import results.Experiment;
 import database.Database;
 
 /**
@@ -25,14 +26,15 @@ public class FeatureDriverPersistenceTest {
         
         Database db     = mock(Database.class);
         Statement st    = mock(Statement.class);
-        Execution exec  = mock(Execution.class);                      
+        Execution exec  = mock(Execution.class);     
+        Experiment exp = mock(Experiment.class);
         
         when(exec.getId()).thenReturn("12");
         when(db.getConnection()).thenReturn(st);
         
         FeatureDrivenPersistence persistence = new FeatureDrivenPersistence(st);
         
-        FeatureDriven fd = new FeatureDriven(exec);
+        FeatureDriven fd = new FeatureDriven(exec, exp);
         
         fd.setCdaClass(10d);
         fd.setCdac(1d);
@@ -56,7 +58,7 @@ public class FeatureDriverPersistenceTest {
     
     private String buildQuery(FeatureDriven fd){
         StringBuilder query = new StringBuilder();
-        query.append("insert into FeatureDrivenMetrics (msiAggregation, cdac, cdai, cdao, cibc, iibc, oobc, lcc, lccClass, cdaClass, cibClass, execution_id) values (");
+        query.append("insert into FeatureDrivenMetrics (msiAggregation, cdac, cdai, cdao, cibc, iibc, oobc, lcc, lccClass, cdaClass, cibClass, execution_id, is_all, experiement_id) values (");
         query.append(fd.getMsiAggregation());
         query.append(",");
         query.append(fd.getCdac());
@@ -80,6 +82,10 @@ public class FeatureDriverPersistenceTest {
         query.append(fd.getCibClass());
         query.append(",");
         query.append(fd.getExecution().getId());
+        query.append(",");
+        query.append("0");
+        query.append(",");
+        query.append("null");
         query.append(")");
         
         return query.toString();

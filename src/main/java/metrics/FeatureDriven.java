@@ -1,6 +1,7 @@
 package metrics;
 
 import results.Execution;
+import results.Experiment;
 
 /**
  *
@@ -20,9 +21,11 @@ public class FeatureDriven {
     private double cibClass;
     
     private final Execution execution;
+    private final Experiment experiement;
 
-    public FeatureDriven(Execution execution){
+    public FeatureDriven(Execution execution, Experiment experiement){
         this.execution = execution;
+        this.experiement = experiement;
     }
     
     public double getMsiAggregation() {
@@ -112,5 +115,9 @@ public class FeatureDriven {
     public Execution getExecution(){
         return this.execution;
     }  
+    
+    public Experiment getExperiement(){
+    	return this.experiement;
+    }
     
 }

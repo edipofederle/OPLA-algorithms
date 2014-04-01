@@ -44,27 +44,29 @@ public class ExecutionPersistenceTest {
     @Test
     public void persistExecution() throws Exception{
         PowerMockito.mockStatic(Id.class);
-        
         Database db                         	= mock(Database.class);
         Statement st                        	= mock(Statement.class);
         Execution fakeExecution             	= mock(Execution.class);
         Experiment fakeExperiement				= mock(Experiment.class);
         AllMetrics allMetrics					= mock(AllMetrics.class);
-
-        when(fakeExperiement.getId()).thenReturn("10");
+        InfosResultPersistence infosPersistence = mock(InfosResultPersistence.class);
+        FunsResultPersistence funsPersistence 	= mock(FunsResultPersistence.class);
+        AllMetricsPersistenceDependency allMetricsPersistence = mock(AllMetricsPersistenceDependency.class);
         
+        
+        when(allMetricsPersistence.getStatement()).thenReturn(st);
+        when(allMetricsPersistence.getInfosPersistence()).thenReturn(infosPersistence);
+        when(allMetricsPersistence.getFunsPersistence()).thenReturn(funsPersistence);
+        when(fakeExperiement.getId()).thenReturn("10");
         when(fakeExecution.getAllMetrics()).thenReturn(allMetrics);
         when(fakeExecution.getExperiement()).thenReturn(fakeExperiement);
-        
         when(fakeExperiement.getId()).thenReturn("100");
-        
         when(db.getConnection()).thenReturn(st);
         when(fakeExecution.getTime()).thenReturn(new Long(100));
-        
         PowerMockito.when(Id.generateUniqueId()).thenReturn("10");
         
-        ExecutionPersistence persistence = new ExecutionPersistence(st);
         
+		ExecutionPersistence persistence = new ExecutionPersistence(allMetricsPersistence);
         List<InfoResult> infos = Factory.givenInfos(fakeExecution, fakeExperiement);
         List<FunResults> funs = Factory.givenFuns(fakeExecution, fakeExperiement);
         
@@ -73,7 +75,6 @@ public class ExecutionPersistenceTest {
         when(fakeExecution.getFuns()).thenReturn(funs);
         
         String query = "insert into executions (id, experiement_id, time) values (10,100,100)";
-               
         persistence.persist(fakeExecution);      
         
         verify(st, times(1)).executeUpdate(query);

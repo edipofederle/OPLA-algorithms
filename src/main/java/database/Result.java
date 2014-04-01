@@ -111,7 +111,8 @@ public class Result {
 		return concernsList.substring(0, concernsList.length()-1);
 	}
 
-	public AllMetrics getMetrics(List<Solution> list, Execution execution) {
+	public AllMetrics getMetrics(List<Solution> list, Execution execution, Experiment experiement) {
+		
 		MetricsEvaluation metrics = new MetricsEvaluation();
 		AllMetrics allMetrics = new AllMetrics();
 		int numberOfVariables = list.get(0).getDecisionVariables().length;
@@ -120,10 +121,10 @@ public class Result {
 			for (int j = 0; j < numberOfVariables; j++) {
 				Architecture arch = (Architecture) list.get(i).getDecisionVariables()[j];
 				
-				allMetrics.getElegance().add(buildEleganceMetrics(execution, metrics, arch));
-				allMetrics.getPlaExtensibility().add(buildPLAExtensibilityMetrics(execution, metrics, arch));
-				allMetrics.getConventional().add(buildConventionalMetrics(execution, metrics, arch));
-				allMetrics.getFeatureDriven().add(buildFeatureDrivenMetrics(execution, metrics, arch));
+				allMetrics.getElegance().add(buildEleganceMetrics(execution, experiement, metrics, arch));
+				allMetrics.getPlaExtensibility().add(buildPLAExtensibilityMetrics(execution, experiement, metrics, arch));
+				allMetrics.getConventional().add(buildConventionalMetrics(execution, experiement, metrics, arch));
+				allMetrics.getFeatureDriven().add(buildFeatureDrivenMetrics(execution, experiement, metrics, arch));
 				
 			}
 		}
@@ -131,8 +132,8 @@ public class Result {
 		return allMetrics;
 	}
 
-	private FeatureDriven buildFeatureDrivenMetrics(Execution execution, MetricsEvaluation metrics, Architecture arch) {
-		FeatureDriven fd = new FeatureDriven(execution);
+	private FeatureDriven buildFeatureDrivenMetrics(Execution execution, Experiment experiement, MetricsEvaluation metrics, Architecture arch) {
+		FeatureDriven fd = new FeatureDriven(execution, experiement);
 		
 		fd.setCdac(metrics.evaluateCDAC(arch));
 		fd.setCdai(metrics.evaluateCDAI(arch));
@@ -148,8 +149,8 @@ public class Result {
 		return fd;
 	}
 
-	private Conventional buildConventionalMetrics(Execution execution, MetricsEvaluation metrics, Architecture arch) {
-		Conventional conventional = new Conventional(execution);
+	private Conventional buildConventionalMetrics(Execution execution, Experiment experiement, MetricsEvaluation metrics, Architecture arch) {
+		Conventional conventional = new Conventional(execution, experiement);
 		
 		conventional.setChoesion(metrics.evaluateCohesion(arch));
 		conventional.setMeanDepComps(metrics.evaluateMeanDepComps(arch));
@@ -163,15 +164,14 @@ public class Result {
 	}
 
 	private PLAExtensibility buildPLAExtensibilityMetrics(Execution execution,
-			MetricsEvaluation metrics, Architecture arch) {
-		PLAExtensibility plaExtensibility = new PLAExtensibility(execution);
+			Experiment experiement, MetricsEvaluation metrics, Architecture arch) {
+		PLAExtensibility plaExtensibility = new PLAExtensibility(execution, experiement);
 		plaExtensibility.setPlaExtensibility(metrics.evaluatePLAExtensibility(arch));
 		return plaExtensibility;
 	}
 
-	private Elegance buildEleganceMetrics(Execution execution, MetricsEvaluation metrics, Architecture arch) {
-		Elegance elegance = new Elegance(execution);
-		
+	private Elegance buildEleganceMetrics(Execution execution, Experiment experiement, MetricsEvaluation metrics, Architecture arch) {
+		Elegance elegance = new Elegance(execution, experiement);
 		elegance.setNac(metrics.evaluateNACElegance(arch));
 		elegance.setAtmr(metrics.evaluateATMRElegance(arch));
 		elegance.setEc(metrics.evaluateECElegance(arch));

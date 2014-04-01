@@ -17,12 +17,24 @@ public class PLAExtensibilityPersistence {
 	}
 
 	public void save(PLAExtensibility plaExtensibility) {
+		
+    	String executionID = "''";
+    	if(plaExtensibility.getExecution() != null)
+    		executionID = plaExtensibility.getExecution().getId();
+    	
 		StringBuilder query = new StringBuilder();
 
-		query.append("insert into PLAExtensibilityMetrics (plaExtensibility, execution_id) values (");
+		query.append("insert into PLAExtensibilityMetrics (plaExtensibility, execution_id, is_all, experiement_id) values (");
 		query.append(plaExtensibility.getPlaExtensibility());
 		query.append(",");
-		query.append(plaExtensibility.getExecution().getId());
+		query.append(executionID);
+		query.append(",");
+        if(plaExtensibility.getExecution() == null)
+        	query.append("1");
+        else
+        	query.append("0");
+        query.append(",");
+        query.append(plaExtensibility.getExperiement().getId());
 		query.append(")");
 
 		try {

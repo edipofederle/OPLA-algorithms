@@ -1,6 +1,7 @@
 package metrics;
 
 import results.Execution;
+import results.Experiment;
 
 public class Elegance {
     
@@ -8,9 +9,11 @@ public class Elegance {
     private double atmr;
     private double ec;
     private final Execution execution;
+	private Experiment experiement;
     
-    public Elegance(Execution execution){
+    public Elegance(Execution execution, Experiment experiement){
         this.execution = execution;
+        this.experiement = experiement;
     }
 
     public double getNac() {
@@ -44,5 +47,8 @@ public class Elegance {
 	public double total() {
 		return this.nac + this.atmr + this.ec;
 	}
-    
+
+	public Experiment getExperiment() {
+		return this.experiement;
+	}
 }

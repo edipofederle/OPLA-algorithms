@@ -19,8 +19,13 @@ public class ElegancePersistence {
      * Save to database
      */
     public void save(Elegance eleganceMetric) {
+    	
+    	String executionID = "''";
+    	if(eleganceMetric.getExecution() != null)
+    		executionID = eleganceMetric.getExecution().getId();
+    	
     	StringBuilder query = new StringBuilder();
-    	query.append("insert into EleganceMetrics (nac,atmr,ec,elegance,execution_id) values (");
+    	query.append("insert into EleganceMetrics (nac,atmr,ec,elegance,execution_id, experiement_id, is_all) values (");
     	query.append(eleganceMetric.getNac());
     	query.append(",");
     	query.append(eleganceMetric.getAtmr());
@@ -29,7 +34,14 @@ public class ElegancePersistence {
     	query.append(",");
     	query.append(eleganceMetric.total());
     	query.append(",");
-    	query.append(eleganceMetric.getExecution().getId());
+		query.append(executionID);
+		query.append(",");
+		query.append(eleganceMetric.getExperiment().getId());
+		query.append(",");
+		if(eleganceMetric.getExecution() == null)
+			query.append("1");
+		else
+			query.append("0");
     	query.append(")");
     	
         try {
