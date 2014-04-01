@@ -11,7 +11,6 @@ import metrics.PLAExtensibility;
 
 import org.junit.Test;
 
-import persistence.PLAExtensibilityPersistence;
 import results.Execution;
 import results.Experiment;
 import database.Database;
@@ -43,8 +42,5 @@ public class PLAExtensibilityPersistenceTest {
         String query = "insert into PLAExtensibilityMetrics (plaExtensibility, execution_id, is_all, experiement_id) values (10.0,10,0,null)";
         
         verify(db.getConnection(), times(1)).executeUpdate(query);
-        
-        
-        
     }
 }
