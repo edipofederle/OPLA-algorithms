@@ -4,16 +4,15 @@ import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
+import java.sql.Connection;
 import java.sql.Statement;
 
 import metrics.FeatureDriven;
 
 import org.junit.Test;
 
-import persistence.FeatureDrivenPersistence;
 import results.Execution;
 import results.Experiment;
-import database.Database;
 
 /**
  *
@@ -24,15 +23,15 @@ public class FeatureDriverPersistenceTest {
     @Test
     public void saveFeatureDrivenMetrics() throws Exception{
         
-        Database db     = mock(Database.class);
+        Connection connection     = mock(Connection.class);
         Statement st    = mock(Statement.class);
         Execution exec  = mock(Execution.class);     
         Experiment exp = mock(Experiment.class);
         
+        when(connection.createStatement()).thenReturn(st);
         when(exec.getId()).thenReturn("12");
-        when(db.getConnection()).thenReturn(st);
         
-        FeatureDrivenPersistence persistence = new FeatureDrivenPersistence(st);
+        FeatureDrivenPersistence persistence = new FeatureDrivenPersistence(connection);
         
         FeatureDriven fd = new FeatureDriven(exec, exp);
         
@@ -52,7 +51,7 @@ public class FeatureDriverPersistenceTest {
               
         persistence.save(fd);
         
-        verify(db.getConnection()).executeUpdate(query);
+        verify(st).executeUpdate(query);
         
     }
     

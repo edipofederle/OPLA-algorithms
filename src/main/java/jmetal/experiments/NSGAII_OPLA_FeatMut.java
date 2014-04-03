@@ -3,8 +3,8 @@ package jmetal.experiments;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.IOException;
+import java.sql.Connection;
 import java.sql.SQLException;
-import java.sql.Statement;
 import java.util.HashMap;
 import java.util.List;
 
@@ -22,8 +22,6 @@ import jmetal.util.JMException;
 import metrics.AllMetrics;
 import persistence.AllMetricsPersistenceDependency;
 import persistence.ExecutionPersistence;
-import persistence.FunsResultPersistence;
-import persistence.InfosResultPersistence;
 import persistence.MetricsPersistence;
 import results.Execution;
 import results.Experiment;
@@ -36,8 +34,9 @@ import exceptions.MissingConfigurationException;
 public class NSGAII_OPLA_FeatMut {
 	
 	private static final String PATH_TO_DB = "src/test/resources/opla_test.db";
-    private static Statement connection;
+    private static Connection connection;
     private static AllMetricsPersistenceDependency allMetricsPersistenceDependencies;
+    private static MetricsPersistence mp;
     private static Result result;
 
 	public static int populationSize_;
@@ -51,9 +50,9 @@ public class NSGAII_OPLA_FeatMut {
 		intializeDependencies();
 		
 
-		int runsNumber = 5; // 30;
-		populationSize_ = 10; // 100;
-		maxEvaluations_ = 5; // 300 gerações
+		int runsNumber = 10; // 30;
+		populationSize_ = 20; // 100;
+		maxEvaluations_ = 50; // 300 gerações
 
 		crossoverProbability_ = 0.0;
 		mutationProbability_ = 0.9;
@@ -135,7 +134,7 @@ public class NSGAII_OPLA_FeatMut {
 
 			String PLAName = getPlaName(pla);
 			
-			Experiment experiement = createExperiementOnDb(PLAName); 
+			Experiment experiement = mp.createExperiementOnDb(PLAName); 
 			result.setPlaName(PLAName);
 	        
 			long time[] = new long[runsNumber];
@@ -154,14 +153,10 @@ public class NSGAII_OPLA_FeatMut {
 				resultFront = problem.removeDominadas(resultFront);
 				resultFront = problem.removeRepetidas(resultFront);
 
-				// TEste ////
-				//resultFront.printObjectivesToFile(directory + "/FUN_" + PLAName	+ "_" + runs + ".txt"); //Será removido
-				//resultFront.printInformationToFile(directory + "/INFO_"+ PLAName + "_" + runs + ".txt");//Será removido
-				
 				execution.setTime(estimatedTime);
 
-				List<FunResults> funResults = result.getObjectives(resultFront.getSolutionSet(), execution, experiement); // Édipo...
-				List<InfoResult> infoResults = result.getInformations(resultFront.getSolutionSet(), execution, experiement); // Édipo...
+				List<FunResults> funResults = result.getObjectives(resultFront.getSolutionSet(), execution, experiement); 
+				List<InfoResult> infoResults = result.getInformations(resultFront.getSolutionSet(), execution, experiement);
 				AllMetrics allMetrics = result.getMetrics(resultFront.getSolutionSet(), execution, experiement);
 				
 				execution.setFuns(funResults);
@@ -176,12 +171,10 @@ public class NSGAII_OPLA_FeatMut {
 					e.printStackTrace();
 				}
 			    
-			    //// TEste ////
 				resultFront.saveVariablesToFile("VAR_" + runs + "_"); //Arquivos da arqutietura em si (.uml, .notation e .di)
 				// armazena as solucoes de todas runs
 				todasRuns = todasRuns.union(resultFront);
 
-				// Thelma - Dez2013
 				allSolutions = allSolutions.union(resultFront);
 				resultFront.printMetricsToFile(directory + "/Metrics_" + PLAName + "_" + runs + ".txt");
 
@@ -189,7 +182,7 @@ public class NSGAII_OPLA_FeatMut {
 			// Thelma - Dez2013 - duas proximas linhas
 			String NameOfPLA = getPlaName(pla);
 			
-			//TODO Hypervolume vai continur no arquivo TXT. Ver local onde salvar.
+			//TODO Hypervolume vai continuar no arquivo TXT. Ver local onde salvar.
 			allSolutions.printObjectivesToFile(directory + "/Hypervolume/"+ NameOfPLA + "/" + NameOfPLA + "_HV_" + moea + ".txt");
 
 			todasRuns = problem.removeDominadas(todasRuns);
@@ -199,69 +192,31 @@ public class NSGAII_OPLA_FeatMut {
 			todasRuns.printObjectivesToFile(directory + "/FUN_All_" + PLAName + ".txt");
 			
 			List<FunResults> funResults = result.getObjectives(todasRuns.getSolutionSet(), null, experiement);
-			saveFunAll(funResults);
+			mp.saveFunAll(funResults);
 			funResults = null;
 			
 			List<InfoResult> infoResults = result.getInformations(todasRuns.getSolutionSet(), null, experiement);
-			saveInfoAll(infoResults);
+			mp.saveInfoAll(infoResults);
 			
 			todasRuns.saveVariablesToFile("VAR_All_");
 
-			// Thelma - Dez2013
-			todasRuns.printMetricsToFile(directory + "/Metrics_All_" + PLAName + ".txt");
 			AllMetrics allMetrics = result.getMetrics(todasRuns.getSolutionSet(), null, experiement);
-			MetricsPersistence mp = new MetricsPersistence(allMetricsPersistenceDependencies);
 			mp.persisteMetrics(allMetrics);
 			mp = null;
-			
-			//todasRuns.printAllMetricsToFile(directory + "/FUN_Metrics_All_"	+ PLAName + ".txt"); // ignorar escrita
-
 		}
-	}
-
-	private static void saveInfoAll(List<InfoResult> infoResults) {
-		InfosResultPersistence infosPersistence = new InfosResultPersistence(connection);
-		try{
-			for(InfoResult info : infoResults)
-				infosPersistence.persistInfoDatas(info);
-		}catch(SQLException e){
-			e.printStackTrace();
-		}
-		infosPersistence = null;
-	}
-
-	private static void saveFunAll(List<FunResults> funResults) {
-		FunsResultPersistence funsPersistence = new FunsResultPersistence(connection);
-		try {
-			for(FunResults fun : funResults)
-				funsPersistence.persistFunsDatas(fun);
-		} catch (SQLException e) {
-			e.printStackTrace();
-		}
-		funsPersistence = null;
-	}
-
-	private static Experiment createExperiementOnDb(String PLAName) {
-		Experiment experiement = null;
-		try {
-			experiement = new Experiment(PLAName, "a description");
-			experiement.save();
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
-		return experiement;
 	}
 
 	private static void intializeDependencies() {
 		result  = new Result();
 		Database.setPathToDB(PATH_TO_DB);
-		
+	
 		try {
-			connection = Database.getInstance().getConnection();
-			allMetricsPersistenceDependencies = new AllMetricsPersistenceDependency(connection);
+			connection = Database.getConnection();
 		} catch (ClassNotFoundException | MissingConfigurationException	| SQLException e) {
 			e.printStackTrace();
 		}
+		allMetricsPersistenceDependencies = new AllMetricsPersistenceDependency(connection);
+		mp = new MetricsPersistence(allMetricsPersistenceDependencies);
 	}
 
 	private static String getPlaName(String pla) {

@@ -1,5 +1,6 @@
 package persistence;
 
+import java.sql.Connection;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.logging.Level;
@@ -11,12 +12,11 @@ import metrics.FeatureDriven;
 public class FeatureDrivenPersistence {
 	
 	
-	private Statement statement;
+	private Connection connection;
 	
-	public FeatureDrivenPersistence(Statement statement){
-		this.statement = statement;
+	public FeatureDrivenPersistence(Connection connection){
+		this.connection = connection;
 	}
-	
 	
     public void save(FeatureDriven fd) {
     	String executionID = "''";
@@ -58,7 +58,8 @@ public class FeatureDrivenPersistence {
         query.append(")");
              
         try {
-            this.statement.executeUpdate(query.toString());
+        	Statement statement = connection.createStatement();
+            statement.executeUpdate(query.toString());
         } catch (SQLException ex) {
             Logger.getLogger(Elegance.class.getName()).log(Level.SEVERE, null, ex);
         }

@@ -10,16 +10,15 @@ import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
+import java.sql.Connection;
 import java.sql.Statement;
 
 import metrics.Conventional;
 
 import org.junit.Test;
 
-import persistence.ConventionalPersistence;
 import results.Execution;
 import results.Experiment;
-import database.Database;
 
 /**
  *
@@ -29,15 +28,14 @@ public class ConventionalPersistenceTest {
     
     @Test
     public void saveConventionalMetrics() throws  Exception{
-        Database db     = mock(Database.class);
-        Statement st    = mock(Statement.class);
-        Execution exec  = mock(Execution.class);
-        Experiment exp = mock(Experiment.class);
+    	Connection connection    = mock(Connection.class);
+    	Statement st			 = mock(Statement.class);
+        Execution exec  		 = mock(Execution.class);
+        Experiment exp 			 = mock(Experiment.class);
         
         when(exec.getId()).thenReturn("1");
-        when(db.getConnection()).thenReturn(st);
-        
-        ConventionalPersistence persistence = new ConventionalPersistence(st);
+        when(connection.createStatement()).thenReturn(st);
+        ConventionalPersistence persistence = new ConventionalPersistence(connection);
         
         Conventional conventionalMetrics = new Conventional(exec, exp);
         conventionalMetrics.setChoesion(10d);
@@ -55,11 +53,7 @@ public class ConventionalPersistenceTest {
         
         persistence.save(conventionalMetrics);
                
-        verify(db.getConnection()).executeUpdate(expectedQuery);
-        
-        
-        
-        
+        verify(st).executeUpdate(expectedQuery);
         
     }
     

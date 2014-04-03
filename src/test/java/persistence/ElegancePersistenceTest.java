@@ -4,16 +4,15 @@ import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
+import java.sql.Connection;
 import java.sql.Statement;
 
 import metrics.Elegance;
 
 import org.junit.Test;
 
-import persistence.ElegancePersistence;
 import results.Execution;
 import results.Experiment;
-import database.Database;
 
 /**
  *
@@ -24,13 +23,13 @@ public class ElegancePersistenceTest {
     @Test
     public void saveEleganceMetrics() throws Exception{
         
-        Database db     = mock(Database.class);
         Statement st    = mock(Statement.class);
+        Connection connection = mock(Connection.class);
         Execution exec  = mock(Execution.class);    
         Experiment exp = mock(Experiment.class);
         
         when(exec.getId()).thenReturn("12");
-        when(db.getConnection()).thenReturn(st);
+        when(connection.createStatement()).thenReturn(st);
         
         Elegance eleganceMetric = new Elegance(exec, exp);
         
@@ -38,12 +37,12 @@ public class ElegancePersistenceTest {
         eleganceMetric.setEc(20d);
         eleganceMetric.setNac(30d);
         
-        ElegancePersistence elegancePersistence = new ElegancePersistence(st);
+        ElegancePersistence elegancePersistence = new ElegancePersistence(connection);
         elegancePersistence.save(eleganceMetric);
        
         String query = "insert into EleganceMetrics (nac,atmr,ec,elegance,execution_id, experiement_id, is_all) values (30.0,10.0,20.0,60.0,"+exec.getId()+",null,0)";
                 
-        verify(db.getConnection()).executeUpdate(query);
+        verify(st).executeUpdate(query);
     }
     
 }

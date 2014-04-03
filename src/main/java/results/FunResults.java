@@ -3,7 +3,15 @@ Fun files is where objective values are stored.
 */
 package results;
 
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.sql.Statement;
+import java.util.ArrayList;
+import java.util.List;
+
 import utils.Id;
+import database.Database;
+import exceptions.MissingConfigurationException;
 
 /**
  *

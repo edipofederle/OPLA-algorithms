@@ -11,6 +11,7 @@ import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
+import java.sql.Connection;
 import java.sql.Statement;
 
 import org.junit.Test;
@@ -18,27 +19,22 @@ import org.junit.Test;
 import results.Execution;
 import results.Experiment;
 import results.InfoResult;
-import database.Database;
 
-/**
- *
- * @author elf
- */
 public class InfoResultsPersistenceTest {
     
     @Test
     public void shouldNotBeNull() throws  Exception{
-        Database db = mock(Database.class);
+        Connection connection = mock(Connection.class);
         Statement st = mock(Statement.class);
-        when(db.getConnection()).thenReturn(st);
-        InfosResultPersistence persistence = new InfosResultPersistence(st);
+        when(connection.createStatement()).thenReturn(st);
+        InfosResultPersistence persistence = new InfosResultPersistence(connection);
         assertNotNull(persistence);
     }
 
     
     @Test
     public void persistInfosDatas() throws Exception{
-        Database db = mock(Database.class);
+    	Connection connection = mock(Connection.class);
         Statement st = mock(Statement.class);
         Execution fakeExecution = mock(Execution.class);
         Experiment fakeExperiement = mock(Experiment.class);
@@ -46,9 +42,9 @@ public class InfoResultsPersistenceTest {
         when(fakeExecution.getId()).thenReturn("1");
         when(fakeExperiement.getId()).thenReturn("10");
         
-        when(db.getConnection()).thenReturn(st);
+        when(connection.createStatement()).thenReturn(st);
         
-        InfosResultPersistence persistence = new InfosResultPersistence(st);
+        InfosResultPersistence persistence = new InfosResultPersistence(connection);
         
         InfoResult fakeInfoResult = mock(InfoResult.class);
         

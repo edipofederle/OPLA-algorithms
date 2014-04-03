@@ -12,6 +12,7 @@ public class PLAExtensibility {
     private double plaExtensibility;
     private final Execution execution;
 	private Experiment experiement;
+	private Integer isAll;
 
     public PLAExtensibility(Execution execution, Experiment experiement) {
         this.execution = execution;
@@ -34,6 +35,13 @@ public class PLAExtensibility {
 		return experiement;
 	}
 
-    
-        
+	public Integer getIsAll() {
+		return isAll;
+	}
+
+	public void setIsAll(Integer isAll) {
+		this.isAll = isAll;
+	}
+
+	
 }

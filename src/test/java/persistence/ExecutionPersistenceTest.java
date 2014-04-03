@@ -12,6 +12,7 @@ import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
+import java.sql.Connection;
 import java.sql.Statement;
 import java.util.List;
 
@@ -28,7 +29,6 @@ import results.Experiment;
 import results.FunResults;
 import results.InfoResult;
 import utils.Id;
-import database.Database;
 import factories.Factory;
 
 /**
@@ -44,7 +44,7 @@ public class ExecutionPersistenceTest {
     @Test
     public void persistExecution() throws Exception{
         PowerMockito.mockStatic(Id.class);
-        Database db                         	= mock(Database.class);
+        Connection connection                   = mock(Connection.class);
         Statement st                        	= mock(Statement.class);
         Execution fakeExecution             	= mock(Execution.class);
         Experiment fakeExperiement				= mock(Experiment.class);
@@ -53,15 +53,15 @@ public class ExecutionPersistenceTest {
         FunsResultPersistence funsPersistence 	= mock(FunsResultPersistence.class);
         AllMetricsPersistenceDependency allMetricsPersistence = mock(AllMetricsPersistenceDependency.class);
         
+        when(connection.createStatement()).thenReturn(st);
         
-        when(allMetricsPersistence.getStatement()).thenReturn(st);
+        when(allMetricsPersistence.getConnection()).thenReturn(connection);
         when(allMetricsPersistence.getInfosPersistence()).thenReturn(infosPersistence);
         when(allMetricsPersistence.getFunsPersistence()).thenReturn(funsPersistence);
         when(fakeExperiement.getId()).thenReturn("10");
         when(fakeExecution.getAllMetrics()).thenReturn(allMetrics);
         when(fakeExecution.getExperiement()).thenReturn(fakeExperiement);
         when(fakeExperiement.getId()).thenReturn("100");
-        when(db.getConnection()).thenReturn(st);
         when(fakeExecution.getTime()).thenReturn(new Long(100));
         PowerMockito.when(Id.generateUniqueId()).thenReturn("10");
         

@@ -6,6 +6,7 @@
 
 package persistence;
 
+import java.sql.Connection;
 import java.sql.SQLException;
 import java.sql.Statement;
 
@@ -17,7 +18,7 @@ import results.InfoResult;
  */
 public class InfosResultPersistence {
     
-    private final Statement statement;
+    private final Connection connection;
 
     public void persistInfoDatas(InfoResult fakeInfoResult) throws SQLException{
         StringBuilder query = new StringBuilder();
@@ -63,12 +64,13 @@ public class InfosResultPersistence {
         query.append(fakeInfoResult.getExperiement().getId());
         query.append(")");
         
+        Statement statement = connection.createStatement();
         statement.executeUpdate(query.toString());
     }
     
 
-    public InfosResultPersistence(Statement st) {
-        this.statement = st;
+    public InfosResultPersistence(Connection connection) {
+        this.connection = connection;
     }
     
 }

@@ -1,6 +1,8 @@
 package persistence;
 
+import java.sql.Connection;
 import java.sql.SQLException;
+import java.sql.Statement;
 
 import results.Execution;
 import results.FunResults;
@@ -21,7 +23,10 @@ public class ExecutionPersistence {
        query.append(execution.getTime());
        query.append(")");
         
-       allMetricsPersistenceDependencies.getStatement().executeUpdate(query.toString());
+       Connection connection = allMetricsPersistenceDependencies.getConnection();
+       Statement statement = connection.createStatement();
+       statement.executeUpdate(query.toString());
+       statement.close();
        
        if (execution.getInfos() != null){
     	   for(InfoResult ir : execution.getInfos())

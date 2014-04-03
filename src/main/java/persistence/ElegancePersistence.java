@@ -1,5 +1,6 @@
 package persistence;
 
+import java.sql.Connection;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.logging.Level;
@@ -9,10 +10,10 @@ import metrics.Elegance;
 
 public class ElegancePersistence {
 	
-	private Statement statement;
+	private Connection connection;
 	
-	public ElegancePersistence(Statement statement){
-		this.statement = statement;
+	public ElegancePersistence(Connection connection){
+		this.connection = connection;
 	}
 	
     /**
@@ -45,7 +46,8 @@ public class ElegancePersistence {
     	query.append(")");
     	
         try {
-            this.statement.executeUpdate(query.toString());
+        	Statement statement = connection.createStatement();
+            statement.executeUpdate(query.toString());
         } catch (SQLException ex) {
             Logger.getLogger(Elegance.class.getName()).log(Level.SEVERE, null, ex);
         }

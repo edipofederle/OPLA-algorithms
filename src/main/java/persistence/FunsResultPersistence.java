@@ -6,6 +6,7 @@
 
 package persistence;
 
+import java.sql.Connection;
 import java.sql.SQLException;
 import java.sql.Statement;
 
@@ -17,11 +18,11 @@ import results.FunResults;
  */
 public class FunsResultPersistence {
   
-    private final Statement statement;
+    private final Connection connection;
     
 
-    public FunsResultPersistence(Statement st) {
-        this.statement = st;
+    public FunsResultPersistence(Connection connection) {
+        this.connection = connection;
     }
 
     public void persistFunsDatas(FunResults funs) throws SQLException {
@@ -42,8 +43,9 @@ public class FunsResultPersistence {
        query.append(",");
        query.append(funs.getExperiement().getId());
        query.append(")"); 
+       Statement statement = connection.createStatement();
        
-       this.statement.executeUpdate(query.toString());
+       statement.executeUpdate(query.toString());
     }
    
 }

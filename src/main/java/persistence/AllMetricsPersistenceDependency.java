@@ -1,11 +1,10 @@
 package persistence;
 
-import java.sql.Statement;
+import java.sql.Connection;
 
 public class AllMetricsPersistenceDependency {
 	
-	
-	private Statement statement;
+	private Connection connection;
 	private InfosResultPersistence infosPersistence;
 	private FunsResultPersistence funsPersistence;
 	private ElegancePersistence elegancePersistence;
@@ -13,18 +12,18 @@ public class AllMetricsPersistenceDependency {
 	private ConventionalPersistence conventionalPersistence;
 	private PLAExtensibilityPersistence plaExtensibilityPersistence;
 
-	public AllMetricsPersistenceDependency(Statement st){
-        this.statement = st;
-        this.infosPersistence = new InfosResultPersistence(st);
-        this.funsPersistence = new FunsResultPersistence(st);
-        this.elegancePersistence = new ElegancePersistence(st);
-        this.featureDrivenPersistence = new FeatureDrivenPersistence(st);
-        this.conventionalPersistence = new ConventionalPersistence(st);
-        this.plaExtensibilityPersistence = new PLAExtensibilityPersistence(st);
+	public AllMetricsPersistenceDependency(Connection connection){
+        this.connection = connection;
+        this.infosPersistence = new InfosResultPersistence(connection);
+        this.funsPersistence = new FunsResultPersistence(connection);
+        this.elegancePersistence = new ElegancePersistence(connection);
+        this.featureDrivenPersistence = new FeatureDrivenPersistence(connection);
+        this.conventionalPersistence = new ConventionalPersistence(connection);
+        this.plaExtensibilityPersistence = new PLAExtensibilityPersistence(connection);
 	}
 
-	public Statement getStatement() {
-		return statement;
+	public Connection getConnection() {
+		return connection;
 	}
 
 	public InfosResultPersistence getInfosPersistence() {

@@ -1,5 +1,6 @@
 package persistence;
 
+import java.sql.Connection;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.logging.Level;
@@ -11,10 +12,10 @@ import metrics.Elegance;
 public class ConventionalPersistence {
 
 	
-	private Statement statement;
+	private Connection connection;
 	
-	public ConventionalPersistence(Statement statement){
-		this.statement = statement;
+	public ConventionalPersistence(Connection connection){
+		this.connection = connection;
 	}
 	
 	public void save(Conventional conventional) {
@@ -57,7 +58,8 @@ public class ConventionalPersistence {
 		query.append(")");
 
 		try {
-			this.statement.executeUpdate(query.toString());
+			Statement statement = connection.createStatement();
+			statement.executeUpdate(query.toString());
 		} catch (SQLException ex) {
 			Logger.getLogger(Elegance.class.getName()).log(Level.SEVERE, null,	ex);
 		}

@@ -22,6 +22,7 @@ public class FeatureDriven {
     
     private final Execution execution;
     private final Experiment experiement;
+    private Integer isAll;
 
     public FeatureDriven(Execution execution, Experiment experiement){
         this.execution = execution;
@@ -119,5 +120,15 @@ public class FeatureDriven {
     public Experiment getExperiement(){
     	return this.experiement;
     }
+
+	public Integer getIsAll() {
+		return isAll;
+	}
+
+	public void setIsAll(Integer isAll) {
+		this.isAll = isAll;
+	}
+    
+    
     
 }

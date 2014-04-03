@@ -21,6 +21,7 @@ public class Conventional {
     private double sumClassesDepOut;
     private double sumDepIn;
     private double sumDepOut;
+    private Integer isAll;
     
     private Experiment experiement;
     private final Execution execution;
@@ -97,5 +98,13 @@ public class Conventional {
 	public Experiment getExperiement() {
 		return experiement;
 	}
-    
+
+	public Integer getIsAll() {
+		return isAll;
+	}
+
+	public void setIsAll(Integer isAll) {
+		this.isAll = isAll;
+	}
+	
 }
