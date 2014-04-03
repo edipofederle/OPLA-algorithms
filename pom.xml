@@ -42,6 +42,11 @@
 			<scope>test</scope>
 			<type>jar</type>
 		</dependency>
+		<dependency>
+			<groupId>ufpr.br</groupId>
+			<artifactId>opla-tool</artifactId>
+			<version>0.1</version>
+		</dependency>
 	</dependencies>
 
 	<build>
