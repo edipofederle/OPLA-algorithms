@@ -160,7 +160,7 @@ public class Experiment {
 	private static List<Execution> buildExecutions(String experiementId, Experiment exp, Connection connection) throws Exception {
 		Statement statamentExecution = connection.createStatement();
 		
-		ResultSet r = statamentExecution.executeQuery("select * from executions where experiement_id="+experiementId);
+		ResultSet r = statamentExecution.executeQuery("select * from executions where experiement_id = " + experiementId);
 		List<Execution> execs = new ArrayList<Execution>();
 		
 		
@@ -195,6 +195,9 @@ public class Experiment {
 		StringBuilder query = new StringBuilder();
 		query.append("select * from PLAExtensibilityMetrics where execution_id=");
 		query.append(exec.getId());
+		query.append(" OR (execution_id='' AND experiement_id=");
+		query.append(exp.getId());
+		query.append(")");
 		
 		ResultSet resultPLAExt = plaExtStatement.executeQuery(query.toString());
 		
@@ -217,6 +220,9 @@ public class Experiment {
 		StringBuilder query = new StringBuilder();
 		query.append("select * from FeatureDrivenMetrics where execution_id=");
 		query.append(exec.getId());
+		query.append(" OR (execution_id='' AND experiement_id=");
+		query.append(exp.getId());
+		query.append(")");
 		
 		ResultSet resultFeatureDriven = featureDrivenStatement.executeQuery(query.toString());
 		
@@ -245,9 +251,13 @@ public class Experiment {
 
 	private static List<Elegance> buildEleganceMetrics(Connection connection, Execution exec, Experiment exp) throws SQLException {
 		Statement eleganceStatement = connection.createStatement();
+		
 		StringBuilder query = new StringBuilder();
 		query.append("select * from EleganceMetrics where execution_id =");
 		query.append(exec.getId());
+		query.append(" OR (execution_id='' AND experiement_id=");
+		query.append(exp.getId());
+		query.append(")");
 		
 		ResultSet resultElegance = eleganceStatement.executeQuery(query.toString());
 		List<Elegance> elegances = new ArrayList<Elegance>();
@@ -267,8 +277,15 @@ public class Experiment {
 
 	private static List<Conventional> buildConventionalMetrics(Connection connection, Execution execution, Experiment experiement) throws SQLException {
 		Statement conventionalStatement = connection.createStatement();
-		String query = "select * from ConventionalMetrics where execution_id = " + execution.getId();
-		ResultSet resultSetConventional = conventionalStatement.executeQuery(query);
+
+		StringBuilder query = new StringBuilder();
+		query.append("select * from ConventionalMetrics where execution_id = ");
+		query.append(execution.getId());
+		query.append(" OR (execution_id='' AND experiement_id=");
+		query.append(experiement.getId());
+		query.append(")");
+		
+		ResultSet resultSetConventional = conventionalStatement.executeQuery(query.toString());
 		
 		List<Conventional> conventionals = new ArrayList<Conventional>();
 		
@@ -292,8 +309,16 @@ public class Experiment {
 
 	private static List<InfoResult> buildInfos(Connection connection, Experiment exp, Execution exec) throws SQLException {
 		Statement infosStatement = connection.createStatement();
-		ResultSet resultSetInfos  = infosStatement.executeQuery("select * from infos where execution_id = " +exec.getId());
 		List<InfoResult> infos = new ArrayList<InfoResult>();
+		
+		StringBuilder query = new StringBuilder();
+		query.append("select * from infos where execution_id=");
+		query.append(exec.getId());
+		query.append(" OR (execution_id='' AND experiement_id=");
+		query.append(exp.getId());
+		query.append(")");
+		
+		ResultSet resultSetInfos  = infosStatement.executeQuery(query.toString());
 		
 		while(resultSetInfos.next()){
 			InfoResult info = new InfoResult();
@@ -313,7 +338,6 @@ public class Experiment {
 			info.setNumberOfassociationsClass(getResultParseInteger(resultSetInfos, "number_of_associations_class"));
 			
 			infos.add(info);
-			
 		}
 		
 		return infos;
@@ -339,7 +363,15 @@ public class Experiment {
 
 	private static List<FunResults> buildFuns(Connection connection, Experiment exp, Execution exec) throws SQLException {
 		Statement funStatement = connection.createStatement();
-		ResultSet resultSetFuns  = funStatement.executeQuery("select * from objectives where execution_id = "+exec.getId());
+		
+		StringBuilder query = new StringBuilder();
+		query.append("select * from objectives where execution_id=");
+		query.append(exec.getId());
+		query.append(" OR (execution_id='' AND experiement_id=");
+		query.append(exp.getId());
+		query.append(")");
+		
+		ResultSet resultSetFuns  = funStatement.executeQuery(query.toString());
 		List<FunResults> funs = new ArrayList<FunResults>();
 		
 		while(resultSetFuns.next()){

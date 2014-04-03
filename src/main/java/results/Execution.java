@@ -7,7 +7,7 @@ import utils.Id;
 
 /**
  *
- * Essa classe representa cada execu����o de um dado experiementos.
+ * Essa classe representa cada execucao de um dado experiementos.
  * 
  *
  */
@@ -19,8 +19,6 @@ public class Execution {
     private AllMetrics allMetrics;		
     private Experiment experiment;
     private long time = 0l;
-    
-    //TODO metrics, time, hypervolume etc.
     
     public Execution(Experiment experiment){
         this.id = Id.generateUniqueId();

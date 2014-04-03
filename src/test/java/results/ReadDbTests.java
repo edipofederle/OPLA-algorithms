@@ -32,10 +32,10 @@ public class ReadDbTests {
 		
 		
 		assertNotNull(execution.getInfos());
-		assertEquals(2, execution.getInfos().size());
-		assertEquals(2, execution.getFuns().size());
+		assertEquals(3, execution.getInfos().size());
+		assertEquals(3, execution.getFuns().size());
 		
-		assertEquals(2, execution.getAllMetrics().getConventional().size());
+		assertEquals(3, execution.getAllMetrics().getConventional().size());
 	}
 	
 }
