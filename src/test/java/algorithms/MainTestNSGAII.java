@@ -3,9 +3,9 @@ package algorithms;
 import java.util.Arrays;
 import java.util.List;
 
-import jmetal.experiments.ExperimentCommomConfigs;
 import jmetal.experiments.FeatureMutationOperators;
 import jmetal.experiments.Metrics;
+import jmetal.experiments.NSGAIIConfig;
 import jmetal.experiments.NSGAII_OPLA_FeatMutInitializer;
 import jmetal.experiments.OPLAConfigs;
 
@@ -18,7 +18,7 @@ import jmetal.experiments.OPLAConfigs;
  * @author elf
  * 
  */
-public class MainTest {
+public class MainTestNSGAII {
 
     public static void main(String args[]) {
 	
@@ -34,7 +34,7 @@ public class MainTest {
 		FeatureMutationOperators.MOVE_OPERATION_MUTATION.getOperatorName());
 	
 	//Intancia a classe de configuracoes
-	ExperimentCommomConfigs configs = new ExperimentCommomConfigs();
+	NSGAIIConfig configs = new NSGAIIConfig();
 
 	// Seta os parametros desejados
 	configs.setMutationOperators(operators);

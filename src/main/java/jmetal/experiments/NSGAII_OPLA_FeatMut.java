@@ -44,13 +44,6 @@ public class NSGAII_OPLA_FeatMut {
 
     private ExperimentCommomConfigs configs;
 
-    // public NSGAII_OPLA_FeatMut(HashMap<String, String> configs,
-    // MutationOperators mutationOperators,OPLAConfigs oplaConfig) {
-    // this.configs = configs;
-    // this.mutationOperators = mutationOperators;
-    // this.oplaConfig = oplaConfig;
-    // }
-
     public NSGAII_OPLA_FeatMut(ExperimentCommomConfigs config) {
 	this.configs = config;
     }
@@ -115,13 +108,12 @@ public class NSGAII_OPLA_FeatMut {
 	    algorithm.addOperator("mutation", mutation);
 	    algorithm.addOperator("selection", selection);
 
-	    if (this.configs.isLog()) {
+	    if (this.configs.isLog())
 		logInforamtions(context, pla);
-	    }
 
 	    String PLAName = getPlaName(pla);
 
-	    Experiment experiement = mp.createExperiementOnDb(PLAName);
+	    Experiment experiement = mp.createExperiementOnDb(PLAName, "NSGAII");
 	    result.setPlaName(PLAName);
 
 	    long time[] = new long[runsNumber];
@@ -143,10 +135,8 @@ public class NSGAII_OPLA_FeatMut {
 
 		execution.setTime(estimatedTime);
 
-		List<FunResults> funResults = result
-			.getObjectives(resultFront.getSolutionSet(), execution, experiement);
-		List<InfoResult> infoResults = result.getInformations(resultFront.getSolutionSet(), execution,
-			experiement);
+		List<FunResults> funResults = result.getObjectives(resultFront.getSolutionSet(), execution, experiement);
+		List<InfoResult> infoResults = result.getInformations(resultFront.getSolutionSet(), execution,experiement);
 		AllMetrics allMetrics = result.getMetrics(resultFront.getSolutionSet(), execution, experiement);
 
 		execution.setFuns(funResults);

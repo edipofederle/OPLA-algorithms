@@ -3,7 +3,7 @@ package jmetal.experiments;
 import java.util.ArrayList;
 import java.util.List;
 
-public class ExperimentCommomConfigs {
+public abstract class ExperimentCommomConfigs {
     
     	private boolean log = false;
     	private String pathToDb;
