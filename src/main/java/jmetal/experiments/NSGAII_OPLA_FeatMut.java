@@ -42,9 +42,9 @@ public class NSGAII_OPLA_FeatMut {
     public static double mutationProbability;
     public static double crossoverProbability;
 
-    private ExperimentCommomConfigs configs;
+    private NSGAIIConfig configs;
 
-    public NSGAII_OPLA_FeatMut(ExperimentCommomConfigs config) {
+    public NSGAII_OPLA_FeatMut(NSGAIIConfig config) {
 	this.configs = config;
     }
 

@@ -9,7 +9,6 @@ public abstract class ExperimentCommomConfigs {
     	private String pathToDb;
 	
 	private int numberOfRuns;
-	private int populationSize;
 	private int maxEvaluations;
 	private double crossoverProbability;
 	private double mutationProbability;
@@ -44,18 +43,9 @@ public abstract class ExperimentCommomConfigs {
 		this.numberOfRuns = numberOfRuns;
 	}
 
-	private void validateGreaterOrEqualOne(String arg, int numberOfRuns) {
+	protected void validateGreaterOrEqualOne(String arg, int numberOfRuns) {
 		if(numberOfRuns < 1)
 			throw new IllegalArgumentException(arg + " must be greater or equal 1");
-	}
-
-	public int getPopulationSize() {
-		return populationSize;
-	}
-
-	public void setPopulationSize(int populationSize) {
-		validateGreaterOrEqualOne("populationSize", numberOfRuns);
-		this.populationSize = populationSize;
 	}
 
 	public int getMaxEvaluation() {
@@ -72,7 +62,7 @@ public abstract class ExperimentCommomConfigs {
 		this.crossoverProbability = crossoverProbability;
 	}
 
-	private void validateArgument(String arg, double probability) {
+	protected void validateArgument(String arg, double probability) {
 		if(probability < 0 || probability > 1)
 			throw new IllegalArgumentException(arg+ " must be a value between 0 and 1");
 	}
