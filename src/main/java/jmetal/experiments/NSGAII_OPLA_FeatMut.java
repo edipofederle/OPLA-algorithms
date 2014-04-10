@@ -1,6 +1,5 @@
 package jmetal.experiments;
 
-import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.sql.Connection;
@@ -32,197 +31,207 @@ import database.Result;
 import exceptions.MissingConfigurationException;
 
 public class NSGAII_OPLA_FeatMut {
-	
-	private static final String PATH_TO_DB = "src/test/resources/opla_test.db";
+
+    private static final String PATH_TO_DB = "src/test/resources/opla_test.db";
     private static Connection connection;
     private static AllMetricsPersistenceDependency allMetricsPersistenceDependencies;
     private static MetricsPersistence mp;
     private static Result result;
 
-	public static int populationSize_;
-	public static int maxEvaluations_;
-	public static double mutationProbability_;
-	public static double crossoverProbability_;
+    public static int populationSize;
+    public static int maxEvaluations;
+    public static double mutationProbability;
+    public static double crossoverProbability;
 
-	public static void main(String[] args) throws FileNotFoundException, IOException, JMException, ClassNotFoundException {
-		
-		
-		intializeDependencies();
-		
+    private ExperimentCommomConfigs configs;
 
-		int runsNumber = 10; // 30;
-		populationSize_ = 20; // 100;
-		maxEvaluations_ = 50; // 300 gerações
+    // public NSGAII_OPLA_FeatMut(HashMap<String, String> configs,
+    // MutationOperators mutationOperators,OPLAConfigs oplaConfig) {
+    // this.configs = configs;
+    // this.mutationOperators = mutationOperators;
+    // this.oplaConfig = oplaConfig;
+    // }
 
-		crossoverProbability_ = 0.0;
-		mutationProbability_ = 0.9;
-		String context = "OPLA";
-		
-		/*Thelma - Dez2013 linha adicionada para identificar o algoritmo no
-		/* nome do arquivo do hypervolume
-		*/
-		String moea = "NSGAII-M";
+    public NSGAII_OPLA_FeatMut(ExperimentCommomConfigs config) {
+	this.configs = config;
+    }
 
-		File directory = new File("experiment/OPLA/NSGA-II/FeatureMutation"+ "/");
-		if (!directory.exists()) {
-			if (!directory.mkdirs()) {
-				System.out.println("Nãoo foi posível criar o diretório do resultado");
-				System.exit(0);
-			}
-		}
-		
-		//TODO GUI - Irá vir da GUI
-		String plas[] = new String[] { "/Users/elf/mestrado/sourcesMestrado/arquitetura/src/test/java/resources/agmfinal/agm.uml" };
-		String xmiFilePath;
+    public void execute() throws FileNotFoundException, IOException, JMException, ClassNotFoundException {
 
-		for (String pla : plas) {
-			xmiFilePath = pla;
-			OPLA problem = null;
-			
-			try {
-				problem = new OPLA(xmiFilePath);
-			} catch (Exception e) {
-				e.printStackTrace();
-			}
+	intializeDependencies();
 
-			Algorithm algorithm;
-			SolutionSet todasRuns = new SolutionSet();
-			SolutionSet allSolutions = new SolutionSet();
+	int runsNumber = this.configs.getNumberOfRuns();
+	populationSize = this.configs.getPopulationSize();
+	maxEvaluations = this.configs.getMaxEvaluation();
+	crossoverProbability = this.configs.getCrossoverProbability();
+	mutationProbability = this.configs.getMutationProbability();
 
-			Crossover crossover;
-			Mutation mutation;
-			Selection selection;
+	String context = "OPLA";
 
-			HashMap<String, Double> parameters; // Operator parameters
+	String plas[] = this.configs.getPlas().split(",");
+	String xmiFilePath;
 
-			algorithm = new NSGAII(problem);
+	for (String pla : plas) {
+	    xmiFilePath = pla;
+	    OPLA problem = null;
 
-			// Algorithm parameters
-			algorithm.setInputParameter("populationSize", populationSize_);
-			algorithm.setInputParameter("maxEvaluations", maxEvaluations_);
+	    try {
+		problem = new OPLA(xmiFilePath, this.configs.getOplaConfigs());
+	    } catch (Exception e) {
+		e.printStackTrace();
+	    }
 
-			// Mutation and Crossover
-			parameters = new HashMap<String, Double>();
-			parameters.put("probability", crossoverProbability_);
-			crossover = CrossoverFactory.getCrossoverOperator("PLACrossover", parameters);
+	    Algorithm algorithm;
+	    SolutionSet todasRuns = new SolutionSet();
+	    SolutionSet allSolutions = new SolutionSet();
 
-			parameters = new HashMap<String, Double>();
-			parameters.put("probability", mutationProbability_);
-			mutation = MutationFactory.getMutationOperator("PLAFeatureMutation", parameters);
+	    Crossover crossover;
+	    Mutation mutation;
+	    Selection selection;
 
-			// Selection Operator
-			parameters = null;
-			selection = SelectionFactory.getSelectionOperator("BinaryTournament", parameters);
+	    HashMap<String, Object> parameters;
 
-			// Add the operators to the algorithm
-			algorithm.addOperator("crossover", crossover);
-			algorithm.addOperator("mutation", mutation);
-			algorithm.addOperator("selection", selection);
+	    algorithm = new NSGAII(problem);
 
-			System.out.println("\n================ NSGAII ================");
-			System.out.println("Context: " + context);
-			System.out.println("PLA: " + pla);
-			System.out.println("Params:");
-			System.out.println("\tPop -> " + populationSize_);
-			System.out.println("\tMaxEva -> " + maxEvaluations_);
-			System.out.println("\tCross -> " + crossoverProbability_);
-			System.out.println("\tMuta -> " + mutationProbability_);
+	    // Algorithm parameters
+	    algorithm.setInputParameter("populationSize", populationSize);
+	    algorithm.setInputParameter("maxEvaluations", maxEvaluations);
 
-			long heapSize = Runtime.getRuntime().totalMemory();
-			heapSize = (heapSize / 1024) / 1024;
-			System.out.println("Heap Size: " + heapSize + "Mb\n");
+	    // Mutation and Crossover
+	    parameters = new HashMap<String, Object>();
+	    parameters.put("probability", crossoverProbability);
+	    crossover = CrossoverFactory.getCrossoverOperator("PLACrossover", parameters);
 
-			String PLAName = getPlaName(pla);
-			
-			Experiment experiement = mp.createExperiementOnDb(PLAName); 
-			result.setPlaName(PLAName);
-	        
-			long time[] = new long[runsNumber];
+	    parameters = new HashMap<String, Object>();
+	    parameters.put("probability", mutationProbability);
+	    mutation = MutationFactory
+		    .getMutationOperator("PLAFeatureMutation", parameters, this.configs.getMutationOperators());
 
-			for (int runs = 0; runs < runsNumber; runs++) {
-				
-				//Cria uma execução. Cada execução está ligada a um experiemento.
-				Execution execution = new Execution(experiement);
-				
-				// Execute the Algorithm
-				long initTime = System.currentTimeMillis();
-				SolutionSet resultFront = algorithm.execute();
-				long estimatedTime = System.currentTimeMillis() - initTime;
-				time[runs] = estimatedTime;
+	    // Selection Operator
+	    parameters = null;
+	    selection = SelectionFactory.getSelectionOperator("BinaryTournament", parameters);
 
-				resultFront = problem.removeDominadas(resultFront);
-				resultFront = problem.removeRepetidas(resultFront);
+	    // Add the operators to the algorithm
+	    algorithm.addOperator("crossover", crossover);
+	    algorithm.addOperator("mutation", mutation);
+	    algorithm.addOperator("selection", selection);
 
-				execution.setTime(estimatedTime);
+	    if (this.configs.isLog()) {
+		logInforamtions(context, pla);
+	    }
 
-				List<FunResults> funResults = result.getObjectives(resultFront.getSolutionSet(), execution, experiement); 
-				List<InfoResult> infoResults = result.getInformations(resultFront.getSolutionSet(), execution, experiement);
-				AllMetrics allMetrics = result.getMetrics(resultFront.getSolutionSet(), execution, experiement);
-				
-				execution.setFuns(funResults);
-				execution.setInfos(infoResults);
-				execution.setAllMetrics(allMetrics);
-				
-			    ExecutionPersistence persistence = new ExecutionPersistence(allMetricsPersistenceDependencies);
-			    try {
-					persistence.persist(execution);
-					persistence = null;
-				} catch (SQLException e) {
-					e.printStackTrace();
-				}
-			    
-				resultFront.saveVariablesToFile("VAR_" + runs + "_"); //Arquivos da arqutietura em si (.uml, .notation e .di)
-				// armazena as solucoes de todas runs
-				todasRuns = todasRuns.union(resultFront);
+	    String PLAName = getPlaName(pla);
 
-				allSolutions = allSolutions.union(resultFront);
-				resultFront.printMetricsToFile(directory + "/Metrics_" + PLAName + "_" + runs + ".txt");
+	    Experiment experiement = mp.createExperiementOnDb(PLAName);
+	    result.setPlaName(PLAName);
 
-			}
-			// Thelma - Dez2013 - duas proximas linhas
-			String NameOfPLA = getPlaName(pla);
-			
-			//TODO Hypervolume vai continuar no arquivo TXT. Ver local onde salvar.
-			allSolutions.printObjectivesToFile(directory + "/Hypervolume/"+ NameOfPLA + "/" + NameOfPLA + "_HV_" + moea + ".txt");
+	    long time[] = new long[runsNumber];
 
-			todasRuns = problem.removeDominadas(todasRuns);
-			todasRuns = problem.removeRepetidas(todasRuns);
+	    for (int runs = 0; runs < runsNumber; runs++) {
 
-			System.out.println("------    All Runs - Non-dominated solutions --------");
-			todasRuns.printObjectivesToFile(directory + "/FUN_All_" + PLAName + ".txt");
-			
-			List<FunResults> funResults = result.getObjectives(todasRuns.getSolutionSet(), null, experiement);
-			mp.saveFunAll(funResults);
-			funResults = null;
-			
-			List<InfoResult> infoResults = result.getInformations(todasRuns.getSolutionSet(), null, experiement);
-			mp.saveInfoAll(infoResults);
-			
-			todasRuns.saveVariablesToFile("VAR_All_");
+		// Cria uma execução. Cada execução está ligada a um
+		// experiemento.
+		Execution execution = new Execution(experiement);
 
-			AllMetrics allMetrics = result.getMetrics(todasRuns.getSolutionSet(), null, experiement);
-			mp.persisteMetrics(allMetrics);
-			mp = null;
-		}
-	}
+		// Execute the Algorithm
+		long initTime = System.currentTimeMillis();
+		SolutionSet resultFront = algorithm.execute();
+		long estimatedTime = System.currentTimeMillis() - initTime;
+		time[runs] = estimatedTime;
 
-	private static void intializeDependencies() {
-		result  = new Result();
-		Database.setPathToDB(PATH_TO_DB);
-	
+		resultFront = problem.removeDominadas(resultFront);
+		resultFront = problem.removeRepetidas(resultFront);
+
+		execution.setTime(estimatedTime);
+
+		List<FunResults> funResults = result
+			.getObjectives(resultFront.getSolutionSet(), execution, experiement);
+		List<InfoResult> infoResults = result.getInformations(resultFront.getSolutionSet(), execution,
+			experiement);
+		AllMetrics allMetrics = result.getMetrics(resultFront.getSolutionSet(), execution, experiement);
+
+		execution.setFuns(funResults);
+		execution.setInfos(infoResults);
+		execution.setAllMetrics(allMetrics);
+
+		ExecutionPersistence persistence = new ExecutionPersistence(allMetricsPersistenceDependencies);
 		try {
-			connection = Database.getConnection();
-		} catch (ClassNotFoundException | MissingConfigurationException	| SQLException e) {
-			e.printStackTrace();
+		    persistence.persist(execution);
+		    persistence = null;
+		} catch (SQLException e) {
+		    e.printStackTrace();
 		}
-		allMetricsPersistenceDependencies = new AllMetricsPersistenceDependency(connection);
-		mp = new MetricsPersistence(allMetricsPersistenceDependencies);
+
+		resultFront.saveVariablesToFile("VAR_" + runs + "_");
+		
+		// armazena as solucoes de todas runs
+		todasRuns = todasRuns.union(resultFront);
+
+		allSolutions = allSolutions.union(resultFront);
+
+	    }
+	    // Thelma - Dez2013 - duas proximas linhas
+	    // TODO Hypervolume vai continuar no arquivo TXT. Ver local onde
+	    // salvar.
+	    // String moea = "NSGAII-M";
+	    // allSolutions.printObjectivesToFile(directory + "/Hypervolume/"+
+	    // NameOfPLA + "/" + NameOfPLA + "_HV_" + moea + ".txt");
+
+	    todasRuns = problem.removeDominadas(todasRuns);
+	    todasRuns = problem.removeRepetidas(todasRuns);
+
+	    System.out.println("------ All Runs - Non-dominated solutions --------");
+
+	    List<FunResults> funResults = result.getObjectives(todasRuns.getSolutionSet(), null, experiement);
+	    mp.saveFunAll(funResults);
+	    funResults = null;
+
+	    List<InfoResult> infoResults = result.getInformations(todasRuns.getSolutionSet(), null, experiement);
+	    mp.saveInfoAll(infoResults);
+	    infoResults = null;
+
+	    todasRuns.saveVariablesToFile("VAR_All_"); // Arquitetura
+						       // propriamente dita
+
+	    AllMetrics allMetrics = result.getMetrics(todasRuns.getSolutionSet(), null, experiement);
+	    mp.persisteMetrics(allMetrics);
+	    mp = null;
+	}
+    }
+
+    private void logInforamtions(String context, String pla) {
+	System.out.println("\n================ NSGAII ================");
+	System.out.println("Context: " + context);
+	System.out.println("PLA: " + pla);
+	System.out.println("Params:");
+	System.out.println("\tPop -> " + populationSize);
+	System.out.println("\tMaxEva -> " + maxEvaluations);
+	System.out.println("\tCross -> " + crossoverProbability);
+	System.out.println("\tMuta -> " + mutationProbability);
+
+	long heapSize = Runtime.getRuntime().totalMemory();
+	heapSize = (heapSize / 1024) / 1024;
+	System.out.println("Heap Size: " + heapSize + "Mb\n");
+    }
+
+    private static void intializeDependencies() {
+	result = new Result();
+	Database.setPathToDB(PATH_TO_DB);
+
+	try {
+	    connection = Database.getConnection();
+	} catch (ClassNotFoundException | MissingConfigurationException | SQLException e) {
+	    e.printStackTrace();
 	}
 
-	private static String getPlaName(String pla) {
-		int beginIndex = pla.lastIndexOf("/") + 1;
-		int endIndex = pla.length() - 4;
-		return pla.substring(beginIndex, endIndex);
-	}
+	allMetricsPersistenceDependencies = new AllMetricsPersistenceDependency(connection);
+	mp = new MetricsPersistence(allMetricsPersistenceDependencies);
+    }
+
+    private static String getPlaName(String pla) {
+	int beginIndex = pla.lastIndexOf("/") + 1;
+	int endIndex = pla.length() - 4;
+	return pla.substring(beginIndex, endIndex);
+    }
 
 }

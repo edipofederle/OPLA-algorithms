@@ -9,6 +9,7 @@ import jmetal.core.Problem;
 import jmetal.core.Solution;
 import jmetal.core.SolutionSet;
 import jmetal.encodings.solutionType.ArchitectureSolutionType;
+import jmetal.experiments.OPLAConfigs;
 import jmetal.metrics.PLAMetrics.extensibility.ExtensPLA;
 import jmetal.metrics.concernDrivenMetrics.concernCohesion.LCC;
 import jmetal.metrics.concernDrivenMetrics.concernCohesion.LCCClass;
@@ -65,50 +66,79 @@ public class OPLA extends Problem {
 	public static int contDiscardedSolutions_ = 0;
 
 	public Architecture architecture_;
+	private List<String> selectedMetrics; // Vai vir da GUI
 
-	public OPLA(String xmiFilePath) throws Exception {
+	public OPLA(String xmiFilePath, OPLAConfigs oplaConfig) throws Exception {
 
-		//TODO GUI confiugra����o do experiemnto
 		numberOfVariables_ = 1;
-		numberOfObjectives_ = 2; // Vai vir da GUI
+		numberOfObjectives_ = oplaConfig.getNumberOfObjectives(); // Vai vir da GUI
 		numberOfConstraints_ = 0;
 		problemName_ = "OPLA";
 		solutionType_ = new ArchitectureSolutionType(this);
 		variableType_ = new java.lang.Class[numberOfVariables_];
 		length_ = new int[numberOfVariables_];
-		variableType_[0] = java.lang.Class
-				.forName(Architecture.ARCHITECTURE_TYPE);
-
+		variableType_[0] = java.lang.Class.forName(Architecture.ARCHITECTURE_TYPE);
 		architecture_ = new ArchitectureBuilder().create(xmiFilePath);
+		
+		selectedMetrics = oplaConfig.getSelectedMetrics();
 	}
 
 	// -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- --
 
 	@Override
 	public void evaluate(Solution solution) {
+		List<jmetal.experiments.Fitness> fitnesses = new ArrayList<jmetal.experiments.Fitness>();
 		
-		//TODO GUI Número de fitness é dinamico conforme o valor de numberOfObjectives_
-		//4 objetivos: Conventional, Elegance, FeatureDriven e PLAExtensibility
-		double fitness0 = 0.0;
-		double fitness1 = 0.0;
-//		double fitness2 = 0.0;
-
-		// double fitness3 = 0.0;
-
-		// DesignOutset
-		fitness0 = evaluateMSIFitnessDesignOutset((Architecture) solution.getDecisionVariables()[0]); //nao
-		// fitness0 = evaluateMSIFitness((Architecture) //TODO GUI Metrics
-		// solution.getDecisionVariables()[0]);
-		fitness1 = evaluateMACFitness((Architecture) solution.getDecisionVariables()[0]); //TODO GUI Metrics
-		// fitness2 = evaluateElegance((Architecture) //TODO GUI Metrics
-		// solution.getDecisionVariables()[0]);
-		// fitness2 = evaluatePLAExtensibility((Architecture) //TODO GUI Metrics
-		// solution.getDecisionVariables()[0]);
-
-		solution.setObjective(0, fitness0);
-		solution.setObjective(1, fitness1);
-		// solution.setObjective(2, fitness2);
-		// solution.setObjective(3, fitness3);
+		for(int i=0; i < this.selectedMetrics.size(); i++){
+			String metric = this.selectedMetrics.get(i);
+			
+			switch (metric) {
+			case "elegance":
+				fitnesses.add(new jmetal.experiments.Fitness(
+							evaluateElegance((Architecture) solution.getDecisionVariables()[0])));
+				break;
+			case "conventional":
+				fitnesses.add(new jmetal.experiments.Fitness(
+							evaluateMACFitness((Architecture) solution.getDecisionVariables()[0])));
+				break;
+			case "featureDriven":
+				fitnesses.add(new jmetal.experiments.Fitness(
+							evaluateMSIFitness((Architecture) solution.getDecisionVariables()[0])));
+				break;
+			case "PLAExtensibiliy":
+				fitnesses.add(new jmetal.experiments.Fitness(
+						evaluatePLAExtensibility((Architecture) solution.getDecisionVariables()[0])));
+				break;
+			default:
+				break;
+			}
+		}
+		
+		for (int i = 0; i < fitnesses.size(); i++) {
+			solution.setObjective(i, fitnesses.get(i).getValue());
+		}
+		
+//		//TODO GUI Número de fitness é dinamico conforme o valor de numberOfObjectives_
+//		//4 objetivos: Conventional, Elegance, FeatureDriven e PLAExtensibility
+//		double fitness0 = 0.0;
+//		double fitness1 = 0.0;
+////		double fitness2 = 0.0;
+//		// double fitness3 = 0.0;
+//
+//		// DesignOutset
+//		fitness0 = evaluateMSIFitnessDesignOutset((Architecture) solution.getDecisionVariables()[0]); //nao
+//		// fitness0 = evaluateMSIFitness((Architecture) //TODO GUI Metrics
+//		// solution.getDecisionVariables()[0]);
+//		fitness1 = evaluateMACFitness((Architecture) solution.getDecisionVariables()[0]); //TODO GUI Metrics
+//		// fitness2 = evaluateElegance((Architecture) //TODO GUI Metrics
+//		// solution.getDecisionVariables()[0]);
+//		// fitness2 = evaluatePLAExtensibility((Architecture) //TODO GUI Metrics
+//		// solution.getDecisionVariables()[0]);
+//
+//		solution.setObjective(0, fitness0);
+//		solution.setObjective(1, fitness1);
+//		// solution.setObjective(2, fitness2);
+//		// solution.setObjective(3, fitness3);
 
 	}
 

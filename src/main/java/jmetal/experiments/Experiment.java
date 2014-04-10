@@ -43,7 +43,6 @@ import jmetal.experiments.util.RWilcoxon;
 import jmetal.experiments.util.RunExperiment;
 import jmetal.experiments.util.Statistics;
 import jmetal.util.JMException;
-
 /**
  * Abstract class representing jMetal experiments
  */

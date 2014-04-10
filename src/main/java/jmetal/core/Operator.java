@@ -82,7 +82,7 @@ public abstract class Operator implements Serializable {
 	 * @param value
 	 *            Object representing the parameter.
 	 */
-	public void setParameter(String name, Object value) {
+	public void setParameter(String name, Double value) {
 		parameters_.put(name, value);
 	} // setParameter
 

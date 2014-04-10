@@ -1,8 +1,5 @@
 package results;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertNotNull;
-
 import java.util.List;
 
 import org.junit.Before;
@@ -22,20 +19,34 @@ public class ReadDbTests {
 	public void shouldReturnAllExperiments() throws Exception{
 		List<Experiment> result = Experiment.all();
 		
-		assertNotNull(result);
-		assertEquals(1, result.size());
-		List<Execution> executions = result.get(0).getExecutions();
+		System.out.println("Experiments\n");
+		for(Experiment exp : result){
+			System.out.println("\t"+exp.getName() + " - " + exp.getCreatedAt());
+			for(Execution exec : exp.getExecutions()){
+				System.out.println("\t\tExecution:"+exec.getId() + " - "+ exec.getTime());
+				System.out.println("\t\t\tObjectives");
+				for(FunResults fun : exec.getFuns()){
+					System.out.println("\t\t\t\t"+fun.getObjectives());
+				}
+				
+			}
+			System.out.println("\n");
+		}
 		
-		assertEquals(10, executions.size());
-		Execution execution = executions.get(6);
-		System.out.println(execution.getId());
-		
-		
-		assertNotNull(execution.getInfos());
-		assertEquals(3, execution.getInfos().size());
-		assertEquals(3, execution.getFuns().size());
-		
-		assertEquals(3, execution.getAllMetrics().getConventional().size());
+//		assertNotNull(result);
+//		assertEquals(1, result.size());
+//		List<Execution> executions = result.get(0).getExecutions();
+//		
+//		assertEquals(10, executions.size());
+//		Execution execution = executions.get(6);
+//		System.out.println(execution.getId());
+//		
+//		
+//		assertNotNull(execution.getInfos());
+//		assertEquals(3, execution.getInfos().size());
+//		assertEquals(3, execution.getFuns().size());
+//		
+//		assertEquals(3, execution.getAllMetrics().getConventional().size());
 	}
 	
 }

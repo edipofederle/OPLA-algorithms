@@ -117,10 +117,10 @@ public class Result {
 		AllMetrics allMetrics = new AllMetrics();
 		int numberOfVariables = list.get(0).getDecisionVariables().length;
 
+		//TODO Ver com Thelma: Somente gerar metrica que foram selecionadas na GUI. via (OPLAConfigs)
 		for (int i = 0; i < list.size(); i++) {
 			for (int j = 0; j < numberOfVariables; j++) {
 				Architecture arch = (Architecture) list.get(i).getDecisionVariables()[j];
-				
 				allMetrics.getElegance().add(buildEleganceMetrics(execution, experiement, metrics, arch));
 				allMetrics.getPlaExtensibility().add(buildPLAExtensibilityMetrics(execution, experiement, metrics, arch));
 				allMetrics.getConventional().add(buildConventionalMetrics(execution, experiement, metrics, arch));

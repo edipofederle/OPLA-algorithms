@@ -42,7 +42,7 @@ public class PLACrossover2 extends Crossover {
 	private CrossoverUtils crossoverutils;
 
 	private static List VALID_TYPES = Arrays.asList(ArchitectureSolutionType.class);
-	//use "oneLevel" para não verificar a presença de interesses nos atributos e métodos
+	//use "oneLevel" para n��o verificar a presen��a de interesses nos atributos e m��todos
 	private static String SCOPE_LEVEL = "allLevels"; 
 	private boolean variabilitiesOk = true;
 	
@@ -97,7 +97,7 @@ public class PLACrossover2 extends Crossover {
                     Concern feature = randomObject(concernsArchitecture);
                    
                     obtainChild(feature, (Architecture) parent2.getDecisionVariables()[0], (Architecture) offspring[0].getDecisionVariables()[0], scope);
-                    //Thelma - Dez2013 adicionado para descartar as solucoes com interfaces desconectadas de componentes na PLA e com variabilidades cujos pontos de variacao não fazem parte da solucao
+                    //Thelma - Dez2013 adicionado para descartar as solucoes com interfaces desconectadas de componentes na PLA e com variabilidades cujos pontos de variacao n��o fazem parte da solucao
         	        if (!(isValidSolution((Architecture) offspring[0].getDecisionVariables()[0]))){
         	        	//offspring[0] = new Solution(parent1);
         	        	offspring[0] =parent1;
@@ -105,7 +105,7 @@ public class PLACrossover2 extends Crossover {
         	        }
         	        this.variabilitiesOk = true;
                     obtainChild(feature, (Architecture) parent1.getDecisionVariables()[0], (Architecture) offspring[1].getDecisionVariables()[0], scope);
-                    //Thelma - Dez2013 adicionado para descartar as solucoes com interfaces desconectadas de componentes na PLA e com variabilidades cujos pontos de variacao não fazem parte da solucao
+                    //Thelma - Dez2013 adicionado para descartar as solucoes com interfaces desconectadas de componentes na PLA e com variabilidades cujos pontos de variacao n��o fazem parte da solucao
         	        if (!(isValidSolution((Architecture) offspring[1].getDecisionVariables()[0]))){
         	        	//offspring[0] = new Solution(parent1);
         	        	offspring[0] =parent1;
@@ -165,7 +165,7 @@ public class PLACrossover2 extends Crossover {
 		
 		/*
 		 * Caso parentPackage cuide somente de UM interesse. Tenta localizar Pacote em offspring
-		 * Caso não encontrar o cria.
+		 * Caso n��o encontrar o cria.
 		 */
 		if((parentPackage.getOwnConcerns().size() == 1)  && parentPackage.containsConcern(feature)){
 			Package packageInOffspring = offspring.findPackageByName(parentPackage.getName());
@@ -600,7 +600,7 @@ public class PLACrossover2 extends Crossover {
 		return variabilitiesOk;
 	}
 	
-	// Thelma - Dez2013 método adicionado
+	// Thelma - Dez2013 m��todo adicionado
 	// verify if the architecture contains a valid PLA design, i.e., if there is not any interface without relationships in the architecture. 
 	private boolean isValidSolution(Architecture solution){
 		boolean isValid=true;
