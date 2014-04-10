@@ -6,6 +6,7 @@ import java.util.List;
 public class ExperimentCommomConfigs {
     
     	private boolean log = false;
+    	private String pathToDb;
 	
 	private int numberOfRuns;
 	private int populationSize;
@@ -117,4 +118,12 @@ public class ExperimentCommomConfigs {
 	    return log;
 	}
 
+	public String getPathToDb() {
+	    return pathToDb;
+	}
+
+	public void setPathToDb(String pathToDb) {
+	    this.pathToDb = pathToDb;
+	}
+	
 }

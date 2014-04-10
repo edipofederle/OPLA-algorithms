@@ -45,6 +45,9 @@ public class MainTest {
 	configs.disableCrossover();
 	configs.setMutationProbability(0.9);
 	
+	//Configura onde o db esta localizado
+	configs.setPathToDb("/Users/elf/Desktop/opla_test.db");
+	
 	//Instancia a classe de configuracao da OPLA.java
 	OPLAConfigs oplaConfig = new OPLAConfigs();
 	

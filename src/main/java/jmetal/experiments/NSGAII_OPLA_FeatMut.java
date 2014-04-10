@@ -32,7 +32,6 @@ import exceptions.MissingConfigurationException;
 
 public class NSGAII_OPLA_FeatMut {
 
-    private static final String PATH_TO_DB = "src/test/resources/opla_test.db";
     private static Connection connection;
     private static AllMetricsPersistenceDependency allMetricsPersistenceDependencies;
     private static MetricsPersistence mp;
@@ -214,9 +213,9 @@ public class NSGAII_OPLA_FeatMut {
 	System.out.println("Heap Size: " + heapSize + "Mb\n");
     }
 
-    private static void intializeDependencies() {
+    private void intializeDependencies() {
 	result = new Result();
-	Database.setPathToDB(PATH_TO_DB);
+	Database.setPathToDB(this.configs.getPathToDb());
 
 	try {
 	    connection = Database.getConnection();

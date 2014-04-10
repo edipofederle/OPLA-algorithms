@@ -8,8 +8,7 @@ import jmetal.util.JMException;
 public class NSGAII_OPLA_FeatMutInitializer implements AlgorithmBase{
 
     	private ExperimentCommomConfigs config;
-
-
+    	
 	public NSGAII_OPLA_FeatMutInitializer(ExperimentCommomConfigs config){
     	    this.config = config;
     	}
