@@ -1,7 +1,7 @@
 package algorithms;
 
-import jmetal.experiments.ExperimentCommomConfigs;
+import jmetal.experiments.NSGAIIConfig;
 
-public class FakeAlgorithm  extends ExperimentCommomConfigs{
+public class FakeAlgorithm  extends NSGAIIConfig{
 
 }

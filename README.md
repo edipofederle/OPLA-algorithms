@@ -2,9 +2,9 @@
 
 
 ### Install dependency on local maven repo
-	donwload jar from: https://dl.dropboxusercontent.com/s/rw3sgyd4rgc4kgw/opla-tool-0.0.1.jar?dl=1&token_hash=AAG_0vw6NdXwOC8DOGthZVXfNyka_g9oTdZv-vJq_AV3mA
+	donwload jar from: https://www.dropbox.com/s/rw3sgyd4rgc4kgw/opla-tool-0.0.1.jar
 
-	mvn install:install-file -Dfile=opla-tool-0.0.1.jar -DgroupId=ufpr.br -DartifactId=opla-tool -Dversion=0.1 -Dpackaging=jar
+	mvn install:install-file -Dfile=opla-tool-0.0.1.jar -DgroupId=ufpr.br -DartifactId=opla-tool -Dversion=0.0.1 -Dpackaging=jar
 
 Your pom.xml already include bellow lines.
 

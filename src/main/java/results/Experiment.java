@@ -132,7 +132,7 @@ public class Experiment {
      * @throws Exception
      */
     public static List<Experiment> all() throws SQLException, Exception {
-	String attrs[] = { "id", "name", "description", "created_at" };
+	String attrs[] = { "id", "name", "algorithm", "created_at" };
 	List<Experiment> experiements = new ArrayList<Experiment>();
 	ResultSet r = null;
 	Connection connection = Database.getConnection();

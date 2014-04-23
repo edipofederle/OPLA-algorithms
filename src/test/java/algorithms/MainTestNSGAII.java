@@ -55,8 +55,11 @@ public class MainTestNSGAII {
 	oplaConfig.setNumberOfObjectives(4);
 	
 	//Quais metricas deseja-se utilizar
-	List<String> selectedMetrics = Arrays.asList(Metrics.ELEGANCE.getName(), Metrics.CONVENTIONAL.getName(),
-		Metrics.PLA_EXTENSIBILIY.getName(), Metrics.FEATURE_DRIVEN.getName());
+	List<String> selectedMetrics = Arrays.asList(
+		Metrics.ELEGANCE.getName(),
+		Metrics.CONVENTIONAL.getName(),
+		Metrics.PLA_EXTENSIBILIY.getName(),
+		Metrics.FEATURE_DRIVEN.getName());
 	oplaConfig.setSelectedMetrics(selectedMetrics);
 
 	//Add as confs de OPLA na classe de configuracoes gerais.

@@ -24,7 +24,6 @@ package jmetal.operators.mutation;
 import java.util.HashMap;
 import java.util.List;
 
-import jmetal.experiments.MutationOperators;
 import jmetal.util.Configuration;
 import jmetal.util.JMException;
 

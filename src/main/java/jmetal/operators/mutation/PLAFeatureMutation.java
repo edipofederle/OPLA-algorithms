@@ -75,7 +75,7 @@ public class PLAFeatureMutation extends Mutation {
 	    featureMut.invoke(this, probability, solution, scopeLevels);
 	}
 
-	List<String> withScope = Arrays.asList("moveMethodMutation", "addClassMutation", "addClassMutation");
+	List<String> withScope = Arrays.asList("moveMethodMutation", "addClassMutation", "moveAttributeMutation");
 	if (withScope.contains(selectedOperator)) {
 	    java.lang.reflect.Method featureMut = PLAFeatureMutation.class.getMethod(selectedOperator, double.class,
 		    Solution.class, String.class);
