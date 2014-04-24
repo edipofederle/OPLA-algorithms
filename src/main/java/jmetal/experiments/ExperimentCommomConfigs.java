@@ -7,7 +7,6 @@ public abstract class ExperimentCommomConfigs {
     
     	private boolean log = false;
     	private String pathToDb;
-	
 	private int numberOfRuns;
 	private int maxEvaluations;
 	private double crossoverProbability;

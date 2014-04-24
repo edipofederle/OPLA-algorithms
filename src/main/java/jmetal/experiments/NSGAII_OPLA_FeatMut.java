@@ -1,5 +1,6 @@
 package jmetal.experiments;
 
+import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.sql.Connection;
@@ -26,6 +27,7 @@ import results.Execution;
 import results.Experiment;
 import results.FunResults;
 import results.InfoResult;
+import arquitetura.io.ReaderConfig;
 import database.Database;
 import database.Result;
 import exceptions.MissingConfigurationException;
@@ -41,6 +43,7 @@ public class NSGAII_OPLA_FeatMut {
     public static int maxEvaluations;
     public static double mutationProbability;
     public static double crossoverProbability;
+    public String dirToSaveOutput; //Diretório que sera criado dentro do diretorio configurado no arquivo de configuracao
 
     private NSGAIIConfig configs;
 
@@ -114,6 +117,7 @@ public class NSGAII_OPLA_FeatMut {
 	    String PLAName = getPlaName(pla);
 
 	    Experiment experiement = mp.createExperiementOnDb(PLAName, "NSGAII");
+	    setDirToSaveOutput(experiement.getId());
 	    result.setPlaName(PLAName);
 
 	    long time[] = new long[runsNumber];
@@ -150,8 +154,8 @@ public class NSGAII_OPLA_FeatMut {
 		} catch (SQLException e) {
 		    e.printStackTrace();
 		}
-
-		resultFront.saveVariablesToFile("VAR_" + runs + "_");
+		
+		resultFront.saveVariablesToFile(this.dirToSaveOutput+"VAR_" + runs + "_");
 		
 		// armazena as solucoes de todas runs
 		todasRuns = todasRuns.union(resultFront);
@@ -179,7 +183,7 @@ public class NSGAII_OPLA_FeatMut {
 	    mp.saveInfoAll(infoResults);
 	    infoResults = null;
 
-	    todasRuns.saveVariablesToFile("VAR_All_"); // Arquitetura
+	    todasRuns.saveVariablesToFile(this.dirToSaveOutput+"VAR_All_"); // Arquitetura
 						       // propriamente dita
 
 	    AllMetrics allMetrics = result.getMetrics(todasRuns.getSolutionSet(), null, experiement);
@@ -222,5 +226,13 @@ public class NSGAII_OPLA_FeatMut {
 	int endIndex = pla.length() - 4;
 	return pla.substring(beginIndex, endIndex);
     }
+
+    private void setDirToSaveOutput(String dirToSaveOutput){
+	String dir = ReaderConfig.getDirExportTarget()+ dirToSaveOutput+System.getProperty("file.separator");
+	File newDir = new File(dir);
+	if(!newDir.exists())
+		newDir.mkdirs();
+        this.dirToSaveOutput = dirToSaveOutput+System.getProperty("file.separator");
+    }   
 
 }

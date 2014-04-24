@@ -3,6 +3,7 @@ package algorithms;
 import java.util.Arrays;
 import java.util.List;
 
+import arquitetura.io.ReaderConfig;
 import jmetal.experiments.FeatureMutationOperators;
 import jmetal.experiments.Metrics;
 import jmetal.experiments.NSGAIIConfig;
@@ -22,6 +23,8 @@ public class MainTestNSGAII {
 
     public static void main(String args[]) {
 	
+	ReaderConfig.load();
+	
 	//Arquitetura(s) de entrada
 	String plas = "/Users/elf/mestrado/sourcesMestrado/arquitetura/src/test/java/resources/agmfinal/agm.uml";
 
@@ -35,13 +38,14 @@ public class MainTestNSGAII {
 	
 	//Intancia a classe de configuracoes
 	NSGAIIConfig configs = new NSGAIIConfig();
+	
 
 	// Seta os parametros desejados
 	configs.setMutationOperators(operators);
 	configs.setPlas(plas);
-	configs.setNumberOfRuns(30);
+	configs.setNumberOfRuns(5);
 	configs.setPopulationSize(10);
-	configs.setMaxEvaluations(1000);
+	configs.setMaxEvaluations(100);
 	configs.disableCrossover();
 	configs.setMutationProbability(0.9);
 	
