@@ -3,6 +3,7 @@ package algorithms;
 import java.util.Arrays;
 import java.util.List;
 
+import arquitetura.io.ReaderConfig;
 import jmetal.experiments.FeatureMutationOperators;
 import jmetal.experiments.Metrics;
 import jmetal.experiments.OPLAConfigs;
@@ -12,6 +13,8 @@ import jmetal.experiments.PaesConfigs;
 public class MainTestSpea2 {
     
     public static void main(String args[]) {
+	
+	ReaderConfig.load();
 	
    	//Arquitetura(s) de entrada
    	String plas = "/Users/elf/mestrado/sourcesMestrado/arquitetura/src/test/java/resources/agmfinal/agm.uml";
@@ -30,15 +33,15 @@ public class MainTestSpea2 {
    	// Seta os parametros desejados
    	configs.setMutationOperators(operators);
    	configs.setPlas(plas);
-   	configs.setNumberOfRuns(30);
+   	configs.setNumberOfRuns(3);
    	//configs.setPopulationSize(10); // somente no nsgaii, migrar para classe concreta
-   	configs.setMaxEvaluations(1000);
+   	configs.setMaxEvaluations(100);
    	configs.disableCrossover();
    	configs.setMutationProbability(0.8);
    	configs.setArchiveSize(100);
    	
    	//Configura onde o db esta localizado
-   	configs.setPathToDb("/Users/elf/Desktop/opla_test.db");
+   	configs.setPathToDb("/Users/elf/oplatool/db/oplatool.db");
    	
    	//Instancia a classe de configuracao da OPLA.java
    	OPLAConfigs oplaConfig = new OPLAConfigs();

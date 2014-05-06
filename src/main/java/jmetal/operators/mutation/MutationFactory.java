@@ -49,8 +49,7 @@ public class MutationFactory {
 			Configuration.logger_.severe("Operator '" + name + "' not found ");
 			Class<String> cls = java.lang.String.class;
 			String name2 = cls.getName();
-			throw new JMException("Exception in " + name2
-					+ ".getMutationOperator()");
+			throw new JMException("Exception in " + name2 + ".getMutationOperator()");
 		}
 	} // getMutationOperator
 } // MutationFactory

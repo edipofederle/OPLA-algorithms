@@ -3,7 +3,7 @@
   <modelVersion>4.0.0</modelVersion>
   <groupId>OPLA-algoritms</groupId>
   <artifactId>OPLA-algoritms</artifactId>
-  <version>0.0.1-SNAPSHOT</version>
+  <version>0.0.1</version>
   <build>
     <plugins>
       <plugin>
@@ -36,6 +36,12 @@
     </plugins>
   </build>
   <dependencies>
+    <dependency>
+      <groupId>org.apache.commons</groupId>
+      <artifactId>commons-io</artifactId>
+      <version>1.3.2</version>
+      <scope>compile</scope>
+    </dependency>
     <dependency>
       <groupId>org.powermock</groupId>
       <artifactId>powermock-api-mockito</artifactId>

@@ -43,20 +43,18 @@ public class MainTestNSGAII {
 	// Seta os parametros desejados
 	configs.setMutationOperators(operators);
 	configs.setPlas(plas);
-	configs.setNumberOfRuns(5);
+	configs.setNumberOfRuns(4);
 	configs.setPopulationSize(10);
 	configs.setMaxEvaluations(100);
 	configs.disableCrossover();
 	configs.setMutationProbability(0.9);
 	
 	//Configura onde o db esta localizado
-	configs.setPathToDb("/Users/elf/Desktop/opla_test.db");
+	configs.setPathToDb("/Users/elf/oplatool/db/oplatool.db");
 	
 	//Instancia a classe de configuracao da OPLA.java
 	OPLAConfigs oplaConfig = new OPLAConfigs();
 	
-	//Numero de objetivos
-	oplaConfig.setNumberOfObjectives(4);
 	
 	//Quais metricas deseja-se utilizar
 	List<String> selectedMetrics = Arrays.asList(
@@ -64,7 +62,10 @@ public class MainTestNSGAII {
 		Metrics.CONVENTIONAL.getName(),
 		Metrics.PLA_EXTENSIBILIY.getName(),
 		Metrics.FEATURE_DRIVEN.getName());
+	
 	oplaConfig.setSelectedMetrics(selectedMetrics);
+	//Numero de objetivos
+	oplaConfig.setNumberOfObjectives(selectedMetrics.size());
 
 	//Add as confs de OPLA na classe de configuracoes gerais.
 	configs.setOplaConfigs(oplaConfig);

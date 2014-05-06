@@ -1,8 +1,11 @@
 package persistence;
 
 import java.sql.SQLException;
+import java.sql.Statement;
 import java.util.List;
 
+import database.Database;
+import exceptions.MissingConfigurationException;
 import metrics.AllMetrics;
 import metrics.Conventional;
 import metrics.Elegance;
@@ -12,6 +15,7 @@ import results.Execution;
 import results.Experiment;
 import results.FunResults;
 import results.InfoResult;
+import utils.Id;
 
 public class MetricsPersistence {
 
@@ -45,7 +49,7 @@ public class MetricsPersistence {
 		funsPersistence = null;
 	}
 
-	public Experiment createExperiementOnDb(String PLAName, String description) {
+	public Experiment createExperimentOnDb(String PLAName, String description) {
 		Experiment experiement = null;
 		try {
 			experiement = new Experiment(PLAName, description);
@@ -107,6 +111,46 @@ public class MetricsPersistence {
 		}
 		elegances = null;
 	}
+
+
+	public void saveObjectivesNames(List<String> selectedMetrics, String experimentId) {
+	    
+	    
+	    String names = getNames(selectedMetrics);
+	    
+	    StringBuilder query = new StringBuilder();
+	    query.append("insert into map_objectives_names (id, names, experiment_id) values(");
+	    query.append(Id.generateUniqueId());
+	    query.append(",");
+	    query.append("'");
+	    query.append(names);
+	    query.append("'");
+	    query.append(",");
+	    query.append(experimentId);
+	    query.append(")");
+	    
+	    try {
+		Statement statement = Database.getConnection().createStatement();
+		statement.executeUpdate(query.toString());
+		statement.close();
+	    } catch (SQLException | ClassNotFoundException | MissingConfigurationException e) {
+		e.printStackTrace();
+	    }
+	    
+	}
+
+	private String getNames(List<String> selectedMetrics) {
+	    StringBuilder names = new StringBuilder();
+	    for(String name : selectedMetrics){
+		names.append(name);
+		names.append(" ");
+	    }
+	    
+	    return names.toString().trim();
+	}
+
+
+	
 	
 	
 	

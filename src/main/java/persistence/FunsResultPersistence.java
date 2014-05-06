@@ -32,7 +32,7 @@ public class FunsResultPersistence {
     	if(funs.getExecution() != null)
     		executionId = funs.getExecution().getId();
     	
-       query.append("insert into objectives (id, execution_id, objectives, is_all, experiement_id) values (");
+       query.append("insert into objectives (id, execution_id, objectives, is_all, experiement_id, solution_name) values (");
        query.append(funs.getId());
        query.append(",");
        query.append(executionId);
@@ -42,6 +42,8 @@ public class FunsResultPersistence {
        query.append(funs.getIsAll());
        query.append(",");
        query.append(funs.getExperiement().getId());
+       query.append(",");
+       query.append(funs.getSolution_name());
        query.append(")"); 
        Statement statement = connection.createStatement();
        

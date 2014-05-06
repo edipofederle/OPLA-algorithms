@@ -8,6 +8,7 @@ import java.sql.SQLException;
 import java.util.HashMap;
 import java.util.List;
 
+import arquitetura.io.ReaderConfig;
 import metrics.AllMetrics;
 import persistence.AllMetricsPersistenceDependency;
 import persistence.ExecutionPersistence;
@@ -39,9 +40,10 @@ public class PAES_OPLA_FeatMut {
     public static int populationSize;
     public static int maxEvaluations;
     public static double mutationProbability;
-    
+    public String dirToSaveOutput; //Diretório que sera criado dentro do diretorio configurado no arquivo de configuracao
     
     private PaesConfigs configs;
+    private String experiementId;
 
     public PAES_OPLA_FeatMut(PaesConfigs config) {
 	this.configs = config;
@@ -114,7 +116,8 @@ public class PAES_OPLA_FeatMut {
 
 	    String PLAName = getPlaName(pla);
 	    
-	    Experiment experiement = mp.createExperiementOnDb(PLAName, "PAES");
+	    Experiment experiement = mp.createExperimentOnDb(PLAName, "PAES");
+	    
 	    result.setPlaName(PLAName);
 	    
 	    long time[] = new long[runsNumber];
@@ -124,6 +127,7 @@ public class PAES_OPLA_FeatMut {
 		// Cria uma execução. Cada execução está ligada a um
 		// experiemento.
 		Execution execution = new Execution(experiement);
+		setDirToSaveOutput(experiement.getId(), execution.getId());
 		
 		// Execute the Algorithm
 		long initTime = System.currentTimeMillis();
@@ -152,23 +156,38 @@ public class PAES_OPLA_FeatMut {
 		    e.printStackTrace();
 		}
 		
-		resultFront.saveVariablesToFile("VAR_" + runs + "_");
+		resultFront.saveVariablesToFile("VAR_" + runs + "_", funResults);
 		
 		// armazena as solucoes de todas runs
 		todasRuns = todasRuns.union(resultFront);
+		
+		Util.copyFolder(experiement.getId(), execution.getId());
+		Util.moveAllFilesToExecutionDirectory(experiementId, execution.getId());
 
 	    }
-
-	    todasRuns.printTimeToFile(directory + "/TIME_" + PLAName, runsNumber, time, pla);
 
 	    todasRuns = problem.removeDominadas(todasRuns);
 	    todasRuns = problem.removeRepetidas(todasRuns);
 
 	    System.out.println("------    All Runs - Non-dominated solutions --------");
-	    todasRuns.printObjectivesToFile(directory + "/FUN_All_" + PLAName + ".txt");
-	    todasRuns.printInformationToFile(directory + "/INFO_All_" + PLAName + ".txt");
-	    todasRuns.saveVariablesToFile("VAR_All_");
+	    
+	    List<FunResults> funResults = result.getObjectives(todasRuns.getSolutionSet(), null, experiement);
+	    mp.saveFunAll(funResults);
+	    
+	    
+	    List<InfoResult> infoResults = result.getInformations(todasRuns.getSolutionSet(), null, experiement);
+	    mp.saveInfoAll(infoResults);
+	    
+	    setDirToSaveOutput(experiement.getId(), null);
+	    todasRuns.saveVariablesToFile("VAR_All_", funResults);
+	    
+	    infoResults = null;
+	    funResults = null;
+	    
+	    Util.moveAllFilesToExecutionDirectory(experiementId, null);
 	}
+	
+	Util.moveResourceToExperimentFolder(this.experiementId);
     
     }
 
@@ -204,6 +223,21 @@ public class PAES_OPLA_FeatMut {
 	int endIndex = pla.length() - 4;
 	return pla.substring(beginIndex, endIndex);
     }
+    
+    private void setDirToSaveOutput(String experimentID, String executionID) {
+	this.experiementId = experimentID;
+	String dir;
+	if (executionID != null) {
+	    dir = ReaderConfig.getDirExportTarget() + experimentID + System.getProperty("file.separator") + executionID
+		    + System.getProperty("file.separator");
+	} else {
+	    dir = ReaderConfig.getDirExportTarget() + experimentID + System.getProperty("file.separator");
+	}
+	File newDir = new File(dir);
+	if (!newDir.exists())
+	    newDir.mkdirs();
+
+    }  
     
     
 }

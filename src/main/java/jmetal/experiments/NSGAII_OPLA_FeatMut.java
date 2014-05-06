@@ -43,9 +43,9 @@ public class NSGAII_OPLA_FeatMut {
     public static int maxEvaluations;
     public static double mutationProbability;
     public static double crossoverProbability;
-    public String dirToSaveOutput; //Diretório que sera criado dentro do diretorio configurado no arquivo de configuracao
 
     private NSGAIIConfig configs;
+    private String experiementId;
 
     public NSGAII_OPLA_FeatMut(NSGAIIConfig config) {
 	this.configs = config;
@@ -99,8 +99,8 @@ public class NSGAII_OPLA_FeatMut {
 
 	    parameters = new HashMap<String, Object>();
 	    parameters.put("probability", mutationProbability);
-	    mutation = MutationFactory
-		    .getMutationOperator("PLAFeatureMutation", parameters, this.configs.getMutationOperators());
+	    mutation = MutationFactory.getMutationOperator("PLAFeatureMutation", parameters,
+		    this.configs.getMutationOperators());
 
 	    // Selection Operator
 	    parameters = null;
@@ -116,8 +116,9 @@ public class NSGAII_OPLA_FeatMut {
 
 	    String PLAName = getPlaName(pla);
 
-	    Experiment experiement = mp.createExperiementOnDb(PLAName, "NSGAII");
-	    setDirToSaveOutput(experiement.getId());
+	    Experiment experiement = mp.createExperimentOnDb(PLAName, "NSGAII");
+	    mp.saveObjectivesNames(this.configs.getOplaConfigs().getSelectedMetrics(), experiement.getId());
+
 	    result.setPlaName(PLAName);
 
 	    long time[] = new long[runsNumber];
@@ -127,6 +128,7 @@ public class NSGAII_OPLA_FeatMut {
 		// Cria uma execução. Cada execução está ligada a um
 		// experiemento.
 		Execution execution = new Execution(experiement);
+		setDirToSaveOutput(experiement.getId(), execution.getId());
 
 		// Execute the Algorithm
 		long initTime = System.currentTimeMillis();
@@ -139,8 +141,10 @@ public class NSGAII_OPLA_FeatMut {
 
 		execution.setTime(estimatedTime);
 
-		List<FunResults> funResults = result.getObjectives(resultFront.getSolutionSet(), execution, experiement);
-		List<InfoResult> infoResults = result.getInformations(resultFront.getSolutionSet(), execution,experiement);
+		List<FunResults> funResults = result
+			.getObjectives(resultFront.getSolutionSet(), execution, experiement);
+		List<InfoResult> infoResults = result.getInformations(resultFront.getSolutionSet(), execution,
+			experiement);
 		AllMetrics allMetrics = result.getMetrics(resultFront.getSolutionSet(), execution, experiement);
 
 		execution.setFuns(funResults);
@@ -154,13 +158,16 @@ public class NSGAII_OPLA_FeatMut {
 		} catch (SQLException e) {
 		    e.printStackTrace();
 		}
-		
-		resultFront.saveVariablesToFile(this.dirToSaveOutput+"VAR_" + runs + "_");
-		
+
+		resultFront.saveVariablesToFile("VAR_" + runs + "_", funResults);
+
 		// armazena as solucoes de todas runs
 		todasRuns = todasRuns.union(resultFront);
 
 		allSolutions = allSolutions.union(resultFront);
+		
+		Util.copyFolder(experiement.getId(), execution.getId());
+		Util.moveAllFilesToExecutionDirectory(experiementId, execution.getId());
 
 	    }
 	    // Thelma - Dez2013 - duas proximas linhas
@@ -174,22 +181,26 @@ public class NSGAII_OPLA_FeatMut {
 	    todasRuns = problem.removeRepetidas(todasRuns);
 
 	    System.out.println("------ All Runs - Non-dominated solutions --------");
-
 	    List<FunResults> funResults = result.getObjectives(todasRuns.getSolutionSet(), null, experiement);
 	    mp.saveFunAll(funResults);
-	    funResults = null;
 
 	    List<InfoResult> infoResults = result.getInformations(todasRuns.getSolutionSet(), null, experiement);
 	    mp.saveInfoAll(infoResults);
-	    infoResults = null;
-
-	    todasRuns.saveVariablesToFile(this.dirToSaveOutput+"VAR_All_"); // Arquitetura
-						       // propriamente dita
 
 	    AllMetrics allMetrics = result.getMetrics(todasRuns.getSolutionSet(), null, experiement);
 	    mp.persisteMetrics(allMetrics);
 	    mp = null;
+	    setDirToSaveOutput(experiement.getId(), null);
+	    todasRuns.saveVariablesToFile("VAR_All_", funResults);
+	    infoResults = null;
+	    funResults = null;
+
+
+	    Util.moveAllFilesToExecutionDirectory(experiementId, null);
 	}
+
+	Util.moveResourceToExperimentFolder(this.experiementId);
+
     }
 
     private void logInforamtions(String context, String pla) {
@@ -227,12 +238,19 @@ public class NSGAII_OPLA_FeatMut {
 	return pla.substring(beginIndex, endIndex);
     }
 
-    private void setDirToSaveOutput(String dirToSaveOutput){
-	String dir = ReaderConfig.getDirExportTarget()+ dirToSaveOutput+System.getProperty("file.separator");
+    private void setDirToSaveOutput(String experimentID, String executionID) {
+	this.experiementId = experimentID;
+	String dir;
+	if (executionID != null) {
+	    dir = ReaderConfig.getDirExportTarget() + experimentID + System.getProperty("file.separator") + executionID
+		    + System.getProperty("file.separator");
+	} else {
+	    dir = ReaderConfig.getDirExportTarget() + experimentID + System.getProperty("file.separator");
+	}
 	File newDir = new File(dir);
-	if(!newDir.exists())
-		newDir.mkdirs();
-        this.dirToSaveOutput = dirToSaveOutput+System.getProperty("file.separator");
-    }   
+	if (!newDir.exists())
+	    newDir.mkdirs();
+
+    }
 
 }
