@@ -74,7 +74,7 @@ public class MainTestNSGAII {
 	NSGAII_OPLA_FeatMutInitializer nsgaii = new NSGAII_OPLA_FeatMutInitializer(configs);
 
 	//Executa
-	nsgaii.run();
+	nsgaii.run();	
 
     }
 

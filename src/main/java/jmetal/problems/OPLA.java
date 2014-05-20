@@ -71,8 +71,7 @@ public class OPLA extends Problem {
     public OPLA(String xmiFilePath, OPLAConfigs oplaConfig) throws Exception {
 
 	numberOfVariables_ = 1;
-	numberOfObjectives_ = oplaConfig.getNumberOfObjectives(); // Vai vir da
-								  // GUI
+	numberOfObjectives_ = oplaConfig.getNumberOfObjectives(); 
 	numberOfConstraints_ = 0;
 	problemName_ = "OPLA";
 	solutionType_ = new ArchitectureSolutionType(this);
@@ -83,8 +82,6 @@ public class OPLA extends Problem {
 
 	selectedMetrics = oplaConfig.getSelectedMetrics();
     }
-
-    // -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- --
 
     @Override
     public void evaluate(Solution solution) {

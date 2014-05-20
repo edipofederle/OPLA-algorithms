@@ -114,12 +114,12 @@ public class NSGAII_OPLA_FeatMut {
 	    if (this.configs.isLog())
 		logInforamtions(context, pla);
 
-	    String PLAName = getPlaName(pla);
+	    String plaName = getPlaName(pla);
 
-	    Experiment experiement = mp.createExperimentOnDb(PLAName, "NSGAII");
+	    Experiment experiement = mp.createExperimentOnDb(plaName, "NSGAII");
 	    mp.saveObjectivesNames(this.configs.getOplaConfigs().getSelectedMetrics(), experiement.getId());
 
-	    result.setPlaName(PLAName);
+	    result.setPlaName(plaName);
 
 	    long time[] = new long[runsNumber];
 
@@ -170,12 +170,8 @@ public class NSGAII_OPLA_FeatMut {
 		Util.moveAllFilesToExecutionDirectory(experiementId, execution.getId());
 
 	    }
-	    // Thelma - Dez2013 - duas proximas linhas
-	    // TODO Hypervolume vai continuar no arquivo TXT. Ver local onde
-	    // salvar.
-	    // String moea = "NSGAII-M";
-	    // allSolutions.printObjectivesToFile(directory + "/Hypervolume/"+
-	    // NameOfPLA + "/" + NameOfPLA + "_HV_" + moea + ".txt");
+	    
+	    saveHypervolume(experiement.getId(), allSolutions, plaName);
 
 	    todasRuns = problem.removeDominadas(todasRuns);
 	    todasRuns = problem.removeRepetidas(todasRuns);
@@ -250,7 +246,16 @@ public class NSGAII_OPLA_FeatMut {
 	File newDir = new File(dir);
 	if (!newDir.exists())
 	    newDir.mkdirs();
+    }
+    
+    private void saveHypervolume(String experimentID, SolutionSet allSolutions, String plaName) {
+	String dir = ReaderConfig.getDirExportTarget() + experimentID + "/Hypervolume/";
+	File newDir = new File(dir);
+	if (!newDir.exists())
+	    newDir.mkdirs();
 
+	 String moea = "NSGAII-M";
+	 allSolutions.printObjectivesToFile(dir + plaName + "/" + plaName + "_HV_" + moea + ".txt");
     }
 
 }
