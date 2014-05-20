@@ -41,7 +41,7 @@ public class ExecutaIndicadores2Objetives {
 			    e.printStackTrace();
 			}
 
-			//ÉDIPO NOTE:  
+			//ÉDIPO NOTE:  De onde vem arquivo AllSolutions?
 			// le o conjunto com todas as solucoes encontradas por todos os algoritmos
 			SolutionSet ss = mu.readNonDominatedSolutionSet("experiment/" + abordagem + "/" + "LPS-BET" + "/" + software + "_AllSolutions.txt");
 			
