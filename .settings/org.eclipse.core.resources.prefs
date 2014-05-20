@@ -1,4 +1,5 @@
 eclipse.preferences.version=1
+encoding//src/main/java/indicadores/ExecutaIndicadores2Objetives.java=UTF-8
 encoding//src/main/java/jmetal/experiments/NSGAII_Crossover.java=UTF-8
 encoding//src/main/java/jmetal/experiments/NSGAII_OPLA_FeatMut.java=UTF-8
 encoding//src/main/java/jmetal/experiments/PAES_OPLA_FeatMut.java=UTF-8

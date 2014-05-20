@@ -41,8 +41,10 @@ public class ExecutaIndicadores2Objetives {
 			    e.printStackTrace();
 			}
 
+			//ÉDIPO NOTE:  
 			// le o conjunto com todas as solucoes encontradas por todos os algoritmos
 			SolutionSet ss = mu.readNonDominatedSolutionSet("experiment/" + abordagem + "/" + "LPS-BET" + "/" + software + "_AllSolutions.txt");
+			
 			// remove as solucoes dominadas e repeditas formando o conjunto de pareto rel
 			ss = removeDominadas(ss);
 			// escreve o conjunto de pareto real em um arquivo
