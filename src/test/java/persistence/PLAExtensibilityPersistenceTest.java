@@ -32,14 +32,14 @@ public class PLAExtensibilityPersistenceTest {
         when(exec.getId()).thenReturn("10");
         when(connection.createStatement()).thenReturn(st);
         
-        PLAExtensibility plaext = new PLAExtensibility(exec,exp);
+        PLAExtensibility plaext = new PLAExtensibility("1", exec,exp);
         
         PLAExtensibilityPersistence persistence = new PLAExtensibilityPersistence(connection);
         
         plaext.setPlaExtensibility(10d);
         
         persistence.save(plaext);
-        String query = "insert into PLAExtensibilityMetrics (plaExtensibility, execution_id, is_all, experiement_id) values (10.0,10,0,null)";
+        String query = "insert into PLAExtensibilityMetrics (plaExtensibility, execution_id, is_all, experiement_id, id_solution) values (10.0,10,0,null,1)";
         
         verify(st, times(1)).executeUpdate(query);
     }

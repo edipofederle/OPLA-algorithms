@@ -5,7 +5,7 @@ public enum Metrics {
 	CONVENTIONAL("conventional"),
 	ELEGANCE("elegance"),
 	FEATURE_DRIVEN("featureDriven"),
-	PLA_EXTENSIBILIY("PLAExtensibiliy");
+	PLA_EXTENSIBILIY("PLAExtensibility");
 	
 	private String name;
 	

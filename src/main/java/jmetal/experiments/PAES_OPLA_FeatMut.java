@@ -142,7 +142,7 @@ public class PAES_OPLA_FeatMut {
 
 		List<FunResults> funResults = result.getObjectives(resultFront.getSolutionSet(), execution, experiement);
 		List<InfoResult> infoResults = result.getInformations(resultFront.getSolutionSet(), execution,experiement);
-		AllMetrics allMetrics = result.getMetrics(resultFront.getSolutionSet(), execution, experiement);
+		AllMetrics allMetrics = result.getMetrics(funResults, resultFront.getSolutionSet(), execution, experiement);
 
 		execution.setFuns(funResults);
 		execution.setInfos(infoResults);

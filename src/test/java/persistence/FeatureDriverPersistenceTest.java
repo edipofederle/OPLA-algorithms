@@ -33,7 +33,7 @@ public class FeatureDriverPersistenceTest {
         
         FeatureDrivenPersistence persistence = new FeatureDrivenPersistence(connection);
         
-        FeatureDriven fd = new FeatureDriven(exec, exp);
+        FeatureDriven fd = new FeatureDriven("1", exec, exp);
         
         fd.setCdaClass(10d);
         fd.setCdac(1d);
@@ -48,7 +48,6 @@ public class FeatureDriverPersistenceTest {
         
         String query = buildQuery(fd);
         
-              
         persistence.save(fd);
         
         verify(st).executeUpdate(query);
@@ -57,7 +56,7 @@ public class FeatureDriverPersistenceTest {
     
     private String buildQuery(FeatureDriven fd){
         StringBuilder query = new StringBuilder();
-        query.append("insert into FeatureDrivenMetrics (msiAggregation, cdac, cdai, cdao, cibc, iibc, oobc, lcc, lccClass, cdaClass, cibClass, execution_id, is_all, experiement_id) values (");
+        query.append("insert into FeatureDrivenMetrics (msiAggregation, cdac, cdai, cdao, cibc, iibc, oobc, lcc, lccClass, cdaClass, cibClass, execution_id, is_all, experiement_id, id_solution) values (");
         query.append(fd.getMsiAggregation());
         query.append(",");
         query.append(fd.getCdac());
@@ -85,6 +84,8 @@ public class FeatureDriverPersistenceTest {
         query.append("0");
         query.append(",");
         query.append("null");
+        query.append(",");
+        query.append("1");
         query.append(")");
         
         return query.toString();

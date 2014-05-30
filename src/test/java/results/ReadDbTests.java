@@ -11,7 +11,7 @@ public class ReadDbTests {
 	
 	@Before
 	public void setUp(){
-		String PATH_TO_DB = "src/test/resources/opla_test.db";
+		String PATH_TO_DB = "/Users/elf/oplatool/db/oplatool.db";
 		Database.setPathToDB(PATH_TO_DB);
 	}
 	

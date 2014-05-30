@@ -125,8 +125,7 @@ public class NSGAII_OPLA_FeatMut {
 
 	    for (int runs = 0; runs < runsNumber; runs++) {
 
-		// Cria uma execução. Cada execução está ligada a um
-		// experiemento.
+		// Cria uma execução. Cada execução está ligada a um experiemento.
 		Execution execution = new Execution(experiement);
 		setDirToSaveOutput(experiement.getId(), execution.getId());
 
@@ -141,11 +140,9 @@ public class NSGAII_OPLA_FeatMut {
 
 		execution.setTime(estimatedTime);
 
-		List<FunResults> funResults = result
-			.getObjectives(resultFront.getSolutionSet(), execution, experiement);
-		List<InfoResult> infoResults = result.getInformations(resultFront.getSolutionSet(), execution,
-			experiement);
-		AllMetrics allMetrics = result.getMetrics(resultFront.getSolutionSet(), execution, experiement);
+		List<FunResults> funResults = result.getObjectives(resultFront.getSolutionSet(), execution, experiement);
+		List<InfoResult> infoResults = result.getInformations(resultFront.getSolutionSet(), execution, experiement);
+		AllMetrics allMetrics = result.getMetrics(funResults, resultFront.getSolutionSet(), execution, experiement);
 
 		execution.setFuns(funResults);
 		execution.setInfos(infoResults);
@@ -183,7 +180,7 @@ public class NSGAII_OPLA_FeatMut {
 	    List<InfoResult> infoResults = result.getInformations(todasRuns.getSolutionSet(), null, experiement);
 	    mp.saveInfoAll(infoResults);
 
-	    AllMetrics allMetrics = result.getMetrics(todasRuns.getSolutionSet(), null, experiement);
+	    AllMetrics allMetrics = result.getMetrics(funResults, todasRuns.getSolutionSet(), null, experiement);
 	    mp.persisteMetrics(allMetrics);
 	    mp = null;
 	    setDirToSaveOutput(experiement.getId(), null);

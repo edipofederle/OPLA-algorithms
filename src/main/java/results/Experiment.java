@@ -203,7 +203,8 @@ public class Experiment {
 	List<PLAExtensibility> plaExtensibilities = new ArrayList<PLAExtensibility>();
 
 	while (resultPLAExt.next()) {
-	    PLAExtensibility plaExt = new PLAExtensibility(exec, exp);
+	    String idSolution = resultPLAExt.getString("id_solution");
+	    PLAExtensibility plaExt = new PLAExtensibility(idSolution, exec, exp);
 	    plaExt.setPlaExtensibility(getResultParseDouble(resultPLAExt, "plaExtensibility"));
 	    plaExt.setIsAll(getResultParseInteger(resultPLAExt, "is_all"));
 
@@ -229,7 +230,7 @@ public class Experiment {
 	List<FeatureDriven> featuresDriven = new ArrayList<FeatureDriven>();
 
 	while (resultFeatureDriven.next()) {
-	    FeatureDriven fd = new FeatureDriven(exec, exp);
+	    FeatureDriven fd = new FeatureDriven(resultFeatureDriven.getString("id_solution"), exec, exp);
 	    fd.setCdac(getResultParseDouble(resultFeatureDriven, "cdac"));
 	    fd.setCdai(getResultParseDouble(resultFeatureDriven, "cdai"));
 	    fd.setCdao(getResultParseDouble(resultFeatureDriven, "cdao"));
@@ -264,13 +265,12 @@ public class Experiment {
 	List<Elegance> elegances = new ArrayList<Elegance>();
 
 	while (resultElegance.next()) {
-	    Elegance elegance = new Elegance(exec, exp);
+	    Elegance elegance = new Elegance(resultElegance.getString("id_solution"), exec, exp);
 	    elegance.setAtmr(getResultParseDouble(resultElegance, "atmr"));
 	    elegance.setEc(getResultParseDouble(resultElegance, "ec"));
 	    elegance.setNac(getResultParseDouble(resultElegance, "nac"));
 
 	    elegances.add(elegance);
-
 	}
 
 	return elegances;
@@ -288,11 +288,11 @@ public class Experiment {
 	query.append(")");
 
 	ResultSet resultSetConventional = conventionalStatement.executeQuery(query.toString());
-
 	List<Conventional> conventionals = new ArrayList<Conventional>();
 
 	while (resultSetConventional.next()) {
-	    Conventional conventional = new Conventional(execution, experiement);
+	    Conventional conventional = new Conventional(resultSetConventional.getString("id_solution"), execution,
+		    experiement);
 	    conventional.setChoesion(getResultParseDouble(resultSetConventional, "choesion"));
 	    conventional.setMeanDepComps(getResultParseDouble(resultSetConventional, "meanDepComps"));
 	    conventional.setMeanNumOps(getResultParseDouble(resultSetConventional, "meanNumOps"));
@@ -369,9 +369,9 @@ public class Experiment {
 	Statement funStatement = connection.createStatement();
 
 	StringBuilder query = new StringBuilder();
-	query.append("select * from objectives where execution_id=");
+	query.append("select * from objectives where execution_id =");
 	query.append(exec.getId());
-	query.append(" OR (execution_id='' AND experiement_id=");
+	query.append(" OR (execution_id='' AND experiement_id =");
 	query.append(exp.getId());
 	query.append(")");
 
@@ -387,8 +387,7 @@ public class Experiment {
 
 	    funs.add(fun);
 	}
-
 	return funs;
     }
-
+    
 }

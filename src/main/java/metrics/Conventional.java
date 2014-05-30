@@ -9,7 +9,7 @@ import results.Execution;
 import results.Experiment;
 
 /**
- *
+ * 
  * @author elf
  */
 public class Conventional {
@@ -22,89 +22,95 @@ public class Conventional {
     private double sumDepIn;
     private double sumDepOut;
     private Integer isAll;
-    
+    private String idSolution;
+
     private Experiment experiement;
     private final Execution execution;
 
-    public Conventional(Execution execution, Experiment experiement) {
-        this.execution = execution;
-        this.experiement = experiement;
+    public Conventional(String idSolution, Execution execution, Experiment experiement) {
+	this.execution = execution;
+	this.experiement = experiement;
+	this.idSolution = idSolution;
     }
 
     public double getMacAggregation() {
-        return meanNumOps + meanDepComps  + sumClassesDepIn + sumClassesDepOut + sumDepIn + sumDepOut + (1 / choesion);
+	return meanNumOps + meanDepComps + sumClassesDepIn + sumClassesDepOut + sumDepIn + sumDepOut + (1 / choesion);
     }
 
     public double getChoesion() {
-        return choesion;
+	return choesion;
     }
 
     public void setChoesion(double choesion) {
-        this.choesion = choesion;
+	this.choesion = choesion;
     }
 
     public double getMeanDepComps() {
-        return meanDepComps;
+	return meanDepComps;
     }
 
     public void setMeanDepComps(double meanDepComps) {
-        this.meanDepComps = meanDepComps;
+	this.meanDepComps = meanDepComps;
     }
 
     public double getMeanNumOps() {
-        return meanNumOps;
+	return meanNumOps;
     }
 
     public void setMeanNumOps(double meanNumOps) {
-        this.meanNumOps = meanNumOps;
+	this.meanNumOps = meanNumOps;
     }
 
     public double getSumClassesDepIn() {
-        return sumClassesDepIn;
+	return sumClassesDepIn;
     }
 
     public void setSumClassesDepIn(double sumClassesDepIn) {
-        this.sumClassesDepIn = sumClassesDepIn;
+	this.sumClassesDepIn = sumClassesDepIn;
     }
 
     public double getSumClassesDepOut() {
-        return sumClassesDepOut;
+	return sumClassesDepOut;
     }
 
     public void setSumClassesDepOut(double sumClassesDepOut) {
-        this.sumClassesDepOut = sumClassesDepOut;
+	this.sumClassesDepOut = sumClassesDepOut;
     }
 
     public double getSumDepIn() {
-        return sumDepIn;
+	return sumDepIn;
     }
 
     public void setSumDepIn(double sumDepIn) {
-        this.sumDepIn = sumDepIn;
+	this.sumDepIn = sumDepIn;
     }
 
     public double getSumDepOut() {
-        return sumDepOut;
+	return sumDepOut;
     }
 
     public void setSumDepOut(double sumDepOut) {
-        this.sumDepOut = sumDepOut;
-    }
-    
-    public Execution getExecution(){
-    	return this.execution;
+	this.sumDepOut = sumDepOut;
     }
 
-	public Experiment getExperiement() {
-		return experiement;
-	}
+    public Execution getExecution() {
+	return this.execution;
+    }
 
-	public Integer getIsAll() {
-		return isAll;
-	}
+    public Experiment getExperiement() {
+	return experiement;
+    }
 
-	public void setIsAll(Integer isAll) {
-		this.isAll = isAll;
-	}
-	
+    public Integer getIsAll() {
+	return isAll;
+    }
+
+    public void setIsAll(Integer isAll) {
+	this.isAll = isAll;
+    }
+
+    public String getIdSolution() {
+	return this.idSolution;
+    }
+
 }

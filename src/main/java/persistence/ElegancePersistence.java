@@ -26,7 +26,7 @@ public class ElegancePersistence {
     		executionID = eleganceMetric.getExecution().getId();
     	
     	StringBuilder query = new StringBuilder();
-    	query.append("insert into EleganceMetrics (nac,atmr,ec,elegance,execution_id, experiement_id, is_all) values (");
+    	query.append("insert into EleganceMetrics (nac,atmr,ec,elegance,execution_id, experiement_id, is_all, id_solution) values (");
     	query.append(eleganceMetric.getNac());
     	query.append(",");
     	query.append(eleganceMetric.getAtmr());
@@ -43,6 +43,8 @@ public class ElegancePersistence {
 			query.append("1");
 		else
 			query.append("0");
+	query.append(",");
+	query.append(eleganceMetric.getIdSolution());
     	query.append(")");
     	
         try {

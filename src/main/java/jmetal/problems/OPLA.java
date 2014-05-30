@@ -103,7 +103,7 @@ public class OPLA extends Problem {
 		fitnesses.add(new jmetal.experiments.Fitness(evaluateMSIFitness((Architecture) solution
 			.getDecisionVariables()[0])));
 		break;
-	    case "PLAExtensibiliy":
+	    case "PLAExtensibility":
 		fitnesses.add(new jmetal.experiments.Fitness(evaluatePLAExtensibility((Architecture) solution
 			.getDecisionVariables()[0])));
 		break;
@@ -115,33 +115,6 @@ public class OPLA extends Problem {
 	for (int i = 0; i < fitnesses.size(); i++) {
 	    solution.setObjective(i, fitnesses.get(i).getValue());
 	}
-
-	// //TODO GUI Número de fitness é dinamico conforme o valor de
-	// numberOfObjectives_
-	// //4 objetivos: Conventional, Elegance, FeatureDriven e
-	// PLAExtensibility
-	// double fitness0 = 0.0;
-	// double fitness1 = 0.0;
-	// // double fitness2 = 0.0;
-	// // double fitness3 = 0.0;
-	//
-	// // DesignOutset
-	// fitness0 = evaluateMSIFitnessDesignOutset((Architecture)
-	// solution.getDecisionVariables()[0]); //nao
-	// // fitness0 = evaluateMSIFitness((Architecture) //TODO GUI Metrics
-	// // solution.getDecisionVariables()[0]);
-	// fitness1 = evaluateMACFitness((Architecture)
-	// solution.getDecisionVariables()[0]); //TODO GUI Metrics
-	// // fitness2 = evaluateElegance((Architecture) //TODO GUI Metrics
-	// // solution.getDecisionVariables()[0]);
-	// // fitness2 = evaluatePLAExtensibility((Architecture) //TODO GUI
-	// Metrics
-	// // solution.getDecisionVariables()[0]);
-	//
-	// solution.setObjective(0, fitness0);
-	// solution.setObjective(1, fitness1);
-	// // solution.setObjective(2, fitness2);
-	// // solution.setObjective(3, fitness3);
 
     }
 

@@ -10,15 +10,6 @@ import jmetal.experiments.NSGAIIConfig;
 import jmetal.experiments.NSGAII_OPLA_FeatMutInitializer;
 import jmetal.experiments.OPLAConfigs;
 
-/**
- * TODO - Verificação: se selecionar 2 objetivos nao deve deixar selecionar mais
- * de duas metricas (das 4) Ver com Thelma. E se a variável numberOfObjectives
- * for definida dinamicamente com base no número de métricas que o usuário
- * selecionar. ? ( exemplo, linha 48)
- * 
- * @author elf
- * 
- */
 public class MainTestNSGAII {
 
     public static void main(String args[]) {
