@@ -143,7 +143,9 @@ public class PAES_OPLA_FeatMut {
 		List<FunResults> funResults = result.getObjectives(resultFront.getSolutionSet(), execution, experiement);
 		List<InfoResult> infoResults = result.getInformations(resultFront.getSolutionSet(), execution,experiement);
 		AllMetrics allMetrics = result.getMetrics(funResults, resultFront.getSolutionSet(), execution, experiement);
-
+		
+		resultFront.saveVariablesToFile("VAR_" + runs + "_", funResults);
+		
 		execution.setFuns(funResults);
 		execution.setInfos(infoResults);
 		execution.setAllMetrics(allMetrics);
@@ -156,7 +158,6 @@ public class PAES_OPLA_FeatMut {
 		    e.printStackTrace();
 		}
 		
-		resultFront.saveVariablesToFile("VAR_" + runs + "_", funResults);
 		
 		// armazena as solucoes de todas runs
 		todasRuns = todasRuns.union(resultFront);
@@ -172,14 +173,14 @@ public class PAES_OPLA_FeatMut {
 	    System.out.println("------    All Runs - Non-dominated solutions --------");
 	    
 	    List<FunResults> funResults = result.getObjectives(todasRuns.getSolutionSet(), null, experiement);
+	    todasRuns.saveVariablesToFile("VAR_All_", funResults);
+	    
 	    mp.saveFunAll(funResults);
-	    
-	    
 	    List<InfoResult> infoResults = result.getInformations(todasRuns.getSolutionSet(), null, experiement);
 	    mp.saveInfoAll(infoResults);
 	    
 	    setDirToSaveOutput(experiement.getId(), null);
-	    todasRuns.saveVariablesToFile("VAR_All_", funResults);
+	    
 	    
 	    infoResults = null;
 	    funResults = null;

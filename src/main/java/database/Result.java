@@ -124,7 +124,6 @@ public class Result {
 		allMetrics.getPlaExtensibility().add(buildPLAExtensibilityMetrics(idSolution, execution, experiement, metrics, arch));
 		allMetrics.getConventional().add(buildConventionalMetrics(idSolution, execution, experiement, metrics, arch));
 		allMetrics.getFeatureDriven().add(buildFeatureDrivenMetrics(idSolution, execution, experiement, metrics, arch));
-
 	    }
 	}
 

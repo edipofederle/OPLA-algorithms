@@ -21,5 +21,5 @@ Your pom.xml already include bellow lines.
 	mvn install
 	
 ### Install local maven repo.
-	mvn install:install-file -Dfile=target/OPLA-algoritms-0.0.1.jar -DgroupId=ufpr.br -DartifactId=opla-algorithms -Dversion=0.1 -Dpackaging=jar
+	mvn install:install-file -Dfile=target/OPLA-core-0.0.1.jar -DgroupId=ufpr.br -DartifactId=opla-core -Dversion=0.1 -Dpackaging=jar
 

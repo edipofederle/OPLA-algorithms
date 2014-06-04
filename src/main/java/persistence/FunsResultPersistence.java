@@ -42,9 +42,9 @@ public class FunsResultPersistence {
        query.append(funs.getIsAll());
        query.append(",");
        query.append(funs.getExperiement().getId());
-       query.append(",");
+       query.append(",'");
        query.append(funs.getSolution_name());
-       query.append(")"); 
+       query.append("')"); 
        Statement statement = connection.createStatement();
        
        statement.executeUpdate(query.toString());
