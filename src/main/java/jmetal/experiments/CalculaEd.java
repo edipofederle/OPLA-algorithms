@@ -55,8 +55,13 @@ public class CalculaEd {
     public SolutionSet queryNonDominatedSolutinsFromExperiment(String experimentID) {
 	try {
 	    Statement statement = database.Database.getConnection().createStatement();
-	    ResultSet r = statement.executeQuery("SELECT objectives, solution_name FROM objectives WHERE experiement_id="
-		    + experimentID + " AND execution_ID =''");
+	    
+	    StringBuilder query = new StringBuilder();
+	    query.append("SELECT objectives, solution_name FROM objectives WHERE experiement_id=");
+	    query.append(experimentID);
+	    query.append(" AND execution_ID=''");
+	    
+	    ResultSet r = statement.executeQuery(query.toString());
 	    SolutionSet solutionSet = new NonDominatedSolutionList();
 
 	    while (r.next()) {

@@ -11,6 +11,7 @@ import java.util.List;
 import arquitetura.io.ReaderConfig;
 import metrics.AllMetrics;
 import persistence.AllMetricsPersistenceDependency;
+import persistence.DistanceEuclideanPersistence;
 import persistence.ExecutionPersistence;
 import persistence.MetricsPersistence;
 import results.Execution;
@@ -44,6 +45,7 @@ public class PAES_OPLA_FeatMut {
     
     private PaesConfigs configs;
     private String experiementId;
+    private int numberObjectives;
 
     public PAES_OPLA_FeatMut(PaesConfigs config) {
 	this.configs = config;
@@ -58,6 +60,7 @@ public class PAES_OPLA_FeatMut {
 	int archiveSize = this.configs.getArchiveSize(); //100;
 	int biSections = 5; // Nao precisa estar na GUI.
 	mutationProbability = this.configs.getMutationProbability();
+	this.numberObjectives = this.configs.getOplaConfigs().getNumberOfObjectives();
 	String context = "OPLA";
 
 	File directory = new File("experiment/OPLA/PAES/FeatureMutation" + "/");
@@ -117,6 +120,7 @@ public class PAES_OPLA_FeatMut {
 	    String PLAName = getPlaName(pla);
 	    
 	    Experiment experiement = mp.createExperimentOnDb(PLAName, "PAES");
+	    mp.saveObjectivesNames(this.configs.getOplaConfigs().getSelectedMetrics(), experiement.getId());
 	    
 	    result.setPlaName(PLAName);
 	    
@@ -180,6 +184,8 @@ public class PAES_OPLA_FeatMut {
 	    mp.saveInfoAll(infoResults);
 	    
 	    setDirToSaveOutput(experiement.getId(), null);
+	    CalculaEd c = new CalculaEd();
+	    DistanceEuclideanPersistence.save(c.calcula(this.experiementId, this.numberObjectives), this.experiementId);
 	    
 	    
 	    infoResults = null;
