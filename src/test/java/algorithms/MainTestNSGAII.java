@@ -34,7 +34,7 @@ public class MainTestNSGAII {
 	// Seta os parametros desejados
 	configs.setMutationOperators(operators);
 	configs.setPlas(plas);
-	configs.setNumberOfRuns(4);
+	configs.setNumberOfRuns(10);
 	configs.setPopulationSize(15);
 	configs.setMaxEvaluations(100);
 	configs.disableCrossover();

@@ -269,7 +269,7 @@ public class Experiment {
 	    elegance.setAtmr(getResultParseDouble(resultElegance, "atmr"));
 	    elegance.setEc(getResultParseDouble(resultElegance, "ec"));
 	    elegance.setNac(getResultParseDouble(resultElegance, "nac"));
-
+	    elegance.setIsAll(getResultParseInteger(resultElegance, "is_all"));
 	    elegances.add(elegance);
 	}
 

@@ -10,6 +10,7 @@ public class Elegance {
     private double ec;
     private final Execution execution;
     private Experiment experiement;
+    private Integer isAll;
     private String idSolution;
 
     public Elegance(String idSolution, Execution execution, Experiment experiement) {
@@ -56,5 +57,13 @@ public class Elegance {
 
     public String getIdSolution() {
 	return this.idSolution;
+    }
+
+    public Integer getIsAll() {
+	return isAll;
+    }
+
+    public void setIsAll(Integer isAll) {
+	this.isAll = isAll;
     }
 }
