@@ -58,7 +58,7 @@ public class PAES_OPLA_FeatMut {
 	int runsNumber = this.configs.getNumberOfRuns();
 	maxEvaluations = this.configs.getMaxEvaluation();
 	int archiveSize = this.configs.getArchiveSize(); //100;
-	int biSections = 5; // Nao precisa estar na GUI.
+	int biSections = 5; 
 	mutationProbability = this.configs.getMutationProbability();
 	this.numberObjectives = this.configs.getOplaConfigs().getNumberOfObjectives();
 	String context = "OPLA";

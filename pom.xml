@@ -52,6 +52,11 @@
 			<artifactId>opla-tool</artifactId>
 			<version>0.0.1</version>
 		</dependency>
+		<dependency>
+			<groupId>ufpr.br</groupId>
+			<artifactId>opla-patterns</artifactId>
+			<version>0.0.1</version>
+		</dependency>
 	</dependencies>
 
 	<build>

@@ -24,6 +24,8 @@ package jmetal.operators.mutation;
 import java.util.HashMap;
 import java.util.List;
 
+import br.ufpr.inf.opla.patterns.operator.impl.DesignPatternMutationOperator;
+import br.ufpr.inf.opla.patterns.strategies.designpatternselection.impl.CustomDesignPatternSelection;
 import jmetal.util.Configuration;
 import jmetal.util.JMException;
 
@@ -42,7 +44,10 @@ public class MutationFactory {
 	 * @throws JMException
 	 */
 	public static Mutation getMutationOperator(String name,	HashMap<String, Object> parameters, List<String> mutationOperators) throws JMException {
-
+	    	if( name.equals("DesignPatterns")){
+	    	    //vai ser selecionado um escopo aleatório e vao ser aplicados apenas o Strategy e Mediator (null = aleatorio)
+	    	    return new DesignPatternMutationOperator(parameters, null, new CustomDesignPatternSelection("strategy", "mediator"));
+	    	}
 		if (name.equalsIgnoreCase("PLAFeatureMutation"))
 			return new PLAFeatureMutation(parameters, mutationOperators);
 		else {

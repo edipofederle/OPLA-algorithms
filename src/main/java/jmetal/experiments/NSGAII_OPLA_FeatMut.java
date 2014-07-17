@@ -102,13 +102,12 @@ public class NSGAII_OPLA_FeatMut {
 
 	    parameters = new HashMap<String, Object>();
 	    parameters.put("probability", mutationProbability);
-	    mutation = MutationFactory.getMutationOperator("PLAFeatureMutation", parameters,
-		    this.configs.getMutationOperators());
+	    mutation = MutationFactory.getMutationOperator("PLAFeatureMutation", parameters,  this.configs.getMutationOperators());
 
 	    // Selection Operator
 	    parameters = null;
 	    selection = SelectionFactory.getSelectionOperator("BinaryTournament", parameters);
-
+	    
 	    // Add the operators to the algorithm
 	    algorithm.addOperator("crossover", crossover);
 	    algorithm.addOperator("mutation", mutation);

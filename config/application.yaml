@@ -1,0 +1,9 @@
+--- !DirTarget
+pathToTemplateModelsDirectory: /Users/elf/Desktop/templates/
+directoryToSaveModels: manipulation/
+directoryToExportModels: /Users/elf/Desktop/output/
+pathToProfile:  /Users/elf/NetBeansProjects/OPLA-Patterns/MicrowaveOvenSoftware/Papyrus/smarty.profile.uml
+pathToProfileConcern:  /Users/elf/NetBeansProjects/OPLA-Patterns/MicrowaveOvenSoftware/Papyrus/concerns.profile.uml
+pathToProfileRelationships:  /Users/elf/NetBeansProjects/OPLA-Patterns/MicrowaveOvenSoftware/Papyrus/relationships.profile.uml
+pathToProfilePatterns:  /Users/elf/NetBeansProjects/OPLA-Patterns/MicrowaveOvenSoftware/Papyrus/patterns.profile.uml
+

@@ -17,7 +17,7 @@ public class MainTestNSGAII {
 	ReaderConfig.load();
 	
 	//Arquitetura(s) de entrada
-	String plas = "/Users/elf/mestrado/sourcesMestrado/arquitetura/src/test/java/resources/agmfinal/agm.uml";
+	String plas = "/Users/elf/NetBeansProjects/OPLA-Patterns/MicrowaveOvenSoftware/Papyrus/MicrowaveOvenSoftware.uml";
 
 	//Lista de Operadores de mutação a serem utilizados
 	List<String> operators =  Arrays.asList(FeatureMutationOperators.ADD_CLASS_MUTATION.getOperatorName(),
@@ -34,9 +34,9 @@ public class MainTestNSGAII {
 	// Seta os parametros desejados
 	configs.setMutationOperators(operators);
 	configs.setPlas(plas);
-	configs.setNumberOfRuns(10);
-	configs.setPopulationSize(15);
-	configs.setMaxEvaluations(100);
+	configs.setNumberOfRuns(20);
+	configs.setPopulationSize(60);
+	configs.setMaxEvaluations(5000);
 	configs.disableCrossover();
 	configs.setMutationProbability(0.9);
 	

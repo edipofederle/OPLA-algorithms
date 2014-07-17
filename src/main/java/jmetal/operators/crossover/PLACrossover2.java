@@ -61,7 +61,7 @@ public class PLACrossover2 extends Crossover {
 		} 
 		crossoverProbability_ = (Double)getParameter("probability");
 		if (parents.length < 2){
-			Configuration.logger_.severe("PLACrossover.execute: operator needs two " +	"parents");
+			Configuration.logger_.severe("PLACrossover.execute: operator needs two parents");
 			java.lang.Class<String> cls = java.lang.String.class;
 			String name = cls.getName(); 
 			throw new JMException("Exception in " + name + ".execute()") ;      
