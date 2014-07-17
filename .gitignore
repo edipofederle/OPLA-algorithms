@@ -1,4 +1,9 @@
 .DS_Store
+.settings/org.eclipse.core.resources.prefs
+manipulation/
 target/
 experiment/
 /target
+PatternsApplication.log
+hs_err_pid18768.log
+
