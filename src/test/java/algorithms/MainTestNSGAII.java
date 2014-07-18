@@ -40,6 +40,9 @@ public class MainTestNSGAII {
 	configs.disableCrossover();
 	configs.setMutationProbability(0.9);
 	
+	// OPLA-Patterns Configurations
+	configs.setPatterns("mediator");
+	
 	//Configura onde o db esta localizado
 	configs.setPathToDb("/Users/elf/oplatool/db/oplatool.db");
 	

@@ -1,7 +1,13 @@
 package jmetal.experiments;
 
 import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Collections;
 import java.util.List;
+
+import org.apache.commons.lang.WordUtils;
+
+import br.ufpr.inf.opla.patterns.strategies.scopeselection.impl.ElementsWithSameDesignPatternSelection;
 
 public abstract class ExperimentCommomConfigs {
 
@@ -13,8 +19,10 @@ public abstract class ExperimentCommomConfigs {
     private double mutationProbability;
     private String plas;
     private OPLAConfigs oplaConfigs;
+    private String[] patterns; //OPLA-Patterns....
 
     private List<String> mutationOperators = new ArrayList<String>();
+    private ElementsWithSameDesignPatternSelection applyStrategy;
 
     public void activeLogs() {
 	log = true;
@@ -96,6 +104,41 @@ public abstract class ExperimentCommomConfigs {
 
     public void setOplaConfigs(OPLAConfigs oplaConfigs) {
 	this.oplaConfigs = oplaConfigs;
+    }
+    
+    public String[] getPatterns() {
+        return patterns;
+    }
+    
+    /**
+     * Set patterns to use.
+     * 
+     * This method will normalize patternsList to downcase and capitalized.
+     * 
+     * @param patternsList
+     */
+    public void setPatterns(String ... patternsList) {    
+	for (int i = 0; i < patternsList.length; i++)
+	    patternsList[i] = WordUtils.capitalize(patternsList[i].toLowerCase());
+        this.patterns = patternsList;
+        
+	if(Collections.disjoint(Arrays.asList(this.patterns), Arrays.asList("Strategy", "Bridge", "Mediator"))){
+	    throw new IllegalArgumentException("Invalid(s) Design Pattern(s). Valids are: Stragety, Bridge and Mediator");
+	}
+    }
+    
+    /**
+     * Set the strategy to apply Design Patterns. Two possibilities:<br/>
+     * ElementsWithSameDesignPatternSelection or null for Random
+     * @param elementsWithSameDesignPatternSelection 
+     * 
+     */
+    public void setDesignPatternStrategy(ElementsWithSameDesignPatternSelection elementsWithSameDesignPatternSelection){
+	this.applyStrategy = elementsWithSameDesignPatternSelection;
+    }
+    
+    public ElementsWithSameDesignPatternSelection getDesignPatternStrategy(){
+	return applyStrategy;
     }
 
     /**

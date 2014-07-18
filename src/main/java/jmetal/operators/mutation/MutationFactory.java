@@ -22,39 +22,41 @@
 package jmetal.operators.mutation;
 
 import java.util.HashMap;
-import java.util.List;
 
-import br.ufpr.inf.opla.patterns.operator.impl.DesignPatternMutationOperator;
-import br.ufpr.inf.opla.patterns.strategies.designpatternselection.impl.CustomDesignPatternSelection;
+import jmetal.experiments.NSGAIIConfig;
 import jmetal.util.Configuration;
 import jmetal.util.JMException;
+import br.ufpr.inf.opla.patterns.operator.impl.DesignPatternMutationOperator;
+import br.ufpr.inf.opla.patterns.strategies.designpatternselection.impl.CustomDesignPatternSelection;
 
-/**
- * Class implementing a factory for Mutation objects.
- */
 public class MutationFactory {
 
-	/**
-	 * Gets a crossover operator through its name.
-	 * 
-	 * @param name
-	 *            of the operator
-	 * @param mutationOperators
-	 * @return the operator
-	 * @throws JMException
-	 */
-	public static Mutation getMutationOperator(String name,	HashMap<String, Object> parameters, List<String> mutationOperators) throws JMException {
-	    	if( name.equals("DesignPatterns")){
-	    	    //vai ser selecionado um escopo aleatório e vao ser aplicados apenas o Strategy e Mediator (null = aleatorio)
-	    	    return new DesignPatternMutationOperator(parameters, null, new CustomDesignPatternSelection("strategy", "mediator"));
-	    	}
-		if (name.equalsIgnoreCase("PLAFeatureMutation"))
-			return new PLAFeatureMutation(parameters, mutationOperators);
-		else {
-			Configuration.logger_.severe("Operator '" + name + "' not found ");
-			Class<String> cls = java.lang.String.class;
-			String name2 = cls.getName();
-			throw new JMException("Exception in " + name2 + ".getMutationOperator()");
-		}
-	} // getMutationOperator
-} // MutationFactory
+    /**
+     * Gets a mutation operator through its name.
+     * 
+     * @param name of the operator
+     * @params configs
+     * @param configs.getMutationOperators()
+     * @return the operator
+     * @throws JMException
+     */
+    public static Mutation getMutationOperator(String name, HashMap<String, Object> parameters, NSGAIIConfig configs) throws JMException {
+	if (name.equals("DesignPatterns")) {
+	    // vai ser selecionado um escopo aleatório e vao ser aplicados
+	    // apenas o Strategy e Mediator (null = aleatorio)
+	    return new DesignPatternMutationOperator(parameters,  null, new CustomDesignPatternSelection(configs.getPatterns()));
+	}
+//	}else if(DesignPatterns and PLAFeatureMutation){
+//	    return new DesignPatternsAndPLAMutationOperator(parameters, null, new CustomDesignPatternSelection(configs.getPatterns()));
+//	}
+	
+	if (name.equalsIgnoreCase("PLAFeatureMutation"))
+	    return new PLAFeatureMutation(parameters, configs.getMutationOperators());
+	else {
+	    Configuration.logger_.severe("Operator '" + name + "' not found ");
+	    Class<String> cls = java.lang.String.class;
+	    String name2 = cls.getName();
+	    throw new JMException("Exception in " + name2 + ".getMutationOperator()");
+	}
+    }
+}

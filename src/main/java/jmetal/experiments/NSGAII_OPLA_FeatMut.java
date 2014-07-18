@@ -102,7 +102,7 @@ public class NSGAII_OPLA_FeatMut {
 
 	    parameters = new HashMap<String, Object>();
 	    parameters.put("probability", mutationProbability);
-	    mutation = MutationFactory.getMutationOperator("PLAFeatureMutation", parameters,  this.configs.getMutationOperators());
+	    mutation = MutationFactory.getMutationOperator("PLAFeatureMutation", parameters,  this.configs);
 
 	    // Selection Operator
 	    parameters = null;
