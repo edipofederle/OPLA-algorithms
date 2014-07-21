@@ -1,9 +1,17 @@
 package algorithms;
 
-import static org.junit.Assert.*;
+import static org.hamcrest.CoreMatchers.instanceOf;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNotNull;
+import static org.junit.Assert.assertNull;
+import static org.junit.Assert.assertThat;
+import static org.junit.Assert.assertTrue;
 
 import java.util.Arrays;
+import java.util.LinkedList;
+import java.util.List;
 
+import jmetal.experiments.FeatureMutationOperators;
 import junit.framework.Assert;
 
 import org.junit.Test;
@@ -133,6 +141,14 @@ public class NSGAII_OPLA_FeatMutInitializerTest {
 	assertEquals(3, fake.getPatterns().length);
 	assertEquals(Arrays.asList("Strategy", "Bridge", "Mediator"), Arrays.asList(fake.getPatterns()));
     }
+    
+    @Test
+    public void shouldReturnAllPatternsIfNoneIsSeted() {
+	FakeAlgorithm fake = new FakeAlgorithm();
+	
+	assertEquals(3, fake.getPatterns().length);
+	assertEquals(Arrays.asList("Strategy", "Bridge", "Mediator"), Arrays.asList(fake.getPatterns()));
+    }
 
     @Test
     public void shouldRiseExceptionWhenPatternsNotValid() {
@@ -154,6 +170,7 @@ public class NSGAII_OPLA_FeatMutInitializerTest {
 	fake.setDesignPatternStrategy(new ElementsWithSameDesignPatternSelection());
 	
 	assertNotNull(fake.getDesignPatternStrategy());
+	assertThat(fake.getDesignPatternStrategy(), instanceOf(ElementsWithSameDesignPatternSelection.class));
     }
     
     /**
@@ -165,6 +182,23 @@ public class NSGAII_OPLA_FeatMutInitializerTest {
 	fake.setDesignPatternStrategy(null);
 	
 	assertNull(fake.getDesignPatternStrategy());
+    }
+    
+    @Test
+    public void shouldExcludeDesignPatternsFromMutationOpetatorList(){
+	
+	FakeAlgorithm fake = new FakeAlgorithm();
+	List<String> operators =  new LinkedList<String>(Arrays.asList(FeatureMutationOperators.ADD_CLASS_MUTATION.getOperatorName(),
+		FeatureMutationOperators.MOVE_ATTRIBUTE_MUTATION.getOperatorName(),
+		FeatureMutationOperators.FEATURE_MUTATION.getOperatorName(),
+		FeatureMutationOperators.ADD_MANAGER_CLASS_MUTATION.getOperatorName(),
+		FeatureMutationOperators.MOVE_METHOD_MUTATION.getOperatorName(),
+		FeatureMutationOperators.MOVE_OPERATION_MUTATION.getOperatorName(),
+		FeatureMutationOperators.DESIGN_PATTERNS.getOperatorName()));
+	
+	fake.setMutationOperators(operators);
+	
+	fake.excludeDesignPatternsFromMutationOperatorList();
     }
 
     @Test

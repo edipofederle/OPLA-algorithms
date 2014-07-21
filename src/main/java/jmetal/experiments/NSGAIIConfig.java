@@ -13,4 +13,5 @@ public class NSGAIIConfig extends ExperimentCommomConfigs {
 	this.populationSize = populationSize;
     }
 
+
 }

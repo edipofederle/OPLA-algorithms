@@ -1153,4 +1153,8 @@ public class PLAFeatureMutation extends Mutation {
 	return isValid;
     }
 
+    public List<String> getMutationOperators() {
+        return mutationOperators;
+    }
+
 }

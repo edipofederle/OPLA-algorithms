@@ -19,7 +19,7 @@ public abstract class ExperimentCommomConfigs {
     private double mutationProbability;
     private String plas;
     private OPLAConfigs oplaConfigs;
-    private String[] patterns; //OPLA-Patterns....
+    private String[] patterns = null; //OPLA-Patterns....
 
     private List<String> mutationOperators = new ArrayList<String>();
     private ElementsWithSameDesignPatternSelection applyStrategy;
@@ -106,7 +106,14 @@ public abstract class ExperimentCommomConfigs {
 	this.oplaConfigs = oplaConfigs;
     }
     
+    /**
+     * Get Design Patterns to apply. If none is set return all.
+     * 
+     * @return String[]
+     */
     public String[] getPatterns() {
+	if (patterns == null)
+	    return new String[] {"Strategy", "Bridge", "Mediator"};
         return patterns;
     }
     
@@ -158,9 +165,15 @@ public abstract class ExperimentCommomConfigs {
 	this.pathToDb = pathToDb;
     }
     
+    public void excludeDesignPatternsFromMutationOperatorList() {
+	this.getMutationOperators().remove("DesignPatterns");
+    }
+    
     protected void validateGreaterOrEqualOne(String arg, int numberOfRuns) {
 	if (numberOfRuns < 1)
 	    throw new IllegalArgumentException(arg + " must be greater or equal 1");
     }
+    
+    
 
 }
