@@ -1,14 +1,15 @@
 package algorithms;
 
 import java.util.Arrays;
+import java.util.LinkedList;
 import java.util.List;
 
-import arquitetura.io.ReaderConfig;
 import jmetal.experiments.FeatureMutationOperators;
 import jmetal.experiments.Metrics;
 import jmetal.experiments.OPLAConfigs;
 import jmetal.experiments.PAES_OPLA_FeatMutInitializer;
 import jmetal.experiments.PaesConfigs;
+import arquitetura.io.ReaderConfig;
 
 public class MainTestSpea2 {
     
@@ -20,12 +21,12 @@ public class MainTestSpea2 {
    	String plas = "/Users/elf/mestrado/sourcesMestrado/arquitetura/src/test/java/resources/agmfinal/agm.uml";
 
    	//Lista de Operadores de mutação a serem utilizados
-   	List<String> operators =  Arrays.asList(FeatureMutationOperators.ADD_CLASS_MUTATION.getOperatorName(),
+   	List<String> operators =  new LinkedList<String>(Arrays.asList(FeatureMutationOperators.ADD_CLASS_MUTATION.getOperatorName(),
    		FeatureMutationOperators.MOVE_ATTRIBUTE_MUTATION.getOperatorName(),
    		FeatureMutationOperators.FEATURE_MUTATION.getOperatorName(),
    		FeatureMutationOperators.ADD_MANAGER_CLASS_MUTATION.getOperatorName(),
    		FeatureMutationOperators.MOVE_METHOD_MUTATION.getOperatorName(),
-   		FeatureMutationOperators.MOVE_OPERATION_MUTATION.getOperatorName());
+   		FeatureMutationOperators.MOVE_OPERATION_MUTATION.getOperatorName()));
    	
    	//Intancia a classe de configuracoes
    	PaesConfigs configs = new PaesConfigs();
