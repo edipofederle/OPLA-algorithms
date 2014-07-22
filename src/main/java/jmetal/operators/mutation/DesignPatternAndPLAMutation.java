@@ -1,9 +1,7 @@
-package algorithms;
+package jmetal.operators.mutation;
 
 import java.util.HashMap;
 
-import jmetal.operators.mutation.Mutation;
-import jmetal.operators.mutation.PLAFeatureMutation;
 import jmetal.util.PseudoRandom;
 import br.ufpr.inf.opla.patterns.operator.impl.DesignPatternMutationOperator;
 

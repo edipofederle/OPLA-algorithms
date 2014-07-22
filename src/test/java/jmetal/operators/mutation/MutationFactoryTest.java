@@ -16,7 +16,6 @@ import static org.junit.Assert.assertThat;
 import org.mockito.Mockito;
 
 import static org.hamcrest.CoreMatchers.instanceOf;
-import algorithms.DesignPatternAndPLAMutation;
 import br.ufpr.inf.opla.patterns.operator.impl.DesignPatternMutationOperator;
 
 public class MutationFactoryTest {

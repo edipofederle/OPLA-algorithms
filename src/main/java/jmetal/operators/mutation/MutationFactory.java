@@ -26,7 +26,6 @@ import java.util.HashMap;
 import jmetal.experiments.ExperimentCommomConfigs;
 import jmetal.util.Configuration;
 import jmetal.util.JMException;
-import algorithms.DesignPatternAndPLAMutation;
 import br.ufpr.inf.opla.patterns.operator.impl.DesignPatternMutationOperator;
 import br.ufpr.inf.opla.patterns.strategies.designpatternselection.impl.CustomDesignPatternSelection;
 
