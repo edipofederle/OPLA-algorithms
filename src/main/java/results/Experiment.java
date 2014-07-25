@@ -100,6 +100,7 @@ public class Experiment {
     public void save() throws Exception {
 	Statement statement = Database.getConnection().createStatement();
 	statement.executeUpdate(makeQuery());
+	statement.close();
     }
 
     public String getCreatedAt() {

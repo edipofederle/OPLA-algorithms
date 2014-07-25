@@ -42,9 +42,9 @@ public class MainTestNSGAII {
 	// Seta os parametros desejados
 	configs.setMutationOperators(operators);
 	configs.setPlas(plas);
-	configs.setNumberOfRuns(20);
+	configs.setNumberOfRuns(3);
 	configs.setPopulationSize(30);
-	configs.setMaxEvaluations(1000);
+	configs.setMaxEvaluations(100);
 	configs.disableCrossover();
 	configs.setMutationProbability(0.9);
 	

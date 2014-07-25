@@ -77,6 +77,7 @@ public class CalculaEd {
 		solutionSet.add(solution);
 	    }
 	    r.close();
+	    statement.close();
 	    return solutionSet;
 	} catch (MissingConfigurationException | ClassNotFoundException | SQLException ex) {
 	    Logger.getLogger(CalculaEd.class.getName()).log(Level.ERROR, null, ex);

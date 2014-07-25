@@ -102,12 +102,12 @@ public class NSGAII_OPLA_FeatMut {
 
 	    parameters = new HashMap<String, Object>();
 	    parameters.put("probability", mutationProbability);
-	    mutation = MutationFactory.getMutationOperator("PLAFeatureMutation", parameters,  this.configs);
+	    mutation = MutationFactory.getMutationOperator("PLAFeatureMutation", parameters, this.configs);
 
 	    // Selection Operator
 	    parameters = null;
 	    selection = SelectionFactory.getSelectionOperator("BinaryTournament", parameters);
-	    
+
 	    // Add the operators to the algorithm
 	    algorithm.addOperator("crossover", crossover);
 	    algorithm.addOperator("mutation", mutation);
@@ -128,7 +128,8 @@ public class NSGAII_OPLA_FeatMut {
 
 	    for (int runs = 0; runs < runsNumber; runs++) {
 
-		// Cria uma execução. Cada execução está ligada a um experiemento.
+		// Cria uma execução. Cada execução está ligada a um
+		// experiemento.
 		Execution execution = new Execution(experiement);
 		setDirToSaveOutput(experiement.getId(), execution.getId());
 
@@ -143,10 +144,13 @@ public class NSGAII_OPLA_FeatMut {
 
 		execution.setTime(estimatedTime);
 
-		List<FunResults> funResults = result.getObjectives(resultFront.getSolutionSet(), execution, experiement);
-		List<InfoResult> infoResults = result.getInformations(resultFront.getSolutionSet(), execution, experiement);
-		AllMetrics allMetrics = result.getMetrics(funResults, resultFront.getSolutionSet(), execution, experiement, selectedObjectiveFunctions);
-		
+		List<FunResults> funResults = result
+			.getObjectives(resultFront.getSolutionSet(), execution, experiement);
+		List<InfoResult> infoResults = result.getInformations(resultFront.getSolutionSet(), execution,
+			experiement);
+		AllMetrics allMetrics = result.getMetrics(funResults, resultFront.getSolutionSet(), execution,
+			experiement, selectedObjectiveFunctions);
+
 		resultFront.saveVariablesToFile("VAR_" + runs + "_", funResults);
 
 		execution.setFuns(funResults);
@@ -165,12 +169,12 @@ public class NSGAII_OPLA_FeatMut {
 		todasRuns = todasRuns.union(resultFront);
 
 		allSolutions = allSolutions.union(resultFront);
-		
+
 		Util.copyFolder(experiement.getId(), execution.getId());
 		Util.moveAllFilesToExecutionDirectory(experiementId, execution.getId());
 
 	    }
-	    
+
 	    saveHypervolume(experiement.getId(), allSolutions, plaName);
 
 	    todasRuns = problem.removeDominadas(todasRuns);
@@ -178,24 +182,24 @@ public class NSGAII_OPLA_FeatMut {
 
 	    System.out.println("------ All Runs - Non-dominated solutions --------");
 	    List<FunResults> funResults = result.getObjectives(todasRuns.getSolutionSet(), null, experiement);
-	    
+
 	    todasRuns.saveVariablesToFile("VAR_All_", funResults);
-	    
+
 	    mp.saveFunAll(funResults);
 
 	    List<InfoResult> infoResults = result.getInformations(todasRuns.getSolutionSet(), null, experiement);
 	    mp.saveInfoAll(infoResults);
 
-	    AllMetrics allMetrics = result.getMetrics(funResults, todasRuns.getSolutionSet(), null, experiement, selectedObjectiveFunctions);
+	    AllMetrics allMetrics = result.getMetrics(funResults, todasRuns.getSolutionSet(), null, experiement,
+		    selectedObjectiveFunctions);
 	    mp.persisteMetrics(allMetrics);
 	    mp = null;
 	    setDirToSaveOutput(experiement.getId(), null);
-	
+
 	    CalculaEd c = new CalculaEd();
 	    DistanceEuclideanPersistence.save(c.calcula(this.experiementId, this.numberObjectives), this.experiementId);
 	    infoResults = null;
 	    funResults = null;
-
 
 	    Util.moveAllFilesToExecutionDirectory(experiementId, null);
 	}
@@ -225,12 +229,12 @@ public class NSGAII_OPLA_FeatMut {
 
 	try {
 	    connection = Database.getConnection();
+	    allMetricsPersistenceDependencies = new AllMetricsPersistenceDependency(connection);
+	    mp = new MetricsPersistence(allMetricsPersistenceDependencies);
 	} catch (ClassNotFoundException | MissingConfigurationException | SQLException e) {
 	    e.printStackTrace();
 	}
 
-	allMetricsPersistenceDependencies = new AllMetricsPersistenceDependency(connection);
-	mp = new MetricsPersistence(allMetricsPersistenceDependencies);
     }
 
     private static String getPlaName(String pla) {
@@ -252,15 +256,15 @@ public class NSGAII_OPLA_FeatMut {
 	if (!newDir.exists())
 	    newDir.mkdirs();
     }
-    
+
     private void saveHypervolume(String experimentID, SolutionSet allSolutions, String plaName) {
 	String dir = ReaderConfig.getDirExportTarget() + experimentID + "/Hypervolume/";
 	File newDir = new File(dir);
 	if (!newDir.exists())
 	    newDir.mkdirs();
 
-	 String moea = "NSGAII-M";
-	 allSolutions.printObjectivesToFile(dir + plaName + "/" + plaName + "_HV_" + moea + ".txt");
+	String moea = "NSGAII-M";
+	allSolutions.printObjectivesToFile(dir + plaName + "/" + plaName + "_HV_" + moea + ".txt");
     }
 
 }

@@ -3,51 +3,51 @@ package persistence;
 import java.sql.Connection;
 
 public class AllMetricsPersistenceDependency {
-	
-	private Connection connection;
-	private InfosResultPersistence infosPersistence;
-	private FunsResultPersistence funsPersistence;
-	private ElegancePersistence elegancePersistence;
-	private FeatureDrivenPersistence featureDrivenPersistence;
-	private ConventionalPersistence conventionalPersistence;
-	private PLAExtensibilityPersistence plaExtensibilityPersistence;
 
-	public AllMetricsPersistenceDependency(Connection connection){
-        this.connection = connection;
-        this.infosPersistence = new InfosResultPersistence(connection);
-        this.funsPersistence = new FunsResultPersistence(connection);
-        this.elegancePersistence = new ElegancePersistence(connection);
-        this.featureDrivenPersistence = new FeatureDrivenPersistence(connection);
-        this.conventionalPersistence = new ConventionalPersistence(connection);
-        this.plaExtensibilityPersistence = new PLAExtensibilityPersistence(connection);
-	}
+    private Connection connection;
+    private InfosResultPersistence infosPersistence;
+    private FunsResultPersistence funsPersistence;
+    private ElegancePersistence elegancePersistence;
+    private FeatureDrivenPersistence featureDrivenPersistence;
+    private ConventionalPersistence conventionalPersistence;
+    private PLAExtensibilityPersistence plaExtensibilityPersistence;
 
-	public Connection getConnection() {
-		return connection;
-	}
+    public AllMetricsPersistenceDependency(Connection connection) {
+	this.connection = connection;
+	this.infosPersistence = new InfosResultPersistence(connection);
+	this.funsPersistence = new FunsResultPersistence(connection);
+	this.elegancePersistence = new ElegancePersistence(connection);
+	this.featureDrivenPersistence = new FeatureDrivenPersistence(connection);
+	this.conventionalPersistence = new ConventionalPersistence(connection);
+	this.plaExtensibilityPersistence = new PLAExtensibilityPersistence(connection);
+    }
 
-	public InfosResultPersistence getInfosPersistence() {
-		return infosPersistence;
-	}
+    public Connection getConnection() {
+	return connection;
+    }
 
-	public FunsResultPersistence getFunsPersistence() {
-		return funsPersistence;
-	}
+    public InfosResultPersistence getInfosPersistence() {
+	return infosPersistence;
+    }
 
-	public ElegancePersistence getElegancePersistence() {
-		return elegancePersistence;
-	}
+    public FunsResultPersistence getFunsPersistence() {
+	return funsPersistence;
+    }
 
-	public FeatureDrivenPersistence getFeatureDrivenPersistence() {
-		return featureDrivenPersistence;
-	}
+    public ElegancePersistence getElegancePersistence() {
+	return elegancePersistence;
+    }
 
-	public ConventionalPersistence getConventionalPersistence() {
-		return conventionalPersistence;
-	}
+    public FeatureDrivenPersistence getFeatureDrivenPersistence() {
+	return featureDrivenPersistence;
+    }
 
-	public PLAExtensibilityPersistence getPlaExtensibilityPersistence() {
-		return plaExtensibilityPersistence;
-	}
+    public ConventionalPersistence getConventionalPersistence() {
+	return conventionalPersistence;
+    }
+
+    public PLAExtensibilityPersistence getPlaExtensibilityPersistence() {
+	return plaExtensibilityPersistence;
+    }
 
 }
