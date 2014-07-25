@@ -12,11 +12,17 @@ import jmetal.experiments.NSGAII_OPLA_FeatMutInitializer;
 import jmetal.experiments.OPLAConfigs;
 import arquitetura.io.ReaderConfig;
 
+/**
+ * Classe exemplo de como usar o NSGA-II.
+ * 
+ * @author elf
+ *
+ */
 public class MainTestNSGAII {
 
     public static void main(String args[]) {
 	
-	ReaderConfig.load();
+	ReaderConfig.load(); //Carrega o arquivo de configuração (application.yaml)
 	
 	//Arquitetura(s) de entrada
 	String plas = "/Users/elf/NetBeansProjects/OPLA-Patterns/MicrowaveOvenSoftware/Papyrus/MicrowaveOvenSoftware.uml";
@@ -29,9 +35,6 @@ public class MainTestNSGAII {
 		FeatureMutationOperators.MOVE_METHOD_MUTATION.getOperatorName(),
 		FeatureMutationOperators.MOVE_OPERATION_MUTATION.getOperatorName(),
 		FeatureMutationOperators.DESIGN_PATTERNS.getOperatorName()));
-	
-	//List<String> operators =  new LinkedList<String>(Arrays.asList(FeatureMutationOperators.DESIGN_PATTERNS.getOperatorName()));
-
 	
 	//Intancia a classe de configuracoes
 	NSGAIIConfig configs = new NSGAIIConfig();
@@ -56,16 +59,14 @@ public class MainTestNSGAII {
 	OPLAConfigs oplaConfig = new OPLAConfigs();
 	
 	
-	//Quais metricas deseja-se utilizar
-	List<String> selectedMetrics = Arrays.asList(
+	//Quais funções objetivo deseja-se utilizar
+	List<String> selectedObjectiveFunctions = Arrays.asList(
 		Metrics.ELEGANCE.getName(),
 		Metrics.CONVENTIONAL.getName(),
 		Metrics.PLA_EXTENSIBILIY.getName(),
 		Metrics.FEATURE_DRIVEN.getName());
 	
-	oplaConfig.setSelectedMetrics(selectedMetrics);
-	//Numero de objetivos
-	oplaConfig.setNumberOfObjectives(selectedMetrics.size());
+	oplaConfig.setSelectedObjectiveFunctions(selectedObjectiveFunctions);
 
 	//Add as confs de OPLA na classe de configuracoes gerais.
 	configs.setOplaConfigs(oplaConfig);

@@ -80,7 +80,7 @@ public class OPLA extends Problem {
 	variableType_[0] = java.lang.Class.forName(Architecture.ARCHITECTURE_TYPE);
 	architecture_ = new ArchitectureBuilder().create(xmiFilePath);
 
-	selectedMetrics = oplaConfig.getSelectedMetrics();
+	selectedMetrics = oplaConfig.getSelectedObjectiveFunctions();
     }
 
     @Override

@@ -119,7 +119,8 @@ public class NSGAII_OPLA_FeatMut {
 	    String plaName = getPlaName(pla);
 
 	    Experiment experiement = mp.createExperimentOnDb(plaName, "NSGAII");
-	    mp.saveObjectivesNames(this.configs.getOplaConfigs().getSelectedMetrics(), experiement.getId());
+	    List<String> selectedObjectiveFunctions = this.configs.getOplaConfigs().getSelectedObjectiveFunctions();
+	    mp.saveObjectivesNames(selectedObjectiveFunctions, experiement.getId());
 
 	    result.setPlaName(plaName);
 
@@ -144,7 +145,7 @@ public class NSGAII_OPLA_FeatMut {
 
 		List<FunResults> funResults = result.getObjectives(resultFront.getSolutionSet(), execution, experiement);
 		List<InfoResult> infoResults = result.getInformations(resultFront.getSolutionSet(), execution, experiement);
-		AllMetrics allMetrics = result.getMetrics(funResults, resultFront.getSolutionSet(), execution, experiement);
+		AllMetrics allMetrics = result.getMetrics(funResults, resultFront.getSolutionSet(), execution, experiement, selectedObjectiveFunctions);
 		
 		resultFront.saveVariablesToFile("VAR_" + runs + "_", funResults);
 
@@ -185,7 +186,7 @@ public class NSGAII_OPLA_FeatMut {
 	    List<InfoResult> infoResults = result.getInformations(todasRuns.getSolutionSet(), null, experiement);
 	    mp.saveInfoAll(infoResults);
 
-	    AllMetrics allMetrics = result.getMetrics(funResults, todasRuns.getSolutionSet(), null, experiement);
+	    AllMetrics allMetrics = result.getMetrics(funResults, todasRuns.getSolutionSet(), null, experiement, selectedObjectiveFunctions);
 	    mp.persisteMetrics(allMetrics);
 	    mp = null;
 	    setDirToSaveOutput(experiement.getId(), null);

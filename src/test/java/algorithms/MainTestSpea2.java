@@ -47,13 +47,11 @@ public class MainTestSpea2 {
    	//Instancia a classe de configuracao da OPLA.java
    	OPLAConfigs oplaConfig = new OPLAConfigs();
    	
-   	//Numero de objetivos
-   	oplaConfig.setNumberOfObjectives(4);
-   	
-   	//Quais metricas deseja-se utilizar
-   	List<String> selectedMetrics = Arrays.asList(Metrics.ELEGANCE.getName(), Metrics.CONVENTIONAL.getName(),
+	//Quais funções objetivo deseja-se utilizar
+	List<String> selectedObjectiveFunctions = Arrays.asList(Metrics.ELEGANCE.getName(), Metrics.CONVENTIONAL.getName(),
    		Metrics.PLA_EXTENSIBILIY.getName(), Metrics.FEATURE_DRIVEN.getName());
-   	oplaConfig.setSelectedMetrics(selectedMetrics);
+	
+   	oplaConfig.setSelectedObjectiveFunctions(selectedObjectiveFunctions);
 
    	//Add as confs de OPLA na classe de configuracoes gerais.
    	configs.setOplaConfigs(oplaConfig);

@@ -30,7 +30,7 @@ public class Result {
      * executionId.<br />
      * 
      * Pass null to execution when are ALL results. So results belongs to
-     * experiement and not to execution.
+     * experiment and not to execution (run).
      * 
      * See {@link ResultTest} for more details
      * 
@@ -108,22 +108,25 @@ public class Result {
 	return concernsList.substring(0, concernsList.length() - 1);
     }
 
-    public AllMetrics getMetrics(List<FunResults> funResults, List<Solution> list, Execution execution, Experiment experiement) {
+    public AllMetrics getMetrics(List<FunResults> funResults, List<Solution> list, Execution execution,
+	    Experiment experiement, List<String> objectiveFuncs) {
 
 	MetricsEvaluation metrics = new MetricsEvaluation();
 	AllMetrics allMetrics = new AllMetrics();
 	int numberOfVariables = list.get(0).getDecisionVariables().length;
 
-	// TODO Ver com Thelma: Somente gerar metrica que foram selecionadas na
-	// GUI. via (OPLAConfigs)
 	for (int i = 0; i < list.size(); i++) {
 	    for (int j = 0; j < numberOfVariables; j++) {
 		Architecture arch = (Architecture) list.get(i).getDecisionVariables()[j];
 		String idSolution = funResults.get(i).getId();
-		allMetrics.getElegance().add(buildEleganceMetrics(idSolution, execution, experiement, metrics, arch));
-		allMetrics.getPlaExtensibility().add(buildPLAExtensibilityMetrics(idSolution, execution, experiement, metrics, arch));
-		allMetrics.getConventional().add(buildConventionalMetrics(idSolution, execution, experiement, metrics, arch));
-		allMetrics.getFeatureDriven().add(buildFeatureDrivenMetrics(idSolution, execution, experiement, metrics, arch));
+		if (objectiveFuncs.contains("elegance"))
+		    allMetrics.getElegance().add(buildEleganceMetrics(idSolution, execution, experiement, metrics, arch));
+		if (objectiveFuncs.contains("PLAExtensibility"))
+		    allMetrics.getPlaExtensibility().add(buildPLAExtensibilityMetrics(idSolution, execution, experiement, metrics, arch));
+		if (objectiveFuncs.contains("conventional"))
+		    allMetrics.getConventional().add(buildConventionalMetrics(idSolution, execution, experiement, metrics, arch));
+		if (objectiveFuncs.contains("featureDriven"))
+		    allMetrics.getFeatureDriven().add(buildFeatureDrivenMetrics(idSolution, execution, experiement, metrics, arch));
 	    }
 	}
 
@@ -131,7 +134,8 @@ public class Result {
     }
 
     private FeatureDriven buildFeatureDrivenMetrics(String idSolution, Execution execution, Experiment experiement,
-	    MetricsEvaluation metrics, Architecture arch) {
+	    					    MetricsEvaluation metrics, Architecture arch) {
+	
 	FeatureDriven fd = new FeatureDriven(idSolution, execution, experiement);
 
 	fd.setCdac(metrics.evaluateCDAC(arch));
@@ -149,7 +153,8 @@ public class Result {
     }
 
     private Conventional buildConventionalMetrics(String idSolution, Execution execution, Experiment experiement,
-	    MetricsEvaluation metrics, Architecture arch) {
+	    				          MetricsEvaluation metrics, Architecture arch) {
+	
 	Conventional conventional = new Conventional(idSolution, execution, experiement);
 
 	conventional.setChoesion(metrics.evaluateCohesion(arch));
@@ -163,13 +168,18 @@ public class Result {
 	return conventional;
     }
 
-    private PLAExtensibility buildPLAExtensibilityMetrics(String idSolution, Execution execution, Experiment experiement,  MetricsEvaluation metrics, Architecture arch) {
+    private PLAExtensibility buildPLAExtensibilityMetrics(String idSolution, Execution execution,
+	    						  Experiment experiement, MetricsEvaluation metrics, Architecture arch) {
+	
 	PLAExtensibility plaExtensibility = new PLAExtensibility(idSolution, execution, experiement);
 	plaExtensibility.setPlaExtensibility(metrics.evaluatePLAExtensibility(arch));
+	
 	return plaExtensibility;
     }
 
-    private Elegance buildEleganceMetrics(String idSolution, Execution execution, Experiment experiement, MetricsEvaluation metrics, Architecture arch) {
+    private Elegance buildEleganceMetrics(String idSolution, Execution execution, Experiment experiement,
+	    				  MetricsEvaluation metrics, Architecture arch) {
+	
 	Elegance elegance = new Elegance(idSolution, execution, experiement);
 	elegance.setNac(metrics.evaluateNACElegance(arch));
 	elegance.setAtmr(metrics.evaluateATMRElegance(arch));

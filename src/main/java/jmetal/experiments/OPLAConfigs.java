@@ -3,24 +3,19 @@ package jmetal.experiments;
 import java.util.List;
 
 public class OPLAConfigs {
-	
-	private Integer numberOfObjectives;
-	private List<String> selectedMetrics;
 
-	public Integer getNumberOfObjectives() {
-		return numberOfObjectives;
-	}
+    private List<String> selectedObjectiveFunctions;
 
-	public void setNumberOfObjectives(Integer numberOfObjectives) {
-		this.numberOfObjectives = numberOfObjectives;
-	}
+    public Integer getNumberOfObjectives() {
+	return selectedObjectiveFunctions.size();
+    }
 
-	public List<String> getSelectedMetrics() {
-		return selectedMetrics;
-	}
+    public List<String> getSelectedObjectiveFunctions() {
+	return selectedObjectiveFunctions;
+    }
 
-	public void setSelectedMetrics(List<String> selectedMetrics) {
-		this.selectedMetrics = selectedMetrics;
-	}
-	
+    public void setSelectedObjectiveFunctions(List<String> selectedMetrics) {
+	this.selectedObjectiveFunctions = selectedMetrics;
+    }
+
 }

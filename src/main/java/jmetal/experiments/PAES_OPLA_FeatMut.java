@@ -120,7 +120,8 @@ public class PAES_OPLA_FeatMut {
 	    String PLAName = getPlaName(pla);
 	    
 	    Experiment experiement = mp.createExperimentOnDb(PLAName, "PAES");
-	    mp.saveObjectivesNames(this.configs.getOplaConfigs().getSelectedMetrics(), experiement.getId());
+	    List<String> selectedObjectiveFunctions = this.configs.getOplaConfigs().getSelectedObjectiveFunctions();
+	    mp.saveObjectivesNames(this.configs.getOplaConfigs().getSelectedObjectiveFunctions(), experiement.getId());
 	    
 	    result.setPlaName(PLAName);
 	    
@@ -146,7 +147,7 @@ public class PAES_OPLA_FeatMut {
 
 		List<FunResults> funResults = result.getObjectives(resultFront.getSolutionSet(), execution, experiement);
 		List<InfoResult> infoResults = result.getInformations(resultFront.getSolutionSet(), execution,experiement);
-		AllMetrics allMetrics = result.getMetrics(funResults, resultFront.getSolutionSet(), execution, experiement);
+		AllMetrics allMetrics = result.getMetrics(funResults, resultFront.getSolutionSet(), execution, experiement, selectedObjectiveFunctions);
 		
 		resultFront.saveVariablesToFile("VAR_" + runs + "_", funResults);
 		
