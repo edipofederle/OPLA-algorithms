@@ -5,7 +5,9 @@ import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.HashMap;
 
+import jmetal.experiments.ExperimentCommomConfigs;
 import jmetal.experiments.NSGAIIConfig;
+import jmetal.experiments.PaesConfigs;
 import database.Database;
 import exceptions.MissingConfigurationException;
 
@@ -21,10 +23,10 @@ import exceptions.MissingConfigurationException;
 public class ExperimentConfs {
 
     private String experimentId;
-    private NSGAIIConfig configs;
+    private ExperimentCommomConfigs configs;
     private String algorithm;
 
-    public ExperimentConfs(String experimentId, String algorithm, NSGAIIConfig configs) {
+    public ExperimentConfs(String experimentId, String algorithm, ExperimentCommomConfigs configs) {
 	this.experimentId = experimentId;
 	this.configs = configs;
 	this.algorithm = algorithm;
@@ -35,7 +37,8 @@ public class ExperimentConfs {
     }
 
     /**
-     * Return a {@link HashMap<String, String>} with configuration settings given a experimentId.
+     * Return a {@link HashMap<String, String>} with configuration settings
+     * given a experimentId.
      * 
      * @param experimentId
      * @return {@link HashMap<String, String>}
@@ -55,10 +58,10 @@ public class ExperimentConfs {
 	    while (result.next()) {
 		confs.put("numberOfRuns", result.getString("number_of_runs"));
 		confs.put("maxEvaluations", result.getString("max_evaluations"));
-		confs.put("crossover_prob", result.getString("crossover_prob"));
-		confs.put("mutation_prob", result.getString("mutation_prob"));
-		confs.put("mutation_prob", result.getString("mutation_prob"));
-		confs.put("mutation_operators", result.getString("mutation_operators"));
+		confs.put("crossoverProbability", result.getString("crossover_prob"));
+		confs.put("mutationProbability", result.getString("mutation_prob"));
+		confs.put("populationSize", result.getString("mutation_prob"));
+		confs.put("mutationOperators", result.getString("mutation_operators"));
 		confs.put("patterns", result.getString("patterns"));
 		confs.put("pattern_strategy", result.getString("pattern_strategy"));
 		confs.put("algorithm", result.getString("algorithm"));
@@ -112,8 +115,9 @@ public class ExperimentConfs {
 	    patternsList = removeLastComma(patternsList);
 	    mutationOperatorsList = removeLastComma(mutationOperatorsList);
 
+	    // TODO add archiveSize, populationSize
 	    query.append("INSERT into experiment_configurations (experiment_id, number_of_runs,"
-		    + " max_evaluations, crossover_prob, mutation_prob, patterns, pattern_strategy, algorithm, mutation_operators) VALUES (");
+		    + " max_evaluations, crossover_prob, mutation_prob, patterns, pattern_strategy, algorithm, mutation_operators, archive_size, population_size) VALUES (");
 	    query.append(experimentId);
 	    query.append(",");
 	    query.append(configs.getNumberOfRuns());
@@ -139,6 +143,10 @@ public class ExperimentConfs {
 	    query.append("'");
 	    query.append(mutationOperatorsList);
 	    query.append("'");
+	    query.append(",");
+	    query.append(getArchiveSize());
+	    query.append(",");
+	    query.append(getPopulationSize());
 	    query.append(")");
 
 	    stat.execute(query.toString());
@@ -146,6 +154,25 @@ public class ExperimentConfs {
 	} catch (SQLException | ClassNotFoundException | MissingConfigurationException e) {
 	    e.printStackTrace();
 	}
+    }
+
+    private Object getPopulationSize() {
+	if (this.algorithm.equalsIgnoreCase("paes"))
+	    return ((NSGAIIConfig) this.configs).getPopulationSize();
+
+	return 0;
+    }
+
+    /**
+     * For PAES
+     * 
+     * @return
+     */
+    private int getArchiveSize() {
+	if (this.algorithm.equalsIgnoreCase("paes"))
+	    return ((PaesConfigs) this.configs).getArchiveSize();
+
+	return 0;
     }
 
     private StringBuilder removeLastComma(StringBuilder list) {
