@@ -80,9 +80,9 @@ public class ExperimentConfs {
 
     private static String getMutationsOperators(String mutationOperators) {
 	if(mutationOperators == null || mutationOperators.isEmpty())
-	    return mutationOperators;
+	    return "";
 	
-	return "";
+	return mutationOperators;
     }
 
     private static String getProbability(String probability) {
