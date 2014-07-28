@@ -4,7 +4,6 @@ import java.util.Arrays;
 import java.util.LinkedList;
 import java.util.List;
 
-import br.ufpr.inf.opla.patterns.strategies.scopeselection.impl.ElementsWithSameDesignPatternSelection;
 import jmetal.experiments.FeatureMutationOperators;
 import jmetal.experiments.Metrics;
 import jmetal.experiments.NSGAIIConfig;
@@ -50,7 +49,7 @@ public class MainTestNSGAII {
 	
 	// OPLA-Patterns Configurations
 	configs.setPatterns("Mediator", "Strategy", "Bridge");
-	configs.setDesignPatternStrategy(new ElementsWithSameDesignPatternSelection());
+	configs.setDesignPatternStrategy(null);
 	
 	//Configura onde o db esta localizado
 	configs.setPathToDb("/Users/elf/oplatool/db/oplatool.db");

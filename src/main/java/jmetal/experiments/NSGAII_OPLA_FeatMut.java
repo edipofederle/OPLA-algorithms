@@ -23,6 +23,7 @@ import metrics.AllMetrics;
 import persistence.AllMetricsPersistenceDependency;
 import persistence.DistanceEuclideanPersistence;
 import persistence.ExecutionPersistence;
+import persistence.ExperimentConfs;
 import persistence.MetricsPersistence;
 import results.Execution;
 import results.Experiment;
@@ -72,12 +73,17 @@ public class NSGAII_OPLA_FeatMut {
 	for (String pla : plas) {
 	    xmiFilePath = pla;
 	    OPLA problem = null;
-
+	    String plaName = getPlaName(pla);	
+	    
 	    try {
 		problem = new OPLA(xmiFilePath, this.configs.getOplaConfigs());
 	    } catch (Exception e) {
 		e.printStackTrace();
 	    }
+	    
+	    Experiment experiement = mp.createExperimentOnDb(plaName, "NSGAII");
+	    ExperimentConfs conf = new ExperimentConfs(experiement.getId(), "NSGAII", configs);
+	    conf.save();
 
 	    Algorithm algorithm;
 	    SolutionSet todasRuns = new SolutionSet();
@@ -116,9 +122,6 @@ public class NSGAII_OPLA_FeatMut {
 	    if (this.configs.isLog())
 		logInforamtions(context, pla);
 
-	    String plaName = getPlaName(pla);
-
-	    Experiment experiement = mp.createExperimentOnDb(plaName, "NSGAII");
 	    List<String> selectedObjectiveFunctions = this.configs.getOplaConfigs().getSelectedObjectiveFunctions();
 	    mp.saveObjectivesNames(selectedObjectiveFunctions, experiement.getId());
 
