@@ -173,7 +173,7 @@ public class ExperimentConfs {
     }
 
     private Object getPopulationSize() {
-	if (this.algorithm.equalsIgnoreCase("paes"))
+	if (this.algorithm.equalsIgnoreCase("NSGAII"))
 	    return ((NSGAIIConfig) this.configs).getPopulationSize();
 
 	return 0;
