@@ -10,8 +10,8 @@ import database.Database;
 import exceptions.MissingConfigurationException;
 
 /**
- * Classe responsável por guardar E persistir/recuperar informções referentes a qual
- * configuração o experimento utilizou.
+ * Classe responsável por guardar E persistir/recuperar informções referentes a
+ * qual configuração o experimento utilizou.
  * 
  * Ex: numero de rodas, funcoes objetivos utilizadas e assim por diante.
  * 
@@ -33,25 +33,26 @@ public class ExperimentConfs {
     public void save() {
 	persist();
     }
-    
+
     /**
-     * Retorna as configurações dado um experiment_id;
-     * @return 
+     * Return a {@link HashMap<String, String>} with configuration settings given a experimentId.
+     * 
+     * @param experimentId
+     * @return {@link HashMap<String, String>}
      */
-    public static HashMap<String, String> getConfigs(String experimentId){
-	
+    public static HashMap<String, String> getConfigs(String experimentId) {
+
 	HashMap<String, String> confs = new HashMap<>();
-	
+
 	StringBuilder query = new StringBuilder();
 	query.append("SELECT * FROM experiment_configurations where experiment_id = ");
 	query.append(experimentId);
-	
+
 	try {
 	    Statement stat = Database.getConnection().createStatement();
 
-	    
 	    ResultSet result = stat.executeQuery(query.toString());
-	    while(result.next()){
+	    while (result.next()) {
 		confs.put("numberOfRuns", result.getString("number_of_runs"));
 		confs.put("maxEvaluations", result.getString("max_evaluations"));
 		confs.put("crossover_prob", result.getString("crossover_prob"));
@@ -65,22 +66,23 @@ public class ExperimentConfs {
 		confs.put("objective_functions", getObjectiveFunctionsForExperiment(experimentId));
 
 	    }
-	    
+
 	} catch (SQLException | ClassNotFoundException | MissingConfigurationException e) {
 	    e.printStackTrace();
 	}
-	
+
 	return confs;
     }
 
-    private static String getObjectiveFunctionsForExperiment(String experimentId) throws ClassNotFoundException, SQLException, MissingConfigurationException {
+    private static String getObjectiveFunctionsForExperiment(String experimentId) throws ClassNotFoundException,
+	    SQLException, MissingConfigurationException {
 	Statement stat = Database.getConnection().createStatement();
-	
+
 	StringBuilder query = new StringBuilder();
-	
+
 	query.append("SELECT * FROM map_objectives_names where experiment_id = ");
 	query.append(experimentId);
-	
+
 	ResultSet result = stat.executeQuery(query.toString());
 	String funcs = result.getString("names");
 	stat.close();
@@ -101,18 +103,17 @@ public class ExperimentConfs {
 		    patternsList.append(",");
 		}
 	    }
-	    
+
 	    for (String operator : configs.getMutationOperators()) {
 		mutationOperatorsList.append(operator);
 		mutationOperatorsList.append(",");
 	    }
-	    
+
 	    patternsList = removeLastComma(patternsList);
 	    mutationOperatorsList = removeLastComma(mutationOperatorsList);
-	    
 
 	    query.append("INSERT into experiment_configurations (experiment_id, number_of_runs,"
-	    	+ " max_evaluations, crossover_prob, mutation_prob, patterns, pattern_strategy, algorithm, mutation_operators) VALUES (");
+		    + " max_evaluations, crossover_prob, mutation_prob, patterns, pattern_strategy, algorithm, mutation_operators) VALUES (");
 	    query.append(experimentId);
 	    query.append(",");
 	    query.append(configs.getNumberOfRuns());
@@ -154,9 +155,9 @@ public class ExperimentConfs {
 
     private String getDesignPatternStrategy() {
 	if (configs.getMutationOperators().contains("DesignPatterns")) {
-	    if(configs.getDesignPatternStrategy() == null)
+	    if (configs.getDesignPatternStrategy() == null)
 		return "Random";
-	    if(configs.getDesignPatternStrategy() != null)
+	    if (configs.getDesignPatternStrategy() != null)
 		return "Element with same design patterns or none";
 	}
 	return "";
