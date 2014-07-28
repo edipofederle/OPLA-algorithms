@@ -58,13 +58,14 @@ public class ExperimentConfs {
 	    while (result.next()) {
 		confs.put("numberOfRuns", result.getString("number_of_runs"));
 		confs.put("maxEvaluations", result.getString("max_evaluations"));
-		confs.put("crossoverProbability", result.getString("crossover_prob"));
-		confs.put("mutationProbability", result.getString("mutation_prob"));
-		confs.put("populationSize", result.getString("mutation_prob"));
-		confs.put("mutationOperators", result.getString("mutation_operators"));
+		confs.put("crossoverProbability", getProbability(result.getString("crossover_prob")));
+		confs.put("mutationProbability", getProbability(result.getString("mutation_prob")));
+		confs.put("populationSize", getInt(result.getString("population_size")));
+		confs.put("mutationOperators", getMutationsOperators(result.getString("mutation_operators")));
 		confs.put("patterns", result.getString("patterns"));
 		confs.put("pattern_strategy", result.getString("pattern_strategy"));
 		confs.put("algorithm", result.getString("algorithm"));
+		confs.put("archiveSize", getInt(result.getString("archive_size")));
 		stat.close();
 		confs.put("objective_functions", getObjectiveFunctionsForExperiment(experimentId));
 
@@ -75,6 +76,21 @@ public class ExperimentConfs {
 	}
 
 	return confs;
+    }
+
+    private static String getMutationsOperators(String mutationOperators) {
+	if(mutationOperators == null || mutationOperators.isEmpty())
+	    return mutationOperators;
+	
+	return "";
+    }
+
+    private static String getProbability(String probability) {
+	return Double.valueOf(probability) == 0 ? "-" : probability;
+    }
+
+    private static String getInt(String archiveSize) {
+	return Integer.valueOf(archiveSize) == 0 ? "-" : archiveSize;
     }
 
     private static String getObjectiveFunctionsForExperiment(String experimentId) throws ClassNotFoundException,
