@@ -63,7 +63,7 @@ public class ExperimentConfs {
 		confs.put("populationSize", getInt(result.getString("population_size")));
 		confs.put("mutationOperators", getMutationsOperators(result.getString("mutation_operators")));
 		confs.put("patterns", result.getString("patterns"));
-		confs.put("pattern_strategy", result.getString("pattern_strategy"));
+		confs.put("pattern_strategy", getString(result.getString("pattern_strategy")));
 		confs.put("algorithm", result.getString("algorithm"));
 		confs.put("archiveSize", getInt(result.getString("archive_size")));
 		stat.close();
@@ -76,6 +76,10 @@ public class ExperimentConfs {
 	}
 
 	return confs;
+    }
+
+    private static String getString(String str) {
+	return (str == null || str.isEmpty()) ? "-" : str;
     }
 
     private static String getMutationsOperators(String mutationOperators) {
