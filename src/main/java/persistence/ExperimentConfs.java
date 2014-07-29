@@ -135,7 +135,6 @@ public class ExperimentConfs {
 	    patternsList = removeLastComma(patternsList);
 	    mutationOperatorsList = removeLastComma(mutationOperatorsList);
 
-	    // TODO add archiveSize, populationSize
 	    query.append("INSERT into experiment_configurations (experiment_id, number_of_runs,"
 		    + " max_evaluations, crossover_prob, mutation_prob, patterns, pattern_strategy, algorithm, mutation_operators, archive_size, population_size) VALUES (");
 	    query.append(experimentId);
@@ -205,7 +204,7 @@ public class ExperimentConfs {
 	    if (configs.getDesignPatternStrategy() == null)
 		return "Random";
 	    if (configs.getDesignPatternStrategy() != null)
-		return "Element with same design patterns or none";
+		return "Elements With Same Design Pattern or None";
 	}
 	return "";
     }
