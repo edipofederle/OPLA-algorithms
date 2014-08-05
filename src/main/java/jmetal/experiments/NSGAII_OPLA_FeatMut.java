@@ -73,14 +73,14 @@ public class NSGAII_OPLA_FeatMut {
 	for (String pla : plas) {
 	    xmiFilePath = pla;
 	    OPLA problem = null;
-	    String plaName = getPlaName(pla);	
-	    
+	    String plaName = getPlaName(pla);
+
 	    try {
 		problem = new OPLA(xmiFilePath, this.configs.getOplaConfigs());
 	    } catch (Exception e) {
 		e.printStackTrace();
 	    }
-	    
+
 	    Experiment experiement = mp.createExperimentOnDb(plaName, "NSGAII");
 	    ExperimentConfs conf = new ExperimentConfs(experiement.getId(), "NSGAII", configs);
 	    conf.save();

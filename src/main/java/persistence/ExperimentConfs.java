@@ -131,9 +131,11 @@ public class ExperimentConfs {
 		mutationOperatorsList.append(operator);
 		mutationOperatorsList.append(",");
 	    }
-
-	    patternsList = removeLastComma(patternsList);
-	    mutationOperatorsList = removeLastComma(mutationOperatorsList);
+	    
+	    if(patternsList.length() > 0)
+		patternsList = removeLastComma(patternsList);
+	    if(mutationOperatorsList.length() > 0)
+		mutationOperatorsList = removeLastComma(mutationOperatorsList);
 
 	    query.append("INSERT into experiment_configurations (experiment_id, number_of_runs,"
 		    + " max_evaluations, crossover_prob, mutation_prob, patterns, pattern_strategy, algorithm, mutation_operators, archive_size, population_size) VALUES (");
