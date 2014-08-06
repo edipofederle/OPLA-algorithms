@@ -53,7 +53,7 @@
 			<version>0.0.1</version>
 		</dependency>
 		<dependency>
-			<groupId>ufpr.br</groupId>
+			<groupId>opla</groupId>
 			<artifactId>opla-patterns</artifactId>
 			<version>0.0.1</version>
 		</dependency>

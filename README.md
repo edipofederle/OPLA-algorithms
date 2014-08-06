@@ -21,12 +21,12 @@ Your pom.xml already include bellow lines.
 	mvn install
 	
 ### Install local maven repo.
-	mvn install:install-file -Dfile=target/opla-core-0.0.1.jar -DgroupId=opla -DartifactId=opla-core -Dversion=0.1 -Dpackaging=jar
+	mvn install:install-file -Dfile=target/opla-core-0.0.1.jar -DgroupId=opla -DartifactId=opla-core -Dversion=0.0.1 -Dpackaging=jar
 
 
 ### Dependency OPLA-Patterns
 
-mvn install:install-file -Dfile=/Users/elf/NetBeansProjects/OPLA-Patterns/dist/OPLA-Patterns.jar -DgroupId=ufpr.br -DartifactId=opla-patterns -Dversion=0.0.1 -Dpackaging=jar
+mvn install:install-file -Dfile=/Users/elf/NetBeansProjects/OPLA-Patterns/dist/OPLA-Patterns.jar -DgroupId=opla -DartifactId=opla-patterns -Dversion=0.0.1 -Dpackaging=jar
 
 Your pom.xml already include bellow lines.
 
