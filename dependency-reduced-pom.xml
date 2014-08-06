@@ -3,7 +3,9 @@
   <modelVersion>4.0.0</modelVersion>
   <groupId>opla</groupId>
   <artifactId>opla-core</artifactId>
+  <name>opla-core</name>
   <version>0.0.1</version>
+  <url>http://github.com/edipofederle/architecture-representation</url>
   <build>
     <plugins>
       <plugin>

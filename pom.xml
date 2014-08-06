@@ -48,8 +48,8 @@
 			<type>jar</type>
 		</dependency>
 		<dependency>
-			<groupId>ufpr.br</groupId>
-			<artifactId>opla-tool</artifactId>
+			<groupId>opla</groupId>
+			<artifactId>architecture-representation</artifactId>
 			<version>0.0.1</version>
 		</dependency>
 		<dependency>
@@ -102,4 +102,6 @@
 		</plugins>
 	</build>
 
+	<url>http://github.com/edipofederle/architecture-representation</url>
+	<name>opla-core</name>
 </project>

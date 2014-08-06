@@ -4,7 +4,7 @@
 ### Install dependency on local maven repo
 	download jar from: https://www.dropbox.com/s/rw3sgyd4rgc4kgw/opla-tool-0.0.1.jar
 
-	mvn install:install-file -Dfile=opla-tool-0.0.1.jar -DgroupId=ufpr.br -DartifactId=opla-tool -Dversion=0.0.1 -Dpackaging=jar
+	mvn install:install-file -Dfile=target/architecture-representation-0.0.1.jar -DgroupId=opla -DartifactId=architecture-representation -Dversion=0.0.1 -Dpackaging=jar
 
 Your pom.xml already include bellow lines.
 
@@ -21,7 +21,7 @@ Your pom.xml already include bellow lines.
 	mvn install
 	
 ### Install local maven repo.
-	mvn install:install-file -Dfile=target/OPLA-core-0.0.1.jar -DgroupId=ufpr.br -DartifactId=opla-core -Dversion=0.1 -Dpackaging=jar
+	mvn install:install-file -Dfile=target/opla-core-0.0.1.jar -DgroupId=opla -DartifactId=opla-core -Dversion=0.1 -Dpackaging=jar
 
 
 ### Dependency OPLA-Patterns
