@@ -9,7 +9,7 @@ import jmetal.core.Problem;
 import jmetal.core.Solution;
 import jmetal.core.SolutionSet;
 import jmetal.encodings.solutionType.ArchitectureSolutionType;
-import jmetal.experiments.OPLAConfigs;
+import jmetal.experiments.ExperimentCommomConfigs;
 import jmetal.metrics.PLAMetrics.extensibility.ExtensPLA;
 import jmetal.metrics.concernDrivenMetrics.concernCohesion.LCC;
 import jmetal.metrics.concernDrivenMetrics.concernCohesion.LCCClass;
@@ -67,11 +67,12 @@ public class OPLA extends Problem {
 
     public Architecture architecture_;
     private List<String> selectedMetrics; // Vai vir da GUI
+    private ExperimentCommomConfigs configs;
 
-    public OPLA(String xmiFilePath, OPLAConfigs oplaConfig) throws Exception {
-
+    public OPLA(String xmiFilePath, ExperimentCommomConfigs oplaConfig) throws Exception {
+	this.configs = oplaConfig;
 	numberOfVariables_ = 1;
-	numberOfObjectives_ = oplaConfig.getNumberOfObjectives(); 
+	numberOfObjectives_ = oplaConfig.getOplaConfigs().getNumberOfObjectives(); 
 	numberOfConstraints_ = 0;
 	problemName_ = "OPLA";
 	solutionType_ = new ArchitectureSolutionType(this);
@@ -80,7 +81,7 @@ public class OPLA extends Problem {
 	variableType_[0] = java.lang.Class.forName(Architecture.ARCHITECTURE_TYPE);
 	architecture_ = new ArchitectureBuilder().create(xmiFilePath);
 
-	selectedMetrics = oplaConfig.getSelectedObjectiveFunctions();
+	selectedMetrics = oplaConfig.getOplaConfigs().getSelectedObjectiveFunctions();
     }
 
     @Override
@@ -288,7 +289,7 @@ public class OPLA extends Problem {
 		    // result.get(j).toString());
 
 		    result.remove(j);
-		    System.out.println("removido Dominada");
+		    this.configs.getLogger().putLog("removido Dominada");
 		    j = j - 1;
 		} else if (dominado) {
 		    // System.out.println("--------------------------------------------");
@@ -300,7 +301,7 @@ public class OPLA extends Problem {
 		    // result.get(j).toString());
 
 		    result.remove(i);
-		    System.out.println("removido Dominada");
+		    this.configs.getLogger().putLog("removido Dominada");
 		    j = i;
 		}
 	    }
@@ -318,7 +319,7 @@ public class OPLA extends Problem {
 	    for (int j = i + 1; j < result.size(); j++) {
 		if (solucao.equals(result.get(j).getDecisionVariables()[0].toString())) {
 		    result.remove(j);
-		    System.out.println("removido Repedita");
+		    this.configs.getLogger().putLog("removido Repedita");
 		}
 	    }
 	}

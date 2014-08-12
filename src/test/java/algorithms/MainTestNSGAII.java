@@ -46,7 +46,6 @@ public class MainTestNSGAII {
 	configs.setMaxEvaluations(100);
 	configs.disableCrossover();
 	configs.setMutationProbability(0.9);
-	
 	// OPLA-Patterns Configurations
 	configs.setPatterns("Mediator", "Strategy", "Bridge");
 	configs.setDesignPatternStrategy(null);

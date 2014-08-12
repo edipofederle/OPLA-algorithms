@@ -19,6 +19,7 @@ import jmetal.operators.selection.Selection;
 import jmetal.operators.selection.SelectionFactory;
 import jmetal.problems.OPLA;
 import jmetal.util.JMException;
+import logs.log_log.Level;
 import metrics.AllMetrics;
 import persistence.AllMetricsPersistenceDependency;
 import persistence.DistanceEuclideanPersistence;
@@ -76,9 +77,9 @@ public class NSGAII_OPLA_FeatMut {
 	    String plaName = getPlaName(pla);
 
 	    try {
-		problem = new OPLA(xmiFilePath, this.configs.getOplaConfigs());
+		problem = new OPLA(xmiFilePath, this.configs);
 	    } catch (Exception e) {
-		e.printStackTrace();
+		this.configs.getLogger().putLog(String.format("Error when try read architecture %s. %s", xmiFilePath, e.getMessage()));
 	    }
 
 	    Experiment experiement = mp.createExperimentOnDb(plaName, "NSGAII");
@@ -170,7 +171,6 @@ public class NSGAII_OPLA_FeatMut {
 
 		// armazena as solucoes de todas runs
 		todasRuns = todasRuns.union(resultFront);
-
 		allSolutions = allSolutions.union(resultFront);
 
 		Util.copyFolder(experiement.getId(), execution.getId());
@@ -183,7 +183,7 @@ public class NSGAII_OPLA_FeatMut {
 	    todasRuns = problem.removeDominadas(todasRuns);
 	    todasRuns = problem.removeRepetidas(todasRuns);
 
-	    System.out.println("------ All Runs - Non-dominated solutions --------");
+	    this.configs.getLogger().putLog("------ All Runs - Non-dominated solutions --------", Level.INFO);
 	    List<FunResults> funResults = result.getObjectives(todasRuns.getSolutionSet(), null, experiement);
 
 	    todasRuns.saveVariablesToFile("VAR_All_", funResults);
@@ -212,18 +212,18 @@ public class NSGAII_OPLA_FeatMut {
     }
 
     private void logInforamtions(String context, String pla) {
-	System.out.println("\n================ NSGAII ================");
-	System.out.println("Context: " + context);
-	System.out.println("PLA: " + pla);
-	System.out.println("Params:");
-	System.out.println("\tPop -> " + populationSize);
-	System.out.println("\tMaxEva -> " + maxEvaluations);
-	System.out.println("\tCross -> " + crossoverProbability);
-	System.out.println("\tMuta -> " + mutationProbability);
+	configs.getLogger().putLog("\n================ NSGAII ================", Level.INFO);
+	configs.getLogger().putLog("Context: " + context, Level.INFO);
+	configs.getLogger().putLog("PLA: " + pla, Level.INFO);
+	configs.getLogger().putLog("Params:",Level.INFO);
+	configs.getLogger().putLog("\tPop -> " + populationSize, Level.INFO);
+	configs.getLogger().putLog("\tMaxEva -> " + maxEvaluations, Level.INFO);
+	configs.getLogger().putLog("\tCross -> " + crossoverProbability, Level.INFO);
+	configs.getLogger().putLog("\tMuta -> " + mutationProbability, Level.INFO);
 
 	long heapSize = Runtime.getRuntime().totalMemory();
 	heapSize = (heapSize / 1024) / 1024;
-	System.out.println("Heap Size: " + heapSize + "Mb\n");
+	configs.getLogger().putLog("Heap Size: " + heapSize + "Mb\n");
     }
 
     private void intializeDependencies() {

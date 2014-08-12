@@ -12,5 +12,5 @@ encoding//src/main/java/persistence/ExperimentConfs.java=UTF-8
 encoding//src/main/java/results/Execution.java=UTF-8
 encoding//src/main/java/results/InfoResult.java=UTF-8
 encoding//src/test/java/algorithms/MainTestNSGAII.java=UTF-8
-encoding//src/test/java/algorithms/MainTestSpea2.java=UTF-8
+encoding//src/test/java/algorithms/MainTestPaes.java=UTF-8
 encoding//src/test/java/database/ResultTest.java=UTF-8

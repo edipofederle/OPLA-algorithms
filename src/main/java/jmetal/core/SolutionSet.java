@@ -33,9 +33,12 @@ import java.util.Comparator;
 import java.util.Iterator;
 import java.util.List;
 
-import results.FunResults;
 import jmetal.metrics.MetricsEvaluation;
 import jmetal.util.Configuration;
+import logs.log_log.Level;
+import logs.log_log.LogLog;
+import logs.log_log.Logger;
+import results.FunResults;
 import arquitetura.representation.Architecture;
 import arquitetura.representation.Concern;
 
@@ -58,7 +61,6 @@ public class SolutionSet implements Serializable {
      * Maximum size of the solution set
      */
     private int capacity_ = 0;
-
     /**
      * Constructor. Creates an unbounded solution set.
      */
@@ -338,10 +340,11 @@ public class SolutionSet implements Serializable {
     } // printVariablesToFile
 
     // added by Thelma october/2012
-    public void saveVariablesToFile(String path, List<FunResults> funResults) {
+    public void saveVariablesToFile(String path, List<FunResults> funResults, LogLog logger) {
 	int numberOfVariables = solutionsList_.get(0).getDecisionVariables().length;
-
-	System.out.println("Number of solutions: " + solutionsList_.size());
+	
+	if(logger != null)
+	    logger.putLog("Number of solutions: " + solutionsList_.size(), Level.INFO);
 	for (int i = 0; i < solutionsList_.size(); i++) {
 	    for (int j = 0; j < numberOfVariables; j++) {
 		Architecture arch = (Architecture) solutionsList_.get(i).getDecisionVariables()[j];

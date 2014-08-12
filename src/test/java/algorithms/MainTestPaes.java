@@ -9,16 +9,17 @@ import jmetal.experiments.Metrics;
 import jmetal.experiments.OPLAConfigs;
 import jmetal.experiments.PAES_OPLA_FeatMutInitializer;
 import jmetal.experiments.PaesConfigs;
+import logs.log_log.Logger;
 import arquitetura.io.ReaderConfig;
 
-public class MainTestSpea2 {
+public class MainTestPaes{
     
     public static void main(String args[]) {
 	
 	ReaderConfig.load();
 	
    	//Arquitetura(s) de entrada
-   	String plas = "/Users/elf/mestrado/sourcesMestrado/arquitetura/src/test/java/resources/agmfinal/agm.uml";
+   	String plas = "/Users/elf/NetBeansProjects/OPLA-Patterns/MicrowaveOvenSoftware/Papyrus/MicrowaveOvenSoftware.uml";
 
    	//Lista de Operadores de mutação a serem utilizados
    	List<String> operators =  new LinkedList<String>(Arrays.asList(FeatureMutationOperators.ADD_CLASS_MUTATION.getOperatorName(),
@@ -40,6 +41,11 @@ public class MainTestSpea2 {
    	configs.disableCrossover();
    	configs.setMutationProbability(0.8);
    	configs.setArchiveSize(100);
+   	
+   	//Logs
+   	configs.activeLogs();
+   	Logger.addListener(new ListenerLog());
+   	configs.setLogger(Logger.getLogger());
    	
    	//Configura onde o db esta localizado
    	configs.setPathToDb("/Users/elf/oplatool/db/oplatool.db");

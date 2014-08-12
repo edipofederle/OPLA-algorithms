@@ -9,10 +9,12 @@ import java.util.HashMap;
 import java.util.List;
 
 import arquitetura.io.ReaderConfig;
+import logs.log_log.Level;
 import metrics.AllMetrics;
 import persistence.AllMetricsPersistenceDependency;
 import persistence.DistanceEuclideanPersistence;
 import persistence.ExecutionPersistence;
+import persistence.ExperimentConfs;
 import persistence.MetricsPersistence;
 import results.Execution;
 import results.Experiment;
@@ -24,6 +26,8 @@ import exceptions.MissingConfigurationException;
 import jmetal.core.Algorithm;
 import jmetal.core.SolutionSet;
 import jmetal.metaheuristics.paes.PAES;
+import jmetal.operators.crossover.Crossover;
+import jmetal.operators.crossover.CrossoverFactory;
 import jmetal.operators.mutation.Mutation;
 import jmetal.operators.mutation.MutationFactory;
 import jmetal.operators.selection.Selection;
@@ -41,6 +45,7 @@ public class PAES_OPLA_FeatMut {
     public static int populationSize;
     public static int maxEvaluations;
     public static double mutationProbability;
+    public static double crossoverProbability;
     public String dirToSaveOutput; //Diretório que sera criado dentro do diretorio configurado no arquivo de configuracao
     
     private PaesConfigs configs;
@@ -57,41 +62,38 @@ public class PAES_OPLA_FeatMut {
 
 	int runsNumber = this.configs.getNumberOfRuns();
 	maxEvaluations = this.configs.getMaxEvaluation();
-	int archiveSize = this.configs.getArchiveSize(); //100;
+	int archiveSize = this.configs.getArchiveSize();
 	int biSections = 5; 
 	mutationProbability = this.configs.getMutationProbability();
 	this.numberObjectives = this.configs.getOplaConfigs().getNumberOfObjectives();
 	String context = "OPLA";
 
-	File directory = new File("experiment/OPLA/PAES/FeatureMutation" + "/");
-	if (!directory.exists()) {
-	    if (!directory.mkdirs()) {
-		System.out.println("Nao foi possivel criar o direorio do resultado");
-		System.exit(0);
-	    }
-	}
-
-	String plas[] = new String[] { "/Users/elf/mestrado/sourcesMestrado/arquitetura/src/test/java/resources/agmfinal/agm.uml" };
+	String plas[] = this.configs.getPlas().split(",");
 	String xmiFilePath;
 
 	for (String pla : plas) {
-
 	    xmiFilePath = pla;
-
 	    OPLA problem = null;
+	    String plaName = getPlaName(pla);
+	    
 	    try {
-		problem = new OPLA(xmiFilePath, this.configs.getOplaConfigs());
+		problem = new OPLA(xmiFilePath, this.configs);
 	    } catch (Exception e) {
-		e.printStackTrace();
+		this.configs.getLogger().putLog(String.format("Error when try read architecture %s. %s", xmiFilePath, e.getMessage()));
 	    }
+	    
+	    Experiment experiement = mp.createExperimentOnDb(plaName, "PAES");
+	    ExperimentConfs conf = new ExperimentConfs(experiement.getId(), "PAES", configs);
+	    conf.save();
 
 	    Algorithm algorithm;
 	    SolutionSet todasRuns = new SolutionSet();
-
+	    
+	    Crossover crossover;
 	    Mutation mutation;
 	    Selection selection;
 
-	    HashMap<String, Object> parameters; // Operator parameters
+	    HashMap<String, Object> parameters;
 
 	    algorithm = new PAES(problem);
 
@@ -100,8 +102,11 @@ public class PAES_OPLA_FeatMut {
 	    algorithm.setInputParameter("archiveSize", archiveSize);
 	    algorithm.setInputParameter("biSections", biSections);
 
-	    // Mutation
-
+	    // Mutation and Crossover
+	    parameters = new HashMap<String, Object>();
+	    parameters.put("probability", crossoverProbability);
+	    crossover = CrossoverFactory.getCrossoverOperator("PLACrossover", parameters);
+	    
 	    parameters = new HashMap<String, Object>();
 	    parameters.put("probability", mutationProbability);
 	    mutation = MutationFactory.getMutationOperator("PLAFeatureMutation", parameters, this.configs);
@@ -111,19 +116,17 @@ public class PAES_OPLA_FeatMut {
 	    selection = SelectionFactory.getSelectionOperator("BinaryTournament", parameters);
 
 	    // Add the operators to the algorithm
+	    algorithm.addOperator("crossover", crossover);
 	    algorithm.addOperator("mutation", mutation);
 	    algorithm.addOperator("selection", selection);
 
 	    if (this.configs.isLog())
 		logInforamtions(context, pla);
-
-	    String PLAName = getPlaName(pla);
 	    
-	    Experiment experiement = mp.createExperimentOnDb(PLAName, "PAES");
 	    List<String> selectedObjectiveFunctions = this.configs.getOplaConfigs().getSelectedObjectiveFunctions();
 	    mp.saveObjectivesNames(this.configs.getOplaConfigs().getSelectedObjectiveFunctions(), experiement.getId());
 	    
-	    result.setPlaName(PLAName);
+	    result.setPlaName(plaName);
 	    
 	    long time[] = new long[runsNumber];
 
@@ -149,7 +152,7 @@ public class PAES_OPLA_FeatMut {
 		List<InfoResult> infoResults = result.getInformations(resultFront.getSolutionSet(), execution,experiement);
 		AllMetrics allMetrics = result.getMetrics(funResults, resultFront.getSolutionSet(), execution, experiement, selectedObjectiveFunctions);
 		
-		resultFront.saveVariablesToFile("VAR_" + runs + "_", funResults);
+		resultFront.saveVariablesToFile("VAR_" + runs + "_", funResults, this.configs.getLogger());
 		
 		execution.setFuns(funResults);
 		execution.setInfos(infoResults);
@@ -162,8 +165,6 @@ public class PAES_OPLA_FeatMut {
 		} catch (SQLException e) {
 		    e.printStackTrace();
 		}
-		
-		
 		// armazena as solucoes de todas runs
 		todasRuns = todasRuns.union(resultFront);
 		
@@ -175,10 +176,10 @@ public class PAES_OPLA_FeatMut {
 	    todasRuns = problem.removeDominadas(todasRuns);
 	    todasRuns = problem.removeRepetidas(todasRuns);
 
-	    System.out.println("------    All Runs - Non-dominated solutions --------");
+	    configs.getLogger().putLog("------All Runs - Non-dominated solutions --------");
 	    
 	    List<FunResults> funResults = result.getObjectives(todasRuns.getSolutionSet(), null, experiement);
-	    todasRuns.saveVariablesToFile("VAR_All_", funResults);
+	    todasRuns.saveVariablesToFile("VAR_All_", funResults, this.configs.getLogger());
 	    
 	    mp.saveFunAll(funResults);
 	    List<InfoResult> infoResults = result.getInformations(todasRuns.getSolutionSet(), null, experiement);
@@ -214,16 +215,16 @@ public class PAES_OPLA_FeatMut {
     }
 
     private void logInforamtions(String context, String pla) {
-	System.out.println("\n================ PAES ================");
-	System.out.println("Context: " + context);
-	System.out.println("PLA: " + pla);
-	System.out.println("Params:");
-	System.out.println("\tMaxEva -> " + maxEvaluations);
-	System.out.println("\tMuta -> " + mutationProbability);
+	configs.getLogger().putLog("\n================ PAES ================", Level.INFO);
+	configs.getLogger().putLog("Context: " + context, Level.INFO);
+	configs.getLogger().putLog("PLA: " + pla, Level.INFO);
+	configs.getLogger().putLog("Params:", Level.INFO);
+	configs.getLogger().putLog("\tMaxEva -> " + maxEvaluations, Level.INFO);
+	configs.getLogger().putLog("\tMuta -> " + mutationProbability, Level.INFO);
 
 	long heapSize = Runtime.getRuntime().totalMemory();
 	heapSize = (heapSize / 1024) / 1024;
-	System.out.println("Heap Size: " + heapSize + "Mb\n");
+	configs.getLogger().putLog("Heap Size: " + heapSize + "Mb\n");
     }
 
     private static String getPlaName(String pla) {

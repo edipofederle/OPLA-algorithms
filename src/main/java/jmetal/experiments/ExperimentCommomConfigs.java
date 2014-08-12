@@ -5,6 +5,8 @@ import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
 
+import logs.log_log.LogLog;
+
 import org.apache.commons.lang.WordUtils;
 
 import br.ufpr.inf.opla.patterns.strategies.scopeselection.impl.ElementsWithSameDesignPatternSelection;
@@ -12,6 +14,7 @@ import br.ufpr.inf.opla.patterns.strategies.scopeselection.impl.ElementsWithSame
 public abstract class ExperimentCommomConfigs {
 
     private boolean log = false;
+    private LogLog logger; //Precisa para captar os logs na GUI.
     private String pathToDb;
     private int numberOfRuns;
     private int maxEvaluations;
@@ -154,7 +157,7 @@ public abstract class ExperimentCommomConfigs {
      * @return
      */
     public boolean isLog() {
-	return log;
+	return log && logger != null;
     }
 
     public String getPathToDb() {
@@ -173,7 +176,18 @@ public abstract class ExperimentCommomConfigs {
 	if (numberOfRuns < 1)
 	    throw new IllegalArgumentException(arg + " must be greater or equal 1");
     }
-    
-    
 
+    public LogLog getLogger() {
+        return logger;
+    }
+
+    /**
+     * Seta uma instância de {@link LogLog}.
+     * 
+     * @param logLog
+     */
+    public void setLogger(LogLog logLog) {
+        this.logger = logLog;
+    }
+    
 }
