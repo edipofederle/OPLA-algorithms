@@ -218,8 +218,6 @@ public class Solution implements Serializable {
 	    } // for
 	}
 
-	// System.out.println("Thelma: Tamanho da cole���ao de dependencias antes da c���pia = "+((Architecture)solution.variable_[0]).getDependencyComponentInterfaceRelationships().size());
-
 	variable_ = type_.copyVariables(solution.variable_);
 
 	overallConstraintViolation_ = solution.getOverallConstraintViolation();

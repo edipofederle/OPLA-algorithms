@@ -108,12 +108,10 @@ public class NSGAII extends Algorithm {
 	} catch (Exception e) {
 	    System.err.println(e);
 	}
-
 	
 	try {
 	    // Generations
 	    while (evaluations < maxEvaluations) {
-		System.out.println("==>" + evaluations);
 		// Create the offSpring solutionSet
 		offspringPopulation = new SolutionSet(populationSize);
 		Solution[] parents = new Solution[2];

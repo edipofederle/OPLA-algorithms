@@ -24,7 +24,6 @@ public class DesignPatternAndPLAMutation extends Mutation {
     public Object execute(Object object) throws Exception {
 	int mutationQuantity = this.pf.getMutationOperators().size();
 	int r = PseudoRandom.randInt(0, mutationQuantity);
-	System.out.println(r);
 	if(r == 0){
 	    return this.dpm.execute(object);
 	}else{

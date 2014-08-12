@@ -9,6 +9,7 @@ import jmetal.experiments.Metrics;
 import jmetal.experiments.NSGAIIConfig;
 import jmetal.experiments.NSGAII_OPLA_FeatMutInitializer;
 import jmetal.experiments.OPLAConfigs;
+import logs.log_log.Logger;
 import arquitetura.io.ReaderConfig;
 
 /**
@@ -52,6 +53,11 @@ public class MainTestNSGAII {
 	
 	//Configura onde o db esta localizado
 	configs.setPathToDb("/Users/elf/oplatool/db/oplatool.db");
+	
+	//Logs
+   	configs.activeLogs();
+   	Logger.addListener(new ListenerLog());
+   	configs.setLogger(Logger.getLogger());
 	
 	//Instancia a classe de configuracao da OPLA.java
 	OPLAConfigs oplaConfig = new OPLAConfigs();
