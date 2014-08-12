@@ -155,7 +155,7 @@ public class NSGAII_OPLA_FeatMut {
 		AllMetrics allMetrics = result.getMetrics(funResults, resultFront.getSolutionSet(), execution,
 			experiement, selectedObjectiveFunctions);
 
-		resultFront.saveVariablesToFile("VAR_" + runs + "_", funResults);
+		resultFront.saveVariablesToFile("VAR_" + runs + "_", funResults, this.configs.getLogger());
 
 		execution.setFuns(funResults);
 		execution.setInfos(infoResults);
@@ -186,7 +186,7 @@ public class NSGAII_OPLA_FeatMut {
 	    this.configs.getLogger().putLog("------ All Runs - Non-dominated solutions --------", Level.INFO);
 	    List<FunResults> funResults = result.getObjectives(todasRuns.getSolutionSet(), null, experiement);
 
-	    todasRuns.saveVariablesToFile("VAR_All_", funResults);
+	    todasRuns.saveVariablesToFile("VAR_All_", funResults, this.configs.getLogger());
 
 	    mp.saveFunAll(funResults);
 
