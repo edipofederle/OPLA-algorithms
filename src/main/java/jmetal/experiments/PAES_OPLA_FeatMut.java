@@ -170,6 +170,8 @@ public class PAES_OPLA_FeatMut {
 		
 		Util.copyFolder(experiement.getId(), execution.getId());
 		Util.moveAllFilesToExecutionDirectory(experiementId, execution.getId());
+		
+		saveHypervolume(experiement.getId(), execution.getId(), resultFront, plaName);
 
 	    }
 
@@ -194,6 +196,8 @@ public class PAES_OPLA_FeatMut {
 	    funResults = null;
 	    
 	    Util.moveAllFilesToExecutionDirectory(experiementId, null);
+	    
+	    saveHypervolume(experiement.getId(), null, todasRuns, plaName);
 	}
 	
 	Util.moveResourceToExperimentFolder(this.experiementId);
@@ -247,6 +251,21 @@ public class PAES_OPLA_FeatMut {
 	    newDir.mkdirs();
 
     }  
+    
+    private void saveHypervolume(String experimentID, String executionID, SolutionSet allSolutions, String plaName) {
+	String dir;
+	if(executionID != null)
+	    dir = ReaderConfig.getDirExportTarget() + experimentID + "/" + executionID + "/Hypervolume/";
+	else
+	    dir = ReaderConfig.getDirExportTarget() + experimentID  + "/Hypervolume/";
+	
+	File newDir = new File(dir);
+	if (!newDir.exists())
+	    newDir.mkdirs();
+
+	String moea = "NSGAII-M";
+	allSolutions.printObjectivesToFile(dir + plaName + "/" + plaName + "_HV_" + moea + ".txt");
+    }
     
     
 }

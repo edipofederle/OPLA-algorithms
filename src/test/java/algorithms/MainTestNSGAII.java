@@ -10,6 +10,7 @@ import jmetal.experiments.NSGAIIConfig;
 import jmetal.experiments.NSGAII_OPLA_FeatMutInitializer;
 import jmetal.experiments.OPLAConfigs;
 import logs.log_log.Logger;
+import main.GuiLogs;
 import arquitetura.io.ReaderConfig;
 
 /**
@@ -25,7 +26,8 @@ public class MainTestNSGAII {
 	ReaderConfig.load(); //Carrega o arquivo de configuração (application.yaml)
 	
 	//Arquitetura(s) de entrada
-	String plas = "/Users/elf/NetBeansProjects/OPLA-Patterns/MicrowaveOvenSoftware/Papyrus/MicrowaveOvenSoftware.uml";
+	//String plas = "/Users/elf/NetBeansProjects/OPLA-Patterns/MicrowaveOvenSoftware/Papyrus/MicrowaveOvenSoftware.uml";
+	String plas = "/Users/elf/mestrado/sourcesMestrado/architecture-representation/src/test/java/resources/agmfinal/agm.uml";
 
 	//Lista de Operadores de mutação a serem utilizados
 	List<String> operators =  new LinkedList<String>(Arrays.asList(FeatureMutationOperators.ADD_CLASS_MUTATION.getOperatorName(),
@@ -33,8 +35,7 @@ public class MainTestNSGAII {
 		FeatureMutationOperators.FEATURE_MUTATION.getOperatorName(),
 		FeatureMutationOperators.ADD_MANAGER_CLASS_MUTATION.getOperatorName(),
 		FeatureMutationOperators.MOVE_METHOD_MUTATION.getOperatorName(),
-		FeatureMutationOperators.MOVE_OPERATION_MUTATION.getOperatorName(),
-		FeatureMutationOperators.DESIGN_PATTERNS.getOperatorName()));
+		FeatureMutationOperators.MOVE_OPERATION_MUTATION.getOperatorName()));
 	
 	//Intancia a classe de configuracoes
 	NSGAIIConfig configs = new NSGAIIConfig();
@@ -42,14 +43,14 @@ public class MainTestNSGAII {
 	// Seta os parametros desejados
 	configs.setMutationOperators(operators);
 	configs.setPlas(plas);
-	configs.setNumberOfRuns(3);
+	configs.setNumberOfRuns(5);
 	configs.setPopulationSize(30);
 	configs.setMaxEvaluations(100);
 	configs.disableCrossover();
 	configs.setMutationProbability(0.9);
 	// OPLA-Patterns Configurations
-	configs.setPatterns("Mediator", "Strategy", "Bridge");
-	configs.setDesignPatternStrategy(null);
+	//configs.setPatterns("Mediator", "Strategy", "Bridge");
+	//configs.setDesignPatternStrategy(null);
 	
 	//Configura onde o db esta localizado
 	configs.setPathToDb("/Users/elf/oplatool/db/oplatool.db");
@@ -58,17 +59,14 @@ public class MainTestNSGAII {
    	configs.activeLogs();
    	Logger.addListener(new ListenerLog());
    	configs.setLogger(Logger.getLogger());
+   	GuiLogs.setLogger(Logger.getLogger());
 	
 	//Instancia a classe de configuracao da OPLA.java
 	OPLAConfigs oplaConfig = new OPLAConfigs();
 	
 	
 	//Quais funções objetivo deseja-se utilizar
-	List<String> selectedObjectiveFunctions = Arrays.asList(
-		Metrics.ELEGANCE.getName(),
-		Metrics.CONVENTIONAL.getName(),
-		Metrics.PLA_EXTENSIBILIY.getName(),
-		Metrics.FEATURE_DRIVEN.getName());
+	List<String> selectedObjectiveFunctions = Arrays.asList(Metrics.CONVENTIONAL.getName(), Metrics.FEATURE_DRIVEN.getName());
 	
 	oplaConfig.setSelectedObjectiveFunctions(selectedObjectiveFunctions);
 

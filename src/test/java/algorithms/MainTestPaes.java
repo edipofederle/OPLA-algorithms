@@ -19,8 +19,8 @@ public class MainTestPaes{
 	ReaderConfig.load();
 	
    	//Arquitetura(s) de entrada
-   	String plas = "/Users/elf/NetBeansProjects/OPLA-Patterns/MicrowaveOvenSoftware/Papyrus/MicrowaveOvenSoftware.uml";
-
+   	//String plas = "/Users/elf/NetBeansProjects/OPLA-Patterns/MicrowaveOvenSoftware/Papyrus/MicrowaveOvenSoftware.uml";
+	String plas = "/Users/elf/mestrado/sourcesMestrado/architecture-representation/src/test/java/resources/agmfinal/agm.uml";
    	//Lista de Operadores de mutação a serem utilizados
    	List<String> operators =  new LinkedList<String>(Arrays.asList(FeatureMutationOperators.ADD_CLASS_MUTATION.getOperatorName(),
    		FeatureMutationOperators.MOVE_ATTRIBUTE_MUTATION.getOperatorName(),
@@ -35,7 +35,7 @@ public class MainTestPaes{
    	// Seta os parametros desejados
    	configs.setMutationOperators(operators);
    	configs.setPlas(plas);
-   	configs.setNumberOfRuns(3);
+   	configs.setNumberOfRuns(5);
    	//configs.setPopulationSize(10); // somente no nsgaii, migrar para classe concreta
    	configs.setMaxEvaluations(100);
    	configs.disableCrossover();
@@ -54,8 +54,7 @@ public class MainTestPaes{
    	OPLAConfigs oplaConfig = new OPLAConfigs();
    	
 	//Quais funções objetivo deseja-se utilizar
-	List<String> selectedObjectiveFunctions = Arrays.asList(Metrics.ELEGANCE.getName(), Metrics.CONVENTIONAL.getName(),
-   		Metrics.PLA_EXTENSIBILIY.getName(), Metrics.FEATURE_DRIVEN.getName());
+	List<String> selectedObjectiveFunctions = Arrays.asList(Metrics.CONVENTIONAL.getName(), Metrics.FEATURE_DRIVEN.getName());
 	
    	oplaConfig.setSelectedObjectiveFunctions(selectedObjectiveFunctions);
 

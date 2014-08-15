@@ -6,7 +6,6 @@ import java.util.Collections;
 import java.util.List;
 
 import logs.log_log.LogLog;
-import main.GuiLogs;
 
 import org.apache.commons.lang.WordUtils;
 
@@ -188,7 +187,6 @@ public abstract class ExperimentCommomConfigs {
      * @param logLog
      */
     public void setLogger(LogLog logLog) {
-	GuiLogs.setLogger(logLog);
         this.logger = logLog;
     }
     

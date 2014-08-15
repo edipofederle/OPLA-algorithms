@@ -88,7 +88,6 @@ public class NSGAII_OPLA_FeatMut {
 
 	    Algorithm algorithm;
 	    SolutionSet todasRuns = new SolutionSet();
-	    SolutionSet allSolutions = new SolutionSet();
 
 	    Crossover crossover;
 	    Mutation mutation;
@@ -171,14 +170,13 @@ public class NSGAII_OPLA_FeatMut {
 
 		// armazena as solucoes de todas runs
 		todasRuns = todasRuns.union(resultFront);
-		allSolutions = allSolutions.union(resultFront);
 
 		Util.copyFolder(experiement.getId(), execution.getId());
 		Util.moveAllFilesToExecutionDirectory(experiementId, execution.getId());
+		
+		saveHypervolume(experiement.getId(), execution.getId(), resultFront, plaName);
 
 	    }
-
-	    saveHypervolume(experiement.getId(), allSolutions, plaName);
 
 	    todasRuns = problem.removeDominadas(todasRuns);
 	    todasRuns = problem.removeRepetidas(todasRuns);
@@ -205,9 +203,13 @@ public class NSGAII_OPLA_FeatMut {
 	    funResults = null;
 
 	    Util.moveAllFilesToExecutionDirectory(experiementId, null);
+	    
+	    saveHypervolume(experiement.getId(), null, todasRuns, plaName);
 	}
 
 	Util.moveResourceToExperimentFolder(this.experiementId);
+	
+	
 
     }
 
@@ -260,8 +262,13 @@ public class NSGAII_OPLA_FeatMut {
 	    newDir.mkdirs();
     }
 
-    private void saveHypervolume(String experimentID, SolutionSet allSolutions, String plaName) {
-	String dir = ReaderConfig.getDirExportTarget() + experimentID + "/Hypervolume/";
+    private void saveHypervolume(String experimentID, String executionID, SolutionSet allSolutions, String plaName) {
+	String dir;
+	if(executionID != null)
+	    dir = ReaderConfig.getDirExportTarget() + experimentID + "/" + executionID + "/Hypervolume/";
+	else
+	    dir = ReaderConfig.getDirExportTarget() + experimentID  + "/Hypervolume/";
+	
 	File newDir = new File(dir);
 	if (!newDir.exists())
 	    newDir.mkdirs();
