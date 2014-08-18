@@ -42,11 +42,13 @@ public class MainTestNSGAII {
 	// Seta os parametros desejados
 	configs.setMutationOperators(operators);
 	configs.setPlas(plas);
-	configs.setNumberOfRuns(5);
-	configs.setPopulationSize(30);
-	configs.setMaxEvaluations(100);
+	configs.setNumberOfRuns(20);
+	configs.setPopulationSize(40);
+	configs.setMaxEvaluations(200);
 	configs.disableCrossover();
 	configs.setMutationProbability(0.9);
+	configs.setDescription("Alguma descricao sobre");
+	
 	// OPLA-Patterns Configurations
 	//configs.setPatterns("Mediator", "Strategy", "Bridge");
 	//configs.setDesignPatternStrategy(null);

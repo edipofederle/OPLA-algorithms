@@ -32,6 +32,7 @@ public class Experiment {
 
     private String id;
     private String name;
+    private String description;
     private String algorithm;
     private String createdAt;
     private List<Execution> executions;
@@ -43,9 +44,10 @@ public class Experiment {
      * @param description
      * @throws Exception
      */
-    public Experiment(String name, String algorithm) throws Exception {
+    public Experiment(String name, String algorithm, String description) throws Exception {
 	this.name = name;
 	this.algorithm = algorithm;
+	this.description = description;
 	this.id = givenId();
 	this.createdAt = setCreatedAt();
     }
@@ -77,16 +79,27 @@ public class Experiment {
     public void setCreatedAt(String createdAt) {
 	this.createdAt = createdAt;
     }
+    
+
+    public String getDescription() {
+        return description;
+    }
+
+    public void setDescription(String description) {
+        this.description = description;
+    }
 
     private String makeQuery() {
 	StringBuilder sb = new StringBuilder();
-	sb.append("insert into experiments (id, name, algorithm, created_at) ");
+	sb.append("insert into experiments (id, name, algorithm, description, created_at) ");
 	sb.append("values (");
 	sb.append(this.id);
 	sb.append(",'");
 	sb.append(this.name);
 	sb.append("','");
 	sb.append(this.algorithm);
+	sb.append("','");
+	sb.append(this.description);
 	sb.append("','");
 	sb.append(this.getCreatedAt());
 	sb.append("')");
@@ -122,7 +135,7 @@ public class Experiment {
 
     /**
      * Return all Experiments.<br/>
-     * </br> Once this method is static, and maybe databsae URL isn't yet seted,
+     * </br> Once this method is static, and maybe database URL isn't yet seted,
      * you need supply a database URL before. To do that:
      * 
      * <code>Database.setURL("path/to/db/file");</code>>
@@ -142,7 +155,7 @@ public class Experiment {
 	r = staementExperiement.executeQuery("select * from experiments");
 
 	while (r.next()) {
-	    Experiment exp = new Experiment(r.getString(attrs[1]), r.getString(attrs[2]));
+	    Experiment exp = new Experiment(r.getString(attrs[1]), r.getString(attrs[2]), r.getString(attrs[3]));
 	    exp.setId(r.getString(attrs[0]));
 	    List<Execution> execs = buildExecutions(r.getString(attrs[0]), exp, connection);
 	    exp.setCreatedAt(r.getString(attrs[3]));

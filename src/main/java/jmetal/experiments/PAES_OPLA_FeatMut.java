@@ -82,7 +82,7 @@ public class PAES_OPLA_FeatMut {
 		this.configs.getLogger().putLog(String.format("Error when try read architecture %s. %s", xmiFilePath, e.getMessage()));
 	    }
 	    
-	    Experiment experiement = mp.createExperimentOnDb(plaName, "PAES");
+	    Experiment experiement = mp.createExperimentOnDb(plaName, "PAES", configs.getDescription());
 	    ExperimentConfs conf = new ExperimentConfs(experiement.getId(), "PAES", configs);
 	    conf.save();
 
@@ -263,7 +263,7 @@ public class PAES_OPLA_FeatMut {
 	if (!newDir.exists())
 	    newDir.mkdirs();
 
-	allSolutions.printObjectivesToFile(dir + plaName + "/hypervolume.txt");
+	allSolutions.printObjectivesToFile(dir + "/hypervolume.txt");
     }
     
     

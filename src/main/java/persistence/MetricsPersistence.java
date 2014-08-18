@@ -49,10 +49,10 @@ public class MetricsPersistence {
 	funsPersistence = null;
     }
 
-    public Experiment createExperimentOnDb(String PLAName, String description) {
+    public Experiment createExperimentOnDb(String PLAName, String algorithm, String description) {
 	Experiment experiement = null;
 	try {
-	    experiement = new Experiment(PLAName, description);
+	    experiement = new Experiment(PLAName, algorithm, description);
 	    experiement.save();
 	} catch (Exception e) {
 	    e.printStackTrace();
