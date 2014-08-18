@@ -10,7 +10,6 @@ import jmetal.experiments.NSGAIIConfig;
 import jmetal.experiments.NSGAII_OPLA_FeatMutInitializer;
 import jmetal.experiments.OPLAConfigs;
 import logs.log_log.Logger;
-import main.GuiLogs;
 import arquitetura.io.ReaderConfig;
 
 /**
@@ -59,7 +58,6 @@ public class MainTestNSGAII {
    	configs.activeLogs();
    	Logger.addListener(new ListenerLog());
    	configs.setLogger(Logger.getLogger());
-   	GuiLogs.setLogger(Logger.getLogger());
 	
 	//Instancia a classe de configuracao da OPLA.java
 	OPLAConfigs oplaConfig = new OPLAConfigs();

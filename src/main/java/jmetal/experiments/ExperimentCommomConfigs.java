@@ -13,6 +13,7 @@ import br.ufpr.inf.opla.patterns.strategies.scopeselection.impl.ElementsWithSame
 
 public abstract class ExperimentCommomConfigs {
 
+    
     private boolean log = false;
     private LogLog logger; //Precisa para captar os logs na GUI.
     private String pathToDb;
@@ -23,6 +24,7 @@ public abstract class ExperimentCommomConfigs {
     private String plas;
     private OPLAConfigs oplaConfigs;
     private String[] patterns = null; //OPLA-Patterns....
+    private String description;
 
     private List<String> mutationOperators = new ArrayList<String>();
     private ElementsWithSameDesignPatternSelection applyStrategy;
@@ -189,5 +191,15 @@ public abstract class ExperimentCommomConfigs {
     public void setLogger(LogLog logLog) {
         this.logger = logLog;
     }
+
+    public String getDescription() {
+        return description;
+    }
+
+    public void setDescription(String description) {
+        this.description = description;
+    }
+    
+    
     
 }
