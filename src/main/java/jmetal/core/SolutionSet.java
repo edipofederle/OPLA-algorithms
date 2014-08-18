@@ -37,7 +37,6 @@ import jmetal.metrics.MetricsEvaluation;
 import jmetal.util.Configuration;
 import logs.log_log.Level;
 import logs.log_log.LogLog;
-import logs.log_log.Logger;
 import results.FunResults;
 import arquitetura.representation.Architecture;
 import arquitetura.representation.Concern;
@@ -268,10 +267,11 @@ public class SolutionSet implements Serializable {
 
 	    for (int i = 0; i < solutionsList_.size(); i++) {
 		// if (this.vector[i].getFitness()<1.0) {
-		bw.write(solutionsList_.get(i).toString()); // returns something
+		bw.write(solutionsList_.get(i).toString().trim().replaceAll(" ", ", ")); // returns something
 							    // like this: 744.0
 							    // 6.142857142857143
 		bw.newLine();
+		
 		// }
 	    }
 

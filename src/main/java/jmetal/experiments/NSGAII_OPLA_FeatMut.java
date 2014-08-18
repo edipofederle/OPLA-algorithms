@@ -273,8 +273,7 @@ public class NSGAII_OPLA_FeatMut {
 	if (!newDir.exists())
 	    newDir.mkdirs();
 
-	String moea = "NSGAII-M";
-	allSolutions.printObjectivesToFile(dir + plaName + "/" + plaName + "_HV_" + moea + ".txt");
+	allSolutions.printObjectivesToFile(dir + plaName + "/hypervolume.txt");
     }
 
 }
