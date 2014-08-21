@@ -67,11 +67,16 @@ public class MetricsPersistence {
 	persistePlaExtensibility(execution.getAllMetrics().getPlaExtensibility());
     }
 
-    public void persisteMetrics(AllMetrics allMetrics) {
-	persisteElegance(allMetrics.getElegance());
-	persisteFeatureDriven(allMetrics.getFeatureDriven());
-	persisteConventional(allMetrics.getConventional());
-	persistePlaExtensibility(allMetrics.getPlaExtensibility());
+    //TODO BUG HERE
+    public void persisteMetrics(AllMetrics allMetrics, List<String> list) {
+	if (list.contains("elegance"))
+	    persisteElegance(allMetrics.getElegance());
+	if (list.contains("featureDriven"))
+	    persisteFeatureDriven(allMetrics.getFeatureDriven());
+	if (list.contains("conventional"))
+	    persisteConventional(allMetrics.getConventional());
+	if (list.contains("PLAExtensibility"))
+	    persistePlaExtensibility(allMetrics.getPlaExtensibility());
     }
 
     private void persistePlaExtensibility(List<PLAExtensibility> plaExt) {

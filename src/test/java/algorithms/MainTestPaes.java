@@ -26,8 +26,8 @@ public class MainTestPaes{
    		FeatureMutationOperators.MOVE_ATTRIBUTE_MUTATION.getOperatorName(),
    		FeatureMutationOperators.FEATURE_MUTATION.getOperatorName(),
    		FeatureMutationOperators.ADD_MANAGER_CLASS_MUTATION.getOperatorName(),
-   		FeatureMutationOperators.MOVE_METHOD_MUTATION.getOperatorName(),
-   		FeatureMutationOperators.MOVE_OPERATION_MUTATION.getOperatorName()));
+   		FeatureMutationOperators.MOVE_METHOD_MUTATION.getOperatorName()));
+   	//	FeatureMutationOperators.MOVE_OPERATION_MUTATION.getOperatorName()));
    	
    	//Intancia a classe de configuracoes
    	PaesConfigs configs = new PaesConfigs();
@@ -35,12 +35,13 @@ public class MainTestPaes{
    	// Seta os parametros desejados
    	configs.setMutationOperators(operators);
    	configs.setPlas(plas);
-   	configs.setNumberOfRuns(5);
+   	configs.setNumberOfRuns(20);
    	//configs.setPopulationSize(10); // somente no nsgaii, migrar para classe concreta
-   	configs.setMaxEvaluations(100);
+   	configs.setMaxEvaluations(50);
    	configs.disableCrossover();
-   	configs.setMutationProbability(0.8);
+   	configs.setMutationProbability(1.0);
    	configs.setArchiveSize(100);
+   	configs.setDescription("SEM MOVE_OPERATION_MUTATION");
    	
    	//Logs
    	configs.activeLogs();
@@ -54,7 +55,7 @@ public class MainTestPaes{
    	OPLAConfigs oplaConfig = new OPLAConfigs();
    	
 	//Quais funções objetivo deseja-se utilizar
-	List<String> selectedObjectiveFunctions = Arrays.asList(Metrics.CONVENTIONAL.getName(), Metrics.FEATURE_DRIVEN.getName());
+	List<String> selectedObjectiveFunctions = Arrays.asList(Metrics.CONVENTIONAL.getName(), Metrics.FEATURE_DRIVEN.getName(), Metrics.PLA_EXTENSIBILIY.getName());
 	
    	oplaConfig.setSelectedObjectiveFunctions(selectedObjectiveFunctions);
 

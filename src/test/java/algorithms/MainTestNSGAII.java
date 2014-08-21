@@ -32,8 +32,8 @@ public class MainTestNSGAII {
 	List<String> operators =  new LinkedList<String>(Arrays.asList(FeatureMutationOperators.ADD_CLASS_MUTATION.getOperatorName(),
 		FeatureMutationOperators.MOVE_ATTRIBUTE_MUTATION.getOperatorName(),
 		FeatureMutationOperators.FEATURE_MUTATION.getOperatorName(),
-		FeatureMutationOperators.ADD_MANAGER_CLASS_MUTATION.getOperatorName(),
-		FeatureMutationOperators.MOVE_METHOD_MUTATION.getOperatorName(),
+//		FeatureMutationOperators.ADD_MANAGER_CLASS_MUTATION.getOperatorName(),
+//		FeatureMutationOperators.MOVE_METHOD_MUTATION.getOperatorName(),
 		FeatureMutationOperators.MOVE_OPERATION_MUTATION.getOperatorName()));
 	
 	//Intancia a classe de configuracoes
@@ -44,10 +44,10 @@ public class MainTestNSGAII {
 	configs.setPlas(plas);
 	configs.setNumberOfRuns(20);
 	configs.setPopulationSize(40);
-	configs.setMaxEvaluations(200);
+	configs.setMaxEvaluations(50);
 	configs.disableCrossover();
 	configs.setMutationProbability(0.9);
-	configs.setDescription("Alguma descricao sobre");
+	configs.setDescription("Sem ADD_MANAGER_CLASS_MUTATION e sem  MOVE_METHOD_MUTATION");
 	
 	// OPLA-Patterns Configurations
 	//configs.setPatterns("Mediator", "Strategy", "Bridge");
@@ -66,7 +66,7 @@ public class MainTestNSGAII {
 	
 	
 	//Quais funções objetivo deseja-se utilizar
-	List<String> selectedObjectiveFunctions = Arrays.asList(Metrics.CONVENTIONAL.getName(), Metrics.FEATURE_DRIVEN.getName());
+	List<String> selectedObjectiveFunctions = Arrays.asList(Metrics.CONVENTIONAL.getName(), Metrics.FEATURE_DRIVEN.getName(), Metrics.PLA_EXTENSIBILIY.getName());
 	
 	oplaConfig.setSelectedObjectiveFunctions(selectedObjectiveFunctions);
 

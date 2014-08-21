@@ -179,24 +179,28 @@ public class PAES_OPLA_FeatMut {
 	    todasRuns = problem.removeRepetidas(todasRuns);
 
 	    configs.getLogger().putLog("------All Runs - Non-dominated solutions --------");
-	    
 	    List<FunResults> funResults = result.getObjectives(todasRuns.getSolutionSet(), null, experiement);
+	    
 	    todasRuns.saveVariablesToFile("VAR_All_", funResults, this.configs.getLogger());
 	    
 	    mp.saveFunAll(funResults);
+	    
 	    List<InfoResult> infoResults = result.getInformations(todasRuns.getSolutionSet(), null, experiement);
 	    mp.saveInfoAll(infoResults);
 	    
+	    AllMetrics allMetrics = result.getMetrics(funResults, todasRuns.getSolutionSet(), null, experiement,
+		    selectedObjectiveFunctions);
+	    mp.persisteMetrics(allMetrics, this.configs.getOplaConfigs().getSelectedObjectiveFunctions());
+	    mp = null;
+	    
 	    setDirToSaveOutput(experiement.getId(), null);
+	    
 	    CalculaEd c = new CalculaEd();
 	    DistanceEuclideanPersistence.save(c.calcula(this.experiementId, this.numberObjectives), this.experiementId);
-	    
-	    
 	    infoResults = null;
 	    funResults = null;
 	    
 	    Util.moveAllFilesToExecutionDirectory(experiementId, null);
-	    
 	    saveHypervolume(experiement.getId(), null, todasRuns, plaName);
 	}
 	

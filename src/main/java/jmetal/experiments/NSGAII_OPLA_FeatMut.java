@@ -193,8 +193,9 @@ public class NSGAII_OPLA_FeatMut {
 
 	    AllMetrics allMetrics = result.getMetrics(funResults, todasRuns.getSolutionSet(), null, experiement,
 		    selectedObjectiveFunctions);
-	    mp.persisteMetrics(allMetrics);
+	    mp.persisteMetrics(allMetrics, this.configs.getOplaConfigs().getSelectedObjectiveFunctions());
 	    mp = null;
+	    
 	    setDirToSaveOutput(experiement.getId(), null);
 
 	    CalculaEd c = new CalculaEd();
@@ -203,13 +204,10 @@ public class NSGAII_OPLA_FeatMut {
 	    funResults = null;
 
 	    Util.moveAllFilesToExecutionDirectory(experiementId, null);
-	    
 	    saveHypervolume(experiement.getId(), null, todasRuns, plaName);
 	}
 
 	Util.moveResourceToExperimentFolder(this.experiementId);
-	
-	
 
     }
 
