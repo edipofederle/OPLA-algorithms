@@ -146,7 +146,7 @@ public class Experiment {
      * @throws Exception
      */
     public static List<Experiment> all() throws SQLException, Exception {
-	String attrs[] = { "id", "name", "algorithm", "created_at" };
+	String attrs[] = { "id", "name", "algorithm", "created_at", "description" };
 	List<Experiment> experiements = new ArrayList<Experiment>();
 	ResultSet r = null;
 	Connection connection = Database.getConnection();
@@ -160,6 +160,7 @@ public class Experiment {
 	    List<Execution> execs = buildExecutions(r.getString(attrs[0]), exp, connection);
 	    exp.setCreatedAt(r.getString(attrs[3]));
 	    exp.setExecutions(execs);
+	    exp.setDescription(r.getString(attrs[4]));
 	    experiements.add(exp);
 	}
 	r.close();
