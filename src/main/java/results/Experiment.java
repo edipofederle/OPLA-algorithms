@@ -80,9 +80,18 @@ public class Experiment {
 	this.createdAt = createdAt;
     }
     
-
     public String getDescription() {
         return description;
+    }
+    
+    public String getAlgorithmAndDescription(){
+	StringBuilder sb = new StringBuilder();
+	sb.append(this.getName());
+	sb.append(" (");
+	sb.append(this.description);
+	sb.append(")");
+	
+	return sb.toString();
     }
 
     public void setDescription(String description) {
