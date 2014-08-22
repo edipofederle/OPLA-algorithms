@@ -85,13 +85,17 @@ public class Experiment {
     }
     
     public String getAlgorithmAndDescription(){
-	StringBuilder sb = new StringBuilder();
-	sb.append(this.getName());
-	sb.append(" (");
-	sb.append(this.description);
-	sb.append(")");
+	if(this.description != null){
+        	StringBuilder sb = new StringBuilder();
+        	sb.append(this.getName());
+        	sb.append(" (");
+        	sb.append(this.description);
+        	sb.append(")");
+        	
+        	return sb.toString();
+	}
 	
-	return sb.toString();
+	return this.algorithm;
     }
 
     public void setDescription(String description) {
