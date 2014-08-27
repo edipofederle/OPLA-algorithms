@@ -1,7 +1,9 @@
 package jmetal.experiments;
+import java.math.RoundingMode;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.text.NumberFormat;
 import java.util.HashMap;
 
 import org.apache.log4j.Level;
@@ -16,9 +18,14 @@ import exceptions.MissingConfigurationException;
 public class CalculaEd {
 
     private MetricsUtil mu;
-
+    private NumberFormat format = NumberFormat.getInstance();
+    
     public CalculaEd() {
 	mu = new MetricsUtil();
+	format.setMaximumFractionDigits(2);  
+	format.setMinimumFractionDigits(2);  
+	format.setMaximumIntegerDigits(2);  
+	format.setRoundingMode(RoundingMode.HALF_UP);  
     }
     
     /**
@@ -40,9 +47,13 @@ public class CalculaEd {
 	double[] min = mu.getMinimumValues(front, numberObjectives);
 
 	for (int i = 0; i < front.length; i++) 
-	    results.put(names[i],  mu.distance(min, front[i]));
+	    results.put(names[i],  format(mu.distance(min, front[i])));
 
 	return results;
+    }
+    
+    private Double format(Double number){
+	return Double.valueOf(format.format(number));
     }
 
 

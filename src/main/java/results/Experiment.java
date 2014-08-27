@@ -79,27 +79,26 @@ public class Experiment {
     public void setCreatedAt(String createdAt) {
 	this.createdAt = createdAt;
     }
-    
+
     public String getDescription() {
-        return description;
+	return description;
     }
-    
-    public String getAlgorithmAndDescription(){
-	if(this.description != null){
-        	StringBuilder sb = new StringBuilder();
-        	sb.append(this.getName());
-        	sb.append(" (");
-        	sb.append(this.description);
-        	sb.append(")");
-        	
-        	return sb.toString();
-	}
-	
-	return this.algorithm;
+
+    public String getAlgorithmAndDescription() {
+	if ("null".equals(this.description))
+	    return this.algorithm;
+
+	StringBuilder sb = new StringBuilder();
+	sb.append(this.getName());
+	sb.append(" (");
+	sb.append(this.description);
+	sb.append(")");
+
+	return sb.toString();
     }
 
     public void setDescription(String description) {
-        this.description = description;
+	this.description = description;
     }
 
     private String makeQuery() {
@@ -417,5 +416,5 @@ public class Experiment {
 	}
 	return funs;
     }
-    
+
 }
