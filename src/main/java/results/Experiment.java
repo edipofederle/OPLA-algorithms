@@ -89,7 +89,7 @@ public class Experiment {
 	    return this.algorithm;
 
 	StringBuilder sb = new StringBuilder();
-	sb.append(this.getName());
+	sb.append(this.getAlgorithm());
 	sb.append(" (");
 	sb.append(this.description);
 	sb.append(")");
