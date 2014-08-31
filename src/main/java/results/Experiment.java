@@ -86,7 +86,7 @@ public class Experiment {
 
     public String getAlgorithmAndDescription() {
 	if ("null".equals(this.description))
-	    return this.algorithm;
+	    return this.getAlgorithm();
 
 	StringBuilder sb = new StringBuilder();
 	sb.append(this.getAlgorithm());

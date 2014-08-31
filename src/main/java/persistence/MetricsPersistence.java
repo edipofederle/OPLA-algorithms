@@ -67,7 +67,6 @@ public class MetricsPersistence {
 	persistePlaExtensibility(execution.getAllMetrics().getPlaExtensibility());
     }
 
-    //TODO BUG HERE
     public void persisteMetrics(AllMetrics allMetrics, List<String> list) {
 	if (list.contains("elegance"))
 	    persisteElegance(allMetrics.getElegance());
