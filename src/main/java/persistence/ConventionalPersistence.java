@@ -51,7 +51,7 @@ public class ConventionalPersistence {
 	if (conventional.getExecution() == null)
 	    query.append("1");
 	else
-	    query.append("2");
+	    query.append("0");
 	query.append(",");
 	query.append(conventional.getExperiement().getId());
 	query.append(",");
