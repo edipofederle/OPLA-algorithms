@@ -49,7 +49,7 @@ public class ConventionalPersistenceTest {
 	String expectedQuery = "insert into ConventionalMetrics (choesion,"
 		+ " macAggregation, meanDepComps, meanNumOps, sumClassesDepIn,"
 		+ " sumClassesDepOut, sumDepIn, sumDepOut, execution_id, is_all, experiement_id, id_solution)"
-		+ " values (10.0,47.1,10.0,10.0,11.0,12.0,1.0,3.0,1,2,null,1)";
+		+ " values (10.0,47.1,10.0,10.0,11.0,12.0,1.0,3.0,1,0,null,1)";
 
 	persistence.save(conventionalMetrics);
 
