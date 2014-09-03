@@ -19,8 +19,9 @@ public class MainTestPaes{
 	ReaderConfig.load();
 	
    	//Arquitetura(s) de entrada
-   	//String plas = "/Users/elf/NetBeansProjects/OPLA-Patterns/MicrowaveOvenSoftware/Papyrus/MicrowaveOvenSoftware.uml";
 	String plas = "/Users/elf/mestrado/sourcesMestrado/architecture-representation/src/test/java/resources/agmfinal/agm.uml";
+	//String plas = "/Users/elf/mestrado/sourcesMestrado/architecture-representation/src/test/java/resources/agmfinal/agm.uml";
+	//String plas = "/Users/elf/NetBeansProjects/OPLA-Patterns/BeT/Papyrus/BeT.uml";
    	//Lista de Operadores de mutação a serem utilizados
    	List<String> operators =  new LinkedList<String>(Arrays.asList(FeatureMutationOperators.ADD_CLASS_MUTATION.getOperatorName(),
    		FeatureMutationOperators.MOVE_ATTRIBUTE_MUTATION.getOperatorName(),
@@ -37,11 +38,15 @@ public class MainTestPaes{
    	configs.setPlas(plas);
    	configs.setNumberOfRuns(30);
    	//configs.setPopulationSize(10); // somente no nsgaii, migrar para classe concreta
-   	configs.setMaxEvaluations(1000);
+   	configs.setMaxEvaluations(10000);
    	configs.disableCrossover();
    	configs.setMutationProbability(0.9);
    	configs.setArchiveSize(100);
-   	configs.setDescription("max evaluations 70");
+   	configs.setDescription("max evaluations 10000");
+   	
+//	// OPLA-Patterns Configurations
+//	configs.setPatterns("Mediator", "Strategy", "Bridge");
+//	configs.setDesignPatternStrategy(null);
    	
    	//Logs
    	configs.activeLogs();

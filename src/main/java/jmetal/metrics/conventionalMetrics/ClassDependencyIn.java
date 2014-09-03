@@ -1,4 +1,5 @@
 package jmetal.metrics.conventionalMetrics;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -10,57 +11,56 @@ import arquitetura.representation.relationship.Relationship;
 
 public class ClassDependencyIn {
 
-	/**
-	 * @param args
-	 */
-	private Architecture architecture;
-	private int results;
-	
-	public ClassDependencyIn(Architecture architecture) {
-	
+    /**
+     * @param args
+     */
+    private Architecture architecture;
+    private int results;
+
+    public ClassDependencyIn(Architecture architecture) {
+
 	this.architecture = architecture;
 	this.results = 0;
-	int depIn =0;
-	
-	
-	//EDIPO - Mudei para Pacote....
+	int depIn = 0;
+
 	for (Package component : this.architecture.getAllPackages()) {
-		for (Class cls: component.getAllClasses()){
-			depIn += searchClassDependencies(cls, component);
-			//System.out.println("DepIn- Classe: "+ cls.getName() + " :" + depIn);
-		}
-		
-		this.results += depIn; // somatorio de DepIn da arquitetura como um todo
-		depIn= 0;
+	    for (Class cls : component.getAllClasses()) {
+		depIn += searchClassDependencies(cls, component);
+		// System.out.println("DepIn- Classe: "+ cls.getName() + " :" +
+		// depIn);
+	    }
+
+	    this.results += depIn; // somatorio de DepIn da arquitetura como um todo
+	    depIn = 0;
 	}
-	
-}
 
-//----------------------------------------------------------------------------------
+    }
 
-	private int searchClassDependencies (Class source, Package comp){
-		List<Class> depClasses = new ArrayList<Class> ();
-			
-		for (Class c: comp.getAllClasses()){
-			List<Relationship> relationships = new ArrayList<Relationship> (source.getRelationships());
-			for (Relationship relationship : relationships) {
-								
-				if (relationship instanceof DependencyRelationship){
-					DependencyRelationship dependency = (DependencyRelationship) relationship;
-					if (dependency.getSupplier().equals(source) && (!(depClasses.contains(c)))) {
-						depClasses.add(c);
-					}
-				}
-			}
-		}//end for classes
-		
-		return depClasses.size();
+    // ----------------------------------------------------------------------------------
+
+    private int searchClassDependencies(Class source, Package comp) {
+	List<Class> depClasses = new ArrayList<Class>();
+
+	for (Class c : comp.getAllClasses()) {
+	    List<Relationship> relationships = new ArrayList<Relationship>(source.getRelationships());
+	    for (Relationship relationship : relationships) {
+
+		if (relationship instanceof DependencyRelationship) {
+		    DependencyRelationship dependency = (DependencyRelationship) relationship;
+		    if (dependency.getSupplier().equals(source) && (!(depClasses.contains(c)))) {
+			depClasses.add(c);
+		    }
 		}
+	    }
+	}// end for classes
 
-	// ---------------------------------------------------------------------------------
+	return depClasses.size();
+    }
 
-	public int getResults() {
-			return results;
-		}
-	
+    // ---------------------------------------------------------------------------------
+
+    public int getResults() {
+	return results;
+    }
+
 }

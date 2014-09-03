@@ -51,7 +51,7 @@ public class MetricsEvaluation {
     }
 
     public double evaluateElegance(Architecture architecture) {
-	double EleganceFitness = 0.0;
+	Double EleganceFitness = 0.0;
 	EleganceFitness = evaluateATMRElegance(architecture) + evaluateECElegance(architecture)
 		+ evaluateNACElegance(architecture);
 	return EleganceFitness;
@@ -70,14 +70,14 @@ public class MetricsEvaluation {
     }
 
     public double evaluateMSIFitness(Architecture architecture) {
-	double sumCIBC = 0.0;
-	double sumIIBC = 0.0;
-	double sumOOBC = 0.0;
-	double sumCDAC = 0.0;
-	double sumCDAI = 0.0;
-	double sumCDAO = 0.0;
-	double sumLCC = 0.0;
-	double MSIFitness = 0.0;
+	Double sumCIBC = 0.0;
+	Double sumIIBC = 0.0;
+	Double sumOOBC = 0.0;
+	Double sumCDAC = 0.0;
+	Double sumCDAI = 0.0;
+	Double sumCDAO = 0.0;
+	Double sumLCC = 0.0;
+	Double MSIFitness = 0.0;
 
 	sumLCC = evaluateLCC(architecture);
 
@@ -115,8 +115,8 @@ public class MetricsEvaluation {
 	return MSIFitness;
     }
 
-    public double evaluateCIBC(Architecture architecture) {
-	double sumCIBC = 0.0;
+    public Double evaluateCIBC(Architecture architecture) {
+	Double sumCIBC = 0.0;
 
 	CIBC cibc = new CIBC(architecture);
 	for (CIBCResult c : cibc.getResults().values()) {
@@ -126,9 +126,9 @@ public class MetricsEvaluation {
 	return sumCIBC;
     }
 
-    public double evaluateIIBC(Architecture architecture) {
+    public Double evaluateIIBC(Architecture architecture) {
 
-	double sumIIBC = 0.0;
+	Double sumIIBC = 0.0;
 
 	IIBC iibc = new IIBC(architecture);
 	for (IIBCResult c : iibc.getResults().values()) {
@@ -138,9 +138,9 @@ public class MetricsEvaluation {
 	return sumIIBC;
     }
 
-    public double evaluateOOBC(Architecture architecture) {
+    public Double evaluateOOBC(Architecture architecture) {
 
-	double sumOOBC = 0.0;
+	Double sumOOBC = 0.0;
 
 	OOBC oobc = new OOBC(architecture);
 	for (OOBCResult c : oobc.getResults().values()) {
@@ -149,9 +149,9 @@ public class MetricsEvaluation {
 	return sumOOBC;
     }
 
-    public double evaluateCDAC(Architecture architecture) {
+    public Double evaluateCDAC(Architecture architecture) {
 
-	double sumCDAC = 0.0;
+	Double sumCDAC = 0.0;
 	CDAC cdac = new CDAC(architecture);
 	for (CDACResult c : cdac.getResults()) {
 	    sumCDAC += c.getElements().size();
@@ -159,8 +159,8 @@ public class MetricsEvaluation {
 	return sumCDAC;
     }
 
-    public double evaluateCDAI(Architecture architecture) {
-	double sumCDAI = 0.0;
+    public Double evaluateCDAI(Architecture architecture) {
+	Double sumCDAI = 0.0;
 
 	CDAI cdai = new CDAI(architecture);
 	for (CDAIResult c : cdai.getResults()) {
@@ -169,8 +169,8 @@ public class MetricsEvaluation {
 	return sumCDAI;
     }
 
-    public double evaluateCDAO(Architecture architecture) {
-	double sumCDAO = 0.0;
+    public Double evaluateCDAO(Architecture architecture) {
+	Double sumCDAO = 0.0;
 	CDAO cdao = new CDAO(architecture);
 	for (CDAOResult c : cdao.getResults()) {
 	    sumCDAO += c.getElements().size();
@@ -178,20 +178,19 @@ public class MetricsEvaluation {
 	return sumCDAO;
     }
 
-    public double evaluateLCC(Architecture architecture) {
-	double sumLCC = 0.0;
+    public Double evaluateLCC(Architecture architecture) {
+	Double sumLCC = 0.0;
 	LCC result = new LCC(architecture);
 
 	for (LCCComponentResult component : result.getResults()) {
 	    sumLCC += component.numberOfConcerns();
-
 	}
 	return sumLCC;
     }
 
-    public double evaluateCDAClass(Architecture architecture) {
+    public Double evaluateCDAClass(Architecture architecture) {
 
-	double sumCDAClass = 0.0;
+	Double sumCDAClass = 0.0;
 
 	CDAClass cdaclass = new CDAClass(architecture);
 	for (CDAClassResult c : cdaclass.getResults()) {
@@ -201,9 +200,9 @@ public class MetricsEvaluation {
 	return sumCDAClass;
     }
 
-    public double evaluateCIBClass(Architecture architecture) {
+    public Double evaluateCIBClass(Architecture architecture) {
 
-	double sumCIBClass = 0.0;
+	Double sumCIBClass = 0.0;
 
 	CIBClass cibclass = new CIBClass(architecture);
 	for (CIBClassResult c : cibclass.getResults().values()) {
@@ -213,8 +212,8 @@ public class MetricsEvaluation {
 	return sumCIBClass;
     }
 
-    public double evaluateLCCClass(Architecture architecture) {
-	double sumLCCClass = 0.0;
+    public Double evaluateLCCClass(Architecture architecture) {
+	Double sumLCCClass = 0.0;
 	LCCClass result = new LCCClass(architecture);
 
 	for (LCCClassComponentResult cls : result.getResults()) {
@@ -225,7 +224,7 @@ public class MetricsEvaluation {
     }
 
     // ----------------------------------------------------------------------------------
-    public double evaluateMACFitness(Architecture architecture) {
+    public Double evaluateMACFitness(Architecture architecture) {
 	double MACFitness = 0.0;
 	double meanNumOps = 0.0;
 	double meanDepComps = 0.0;
@@ -267,21 +266,21 @@ public class MetricsEvaluation {
 	return MACFitness;
     }
 
-    public double evaluateMeanNumOps(Architecture architecture) {
-	double meanNumOps = 0.0;
+    public Double evaluateMeanNumOps(Architecture architecture) {
+	Double meanNumOps = 0.0;
 	MeanNumOpsByInterface numOps = new MeanNumOpsByInterface(architecture);
 	meanNumOps = numOps.getResults();
 	return meanNumOps;
     }
 
-    public double evaluateMeanDepComps(Architecture architecture) {
-	double meanDepComps = 0.0;
+    public Double evaluateMeanDepComps(Architecture architecture) {
+	Double meanDepComps;
 	MeanDepComponents depComps = new MeanDepComponents(architecture);
 	meanDepComps = depComps.getResults();
 	return meanDepComps;
     }
 
-    public double evaluateSumClassesDepIn(Architecture architecture) {
+    public Double evaluateSumClassesDepIn(Architecture architecture) {
 
 	double sumClassesDepIn = 0.0;
 	ClassDependencyIn classesDepIn = new ClassDependencyIn(architecture);
