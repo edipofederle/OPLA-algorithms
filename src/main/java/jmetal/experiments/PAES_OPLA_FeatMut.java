@@ -152,7 +152,7 @@ public class PAES_OPLA_FeatMut {
 		List<InfoResult> infoResults = result.getInformations(resultFront.getSolutionSet(), execution,experiement);
 		AllMetrics allMetrics = result.getMetrics(funResults, resultFront.getSolutionSet(), execution, experiement, selectedObjectiveFunctions);
 		
-		resultFront.saveVariablesToFile("VAR_" + runs + "_", funResults, this.configs.getLogger());
+		resultFront.saveVariablesToFile("VAR_" + runs + "_", funResults, this.configs.getLogger(), false);
 		
 		execution.setFuns(funResults);
 		execution.setInfos(infoResults);
@@ -181,7 +181,7 @@ public class PAES_OPLA_FeatMut {
 	    configs.getLogger().putLog("------All Runs - Non-dominated solutions --------");
 	    List<FunResults> funResults = result.getObjectives(todasRuns.getSolutionSet(), null, experiement);
 	    
-	    todasRuns.saveVariablesToFile("VAR_All_", funResults, this.configs.getLogger());
+	    todasRuns.saveVariablesToFile("VAR_All_", funResults, this.configs.getLogger(), true);
 	    
 	    mp.saveFunAll(funResults);
 	    
