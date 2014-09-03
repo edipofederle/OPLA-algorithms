@@ -2,7 +2,7 @@
 	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
 	<modelVersion>4.0.0</modelVersion>
 	<groupId>opla</groupId>
-	<artifactId>opla-core</artifactId>
+	<artifactId>opla-core-run-experiments</artifactId>
 	<version>0.0.1</version>
 	<packaging>jar</packaging>
 
@@ -107,6 +107,6 @@
 		</plugins>
 	</build>
 
-	<url>http://github.com/edipofederle/architecture-representation</url>
-	<name>opla-core</name>
+	<name>opla-core-run-experiments</name>
+	<description>Usado para rodar os experimentos no serividor. Contem algumas modificacoes que podem ser vista no log do git.</description>
 </project>
