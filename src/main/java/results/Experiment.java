@@ -12,6 +12,8 @@ import java.sql.SQLException;
 import java.sql.Statement;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Collection;
+import java.util.Collections;
 import java.util.Date;
 import java.util.List;
 
@@ -35,7 +37,7 @@ public class Experiment {
     private String description;
     private String algorithm;
     private String createdAt;
-    private List<Execution> executions;
+    private Collection<Execution> executions;
 
     /**
      * Use this if you don't cares about id generated. Otherwise use setters
@@ -137,12 +139,12 @@ public class Experiment {
 	return dt.format(new Date()).toString();
     }
 
-    public List<Execution> getExecutions() {
+    public Collection<Execution> getExecutions() {
 	return executions;
     }
 
-    public void setExecutions(List<Execution> executions) {
-	this.executions = executions;
+    public void setExecutions(Collection<Execution> execs) {
+	this.executions = execs;
     }
 
     /**
@@ -169,7 +171,7 @@ public class Experiment {
 	while (r.next()) {
 	    Experiment exp = new Experiment(r.getString(attrs[1]), r.getString(attrs[2]), r.getString(attrs[3]));
 	    exp.setId(r.getString(attrs[0]));
-	    List<Execution> execs = buildExecutions(r.getString(attrs[0]), exp, connection);
+	    Collection<Execution> execs = buildExecutions(r.getString(attrs[0]), exp, connection);
 	    exp.setCreatedAt(r.getString(attrs[3]));
 	    exp.setExecutions(execs);
 	    exp.setDescription(r.getString(attrs[4]));
@@ -182,7 +184,7 @@ public class Experiment {
 	return experiements;
     }
 
-    private static List<Execution> buildExecutions(String experiementId, Experiment exp, Connection connection)
+    private static Collection<Execution> buildExecutions(String experiementId, Experiment exp, Connection connection)
 	    throws Exception {
 	Statement statamentExecution = connection.createStatement();
 
@@ -212,7 +214,7 @@ public class Experiment {
 
 	statamentExecution.close();
 
-	return execs;
+	return Collections.unmodifiableCollection(execs);
     }
 
     private static List<PLAExtensibility> buildPlaExtensibility(Connection connection, Execution exec, Experiment exp)
