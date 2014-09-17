@@ -38,18 +38,16 @@ public class ConventionalPersistenceTest {
 	ConventionalPersistence persistence = new ConventionalPersistence(connection);
 
 	Conventional conventionalMetrics = new Conventional("1", exec, exp);
-	conventionalMetrics.setChoesion(10d);
+	conventionalMetrics.setSumCohesion(10d);
 	conventionalMetrics.setMeanDepComps(10d);
+	conventionalMetrics.setCohesion(10d);
 	conventionalMetrics.setMeanNumOps(10d);
-	conventionalMetrics.setSumClassesDepIn(11d);
-	conventionalMetrics.setSumClassesDepOut(12d);
+	conventionalMetrics.setSumClassesDepIn(1);
+	conventionalMetrics.setSumClassesDepOut(11);
 	conventionalMetrics.setSumDepIn(1d);
 	conventionalMetrics.setSumDepOut(3d);
 
-	String expectedQuery = "insert into ConventionalMetrics (choesion,"
-		+ " macAggregation, meanDepComps, meanNumOps, sumClassesDepIn,"
-		+ " sumClassesDepOut, sumDepIn, sumDepOut, execution_id, is_all, experiement_id, id_solution)"
-		+ " values (10.0,47.1,10.0,10.0,11.0,12.0,1.0,3.0,1,0,null,1)";
+	String expectedQuery = "insert into ConventionalMetrics (sum_cohesion, cohesion, macAggregation, meanDepComps, meanNumOps, sumClassesDepIn, sumClassesDepOut, sumDepIn, sumDepOut, execution_id, is_all, experiement_id, id_solution) values (10.0,10.0,36.1,10.0,10.0,1,11,1.0,3.0,1,0,null,1)";
 
 	persistence.save(conventionalMetrics);
 

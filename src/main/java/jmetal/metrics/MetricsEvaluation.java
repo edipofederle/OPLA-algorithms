@@ -267,65 +267,43 @@ public class MetricsEvaluation {
     }
 
     public Double evaluateMeanNumOps(Architecture architecture) {
-	Double meanNumOps = 0.0;
 	MeanNumOpsByInterface numOps = new MeanNumOpsByInterface(architecture);
-	meanNumOps = numOps.getResults();
-	return meanNumOps;
+	return numOps.getResults();
     }
 
     public Double evaluateMeanDepComps(Architecture architecture) {
-	Double meanDepComps;
 	MeanDepComponents depComps = new MeanDepComponents(architecture);
-	meanDepComps = depComps.getResults();
-	return meanDepComps;
+	return depComps.getResults();
     }
 
-    public Double evaluateSumClassesDepIn(Architecture architecture) {
-
-	double sumClassesDepIn = 0.0;
+    public int evaluateSumClassesDepIn(Architecture architecture) {
 	ClassDependencyIn classesDepIn = new ClassDependencyIn(architecture);
-	sumClassesDepIn = classesDepIn.getResults();
-	return sumClassesDepIn;
+	return classesDepIn.getResults();
     }
 
-    public double evaluateSumClassesDepOut(Architecture architecture) {
-	double sumClassesDepOut = 0.0;
-
+    public int evaluateSumClassesDepOut(Architecture architecture) {
 	ClassDependencyOut classesDepOut = new ClassDependencyOut(architecture);
-	sumClassesDepOut = classesDepOut.getResults();
-
-	return sumClassesDepOut;
+	return classesDepOut.getResults();
     }
 
     public double evaluateSumDepIn(Architecture architecture) {
-
-	double sumDepIn = 0.0;
 	DependencyIn DepIn = new DependencyIn(architecture);
-	sumDepIn = DepIn.getResults();
-	return sumDepIn;
+	return DepIn.getResults();
     }
 
     public double evaluateSumDepOut(Architecture architecture) {
-
-	double sumDepOut = 0.0;
 	DependencyOut DepOut = new DependencyOut(architecture);
-	sumDepOut = DepOut.getResults();
-	return sumDepOut;
+	return DepOut.getResults();
     }
 
     // ---------------------------------------------------------------------------------
     public double evaluateCohesion(Architecture architecture) {
-	double sumCohesion = 0.0;
-	double iCohesion = 0.0;
-
 	RelationalCohesion cohesion = new RelationalCohesion(architecture);
-	sumCohesion = cohesion.getResults();
-	if (sumCohesion == 0) {
-	    iCohesion = 1.0;
-	} else
-	    iCohesion = 1 / sumCohesion;
+	return  cohesion.getResults();
+    }
 
-	return iCohesion;
+    public Double evaluateICohesion(Double sumCohesion) {
+	return sumCohesion == 0 ? 1.0 : 1 / sumCohesion;
     }
 
 }

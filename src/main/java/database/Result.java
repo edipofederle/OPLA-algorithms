@@ -156,8 +156,9 @@ public class Result {
 	    				          MetricsEvaluation metrics, Architecture arch) {
 	
 	Conventional conventional = new Conventional(idSolution, execution, experiement);
-
-	conventional.setChoesion(metrics.evaluateCohesion(arch));
+	
+	conventional.setSumCohesion(metrics.evaluateCohesion(arch));
+	conventional.setCohesion(metrics.evaluateICohesion(conventional.getSumChoesion()));
 	conventional.setMeanDepComps(metrics.evaluateMeanDepComps(arch));
 	conventional.setMeanNumOps(metrics.evaluateMeanNumOps(arch));
 	conventional.setSumClassesDepIn(metrics.evaluateSumClassesDepIn(arch));

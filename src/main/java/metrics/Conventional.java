@@ -14,11 +14,12 @@ import results.Experiment;
  */
 public class Conventional {
 
-    private Double choesion;
+    private Double sumChoesion;
+    private Double cohesion;
     private Double meanDepComps;
     private Double meanNumOps;
-    private Double sumClassesDepIn;
-    private Double sumClassesDepOut;
+    private int sumClassesDepIn;
+    private int sumClassesDepOut;
     private Double sumDepIn;
     private Double sumDepOut;
     private Integer isAll;
@@ -34,15 +35,16 @@ public class Conventional {
     }
 
     public Double getMacAggregation() {
-	return meanNumOps + meanDepComps + sumClassesDepIn + sumClassesDepOut + sumDepIn + sumDepOut + (1 / choesion);
+	return this.meanNumOps + this.meanDepComps  + Double.valueOf(this.sumClassesDepIn) + Double.valueOf(this.sumClassesDepOut) + this.sumDepIn + this.sumDepOut + (1 / this.sumChoesion);
+    }
+    
+
+    public Double getSumChoesion() {
+	return sumChoesion;
     }
 
-    public Double getChoesion() {
-	return choesion;
-    }
-
-    public void setChoesion(Double choesion) {
-	this.choesion = choesion;
+    public void setSumCohesion(Double sumChoesion) {
+	this.sumChoesion = sumChoesion;
     }
 
     public Double getMeanDepComps() {
@@ -61,19 +63,19 @@ public class Conventional {
 	this.meanNumOps = meanNumOps;
     }
 
-    public Double getSumClassesDepIn() {
+    public int getSumClassesDepIn() {
 	return sumClassesDepIn;
     }
 
-    public void setSumClassesDepIn(Double sumClassesDepIn) {
+    public void setSumClassesDepIn(int sumClassesDepIn) {
 	this.sumClassesDepIn = sumClassesDepIn;
     }
 
-    public Double getSumClassesDepOut() {
+    public int getSumClassesDepOut() {
 	return sumClassesDepOut;
     }
 
-    public void setSumClassesDepOut(Double sumClassesDepOut) {
+    public void setSumClassesDepOut(int sumClassesDepOut) {
 	this.sumClassesDepOut = sumClassesDepOut;
     }
 
@@ -112,5 +114,19 @@ public class Conventional {
     public String getIdSolution() {
 	return this.idSolution;
     }
+
+    public Double getCohesion() {
+        return cohesion;
+    }
+
+    public void setCohesion(Double choesion) {
+        this.cohesion = choesion;
+    }
+
+    public void setSumChoesion(Double sumChoesion) {
+        this.sumChoesion = sumChoesion;
+    }
+    
+    
 
 }
