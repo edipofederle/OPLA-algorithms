@@ -25,12 +25,14 @@ public class ConventionalPersistence {
 
 	StringBuilder query = new StringBuilder();
 
-	query.append("insert into ConventionalMetrics (choesion,"
+	query.append("insert into ConventionalMetrics (sum_cohesion, cohesion,"
 		+ " macAggregation, meanDepComps, meanNumOps, sumClassesDepIn,"
 		+ " sumClassesDepOut, sumDepIn, sumDepOut, execution_id, is_all, experiement_id, id_solution)"
 		+ " values (");
 
-	query.append(conventional.getChoesion());
+	query.append(conventional.getSumChoesion());
+	query.append(",");
+	query.append(conventional.getCohesion());
 	query.append(",");
 	query.append(conventional.getMacAggregation());
 	query.append(",");

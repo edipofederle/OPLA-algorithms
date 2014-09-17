@@ -322,11 +322,11 @@ public class Experiment {
 	while (resultSetConventional.next()) {
 	    Conventional conventional = new Conventional(resultSetConventional.getString("id_solution"), execution,
 		    experiement);
-	    conventional.setChoesion(getResultParseDouble(resultSetConventional, "choesion"));
+	    conventional.setSumCohesion(getResultParseDouble(resultSetConventional, "choesion"));
 	    conventional.setMeanDepComps(getResultParseDouble(resultSetConventional, "meanDepComps"));
 	    conventional.setMeanNumOps(getResultParseDouble(resultSetConventional, "meanNumOps"));
-	    conventional.setSumClassesDepIn(getResultParseDouble(resultSetConventional, "sumClassesDepIn"));
-	    conventional.setSumClassesDepOut(getResultParseDouble(resultSetConventional, "sumClassesDepOut"));
+	    conventional.setSumClassesDepIn(Integer.parseInt(resultSetConventional.getString("sumClassesDepIn")));
+	    conventional.setSumClassesDepOut(Integer.parseInt(resultSetConventional.getString("sumClassesDepOut")));
 	    conventional.setSumDepIn(getResultParseDouble(resultSetConventional, "sumDepIn"));
 	    conventional.setSumDepOut(getResultParseDouble(resultSetConventional, "sumDepOut"));
 	    conventional.setIsAll(getResultParseInteger(resultSetConventional, "is_all"));
