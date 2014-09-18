@@ -35,7 +35,6 @@ public class Conventional {
     }
 
     public Double getMacAggregation() {
-	System.out.println(this.toString());
 	return this.meanNumOps + this.meanDepComps  + Double.valueOf(this.sumClassesDepIn) + Double.valueOf(this.sumClassesDepOut) + this.sumDepIn + this.sumDepOut + (1 / this.sumChoesion);
     }
     
