@@ -62,7 +62,6 @@ public class ConventionalPersistence {
 
 	try {
 	    Statement statement = connection.createStatement();
-	    System.out.println(query.toString());
 	    statement.executeUpdate(query.toString());
 	} catch (SQLException ex) {
 	    Logger.getLogger(Elegance.class.getName()).log(Level.SEVERE, null, ex);

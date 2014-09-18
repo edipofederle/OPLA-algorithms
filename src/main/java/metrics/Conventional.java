@@ -35,6 +35,7 @@ public class Conventional {
     }
 
     public Double getMacAggregation() {
+	System.out.println(this.toString());
 	return this.meanNumOps + this.meanDepComps  + Double.valueOf(this.sumClassesDepIn) + Double.valueOf(this.sumClassesDepOut) + this.sumDepIn + this.sumDepOut + (1 / this.sumChoesion);
     }
     
@@ -125,6 +126,13 @@ public class Conventional {
 
     public void setSumChoesion(Double sumChoesion) {
         this.sumChoesion = sumChoesion;
+    }
+
+    @Override
+    public String toString() {
+	return "Conventional [sumChoesion=" + sumChoesion + ", cohesion=" + cohesion + ", meanDepComps=" + meanDepComps
+		+ ", meanNumOps=" + meanNumOps + ", sumClassesDepIn=" + sumClassesDepIn + ", sumClassesDepOut="
+		+ sumClassesDepOut + ", sumDepIn=" + sumDepIn + ", sumDepOut=" + sumDepOut + "]";
     }
     
     
