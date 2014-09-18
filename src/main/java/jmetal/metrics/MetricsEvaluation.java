@@ -225,15 +225,15 @@ public class MetricsEvaluation {
 
     // ----------------------------------------------------------------------------------
     public Double evaluateMACFitness(Architecture architecture) {
-	double MACFitness = 0.0;
-	double meanNumOps = 0.0;
-	double meanDepComps = 0.0;
-	double sumCohesion = 0.0;
-	double sumClassesDepIn = 0.0;
-	double sumClassesDepOut = 0.0;
-	double sumDepIn = 0.0;
-	double sumDepOut = 0.0;
-	double iCohesion = 0.0;
+	Double MACFitness = 0.0;
+	Double meanNumOps = 0.0;
+	Double meanDepComps = 0.0;
+	Double sumCohesion = 0.0;
+	int sumClassesDepIn = 0;
+	int sumClassesDepOut = 0;
+	int sumDepIn = 0;
+	int sumDepOut = 0;
+	Double iCohesion = 0.0;
 
 	MeanNumOpsByInterface numOps = new MeanNumOpsByInterface(architecture);
 	meanNumOps = numOps.getResults();
@@ -297,7 +297,7 @@ public class MetricsEvaluation {
     }
 
     // ---------------------------------------------------------------------------------
-    public double evaluateCohesion(Architecture architecture) {
+    public Double evaluateCohesion(Architecture architecture) {
 	RelationalCohesion cohesion = new RelationalCohesion(architecture);
 	return  cohesion.getResults();
     }
