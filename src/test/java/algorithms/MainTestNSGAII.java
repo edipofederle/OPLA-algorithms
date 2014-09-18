@@ -26,7 +26,7 @@ public class MainTestNSGAII {
 	
 	//Arquitetura(s) de entrada
 	//String plas = "/Users/elf/NetBeansProjects/OPLA-Patterns/MicrowaveOvenSoftware/Papyrus/MicrowaveOvenSoftware.uml";
-	String plas = "/Users/elf/mestrado/sourcesMestrado/architecture-representation/src/test/java/resources/agmfinal/agm.uml";
+	String plas = "/Users/elf/Desktop/MobileMedia2/Papyrus/MobileMedia.uml";
 
 	//Lista de Operadores de mutação a serem utilizados
 	List<String> operators =  new LinkedList<String>(Arrays.asList(FeatureMutationOperators.ADD_CLASS_MUTATION.getOperatorName(),
@@ -42,11 +42,11 @@ public class MainTestNSGAII {
 	// Seta os parametros desejados
 	configs.setMutationOperators(operators);
 	configs.setPlas(plas);
-	configs.setNumberOfRuns(2);
-	configs.setPopulationSize(2);
-	configs.setMaxEvaluations(3);
+	configs.setNumberOfRuns(10);
+	configs.setPopulationSize(50);
+	configs.setMaxEvaluations(100);
 	configs.disableCrossover();
-	configs.setMutationProbability(0.0);
+	configs.setMutationProbability(0.5);
 	configs.setDescription("30000 eval; pop 200.");
 	
 	// OPLA-Patterns Configurations

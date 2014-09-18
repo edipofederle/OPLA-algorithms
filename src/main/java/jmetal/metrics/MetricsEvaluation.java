@@ -36,37 +36,32 @@ import arquitetura.representation.Architecture;
 public class MetricsEvaluation {
 
     public double evaluateATMRElegance(Architecture architecture) {
-	ATMRElegance ATMR = new ATMRElegance(architecture);
-	return ATMR.getResults();
+	return new ATMRElegance(architecture).getResults();
     }
 
     public double evaluateECElegance(Architecture architecture) {
-	ECElegance EC = new ECElegance(architecture);
-	return EC.getResults();
+	return new ECElegance(architecture).getResults();
     }
 
     public double evaluateNACElegance(Architecture architecture) {
-	NACElegance NAC = new NACElegance(architecture);
-	return NAC.getResults();
+	return new NACElegance(architecture).getResults();
     }
 
     public double evaluateElegance(Architecture architecture) {
-	Double EleganceFitness = 0.0;
-	EleganceFitness = evaluateATMRElegance(architecture) + evaluateECElegance(architecture)
+	return evaluateATMRElegance(architecture) + evaluateECElegance(architecture)
 		+ evaluateNACElegance(architecture);
-	return EleganceFitness;
     }
 
     public float evaluatePLAExtensibility(Architecture architecture) {
-	float ExtensibilityFitness = 0;
-	float Extensibility;
+	float extensibilityFitness = 0;
+	float extensibility;
 	ExtensPLA PLAExtens = new ExtensPLA(architecture);
-	ExtensibilityFitness = PLAExtens.getValue();
-	if (ExtensibilityFitness == 0)
-	    Extensibility = 1000;
+	extensibilityFitness = PLAExtens.getValue();
+	if (extensibilityFitness == 0)
+	    extensibility = 1000;
 	else
-	    Extensibility = 1 / ExtensibilityFitness;
-	return (Extensibility);
+	    extensibility = 1 / extensibilityFitness;
+	return extensibilityFitness;
     }
 
     public double evaluateMSIFitness(Architecture architecture) {
@@ -139,7 +134,6 @@ public class MetricsEvaluation {
     }
 
     public Double evaluateOOBC(Architecture architecture) {
-
 	Double sumOOBC = 0.0;
 
 	OOBC oobc = new OOBC(architecture);
@@ -150,7 +144,6 @@ public class MetricsEvaluation {
     }
 
     public Double evaluateCDAC(Architecture architecture) {
-
 	Double sumCDAC = 0.0;
 	CDAC cdac = new CDAC(architecture);
 	for (CDACResult c : cdac.getResults()) {

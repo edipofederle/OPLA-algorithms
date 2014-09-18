@@ -322,7 +322,8 @@ public class Experiment {
 	while (resultSetConventional.next()) {
 	    Conventional conventional = new Conventional(resultSetConventional.getString("id_solution"), execution,
 		    experiement);
-	    conventional.setSumCohesion(getResultParseDouble(resultSetConventional, "cohesion"));
+	    conventional.setSumCohesion(getResultParseDouble(resultSetConventional, "sum_cohesion"));
+	    conventional.setCohesion(getResultParseDouble(resultSetConventional, "cohesion"));
 	    conventional.setMeanDepComps(getResultParseDouble(resultSetConventional, "meanDepComps"));
 	    conventional.setMeanNumOps(getResultParseDouble(resultSetConventional, "meanNumOps"));
 	    conventional.setSumClassesDepIn(Integer.parseInt(resultSetConventional.getString("sumClassesDepIn")));

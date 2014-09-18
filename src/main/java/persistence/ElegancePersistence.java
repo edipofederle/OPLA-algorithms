@@ -33,11 +33,11 @@ public class ElegancePersistence {
     	query.append(",");
     	query.append(eleganceMetric.getEc());
     	query.append(",");
-    	query.append(eleganceMetric.total());
+    	query.append(eleganceMetric.evaluateEleganceFitness());
     	query.append(",");
 		query.append(executionID);
 		query.append(",");
-		query.append(eleganceMetric.getExperiment().getId());
+		query.append(eleganceMetric.getExperiement().getId());
 		query.append(",");
 		if(eleganceMetric.getExecution() == null)
 			query.append("1");
