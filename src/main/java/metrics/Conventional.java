@@ -12,7 +12,7 @@ import results.Experiment;
  * 
  * @author elf
  */
-public class Conventional {
+public class Conventional extends Metrics {
 
     private Double sumChoesion;
     private Double cohesion;
@@ -22,22 +22,16 @@ public class Conventional {
     private int sumClassesDepOut;
     private Double sumDepIn;
     private Double sumDepOut;
-    private Integer isAll;
-    private String idSolution;
-
-    private Experiment experiement;
-    private final Execution execution;
 
     public Conventional(String idSolution, Execution execution, Experiment experiement) {
-	this.execution = execution;
-	this.experiement = experiement;
-	this.idSolution = idSolution;
+	super.setExecution(execution);
+	super.setExperiement(experiement);
+	super.setIdSolution(idSolution);
     }
 
     public Double getMacAggregation() {
 	return this.meanNumOps + this.meanDepComps  + Double.valueOf(this.sumClassesDepIn) + Double.valueOf(this.sumClassesDepOut) + this.sumDepIn + this.sumDepOut + (1 / this.sumChoesion);
     }
-    
 
     public Double getSumChoesion() {
 	return sumChoesion;
@@ -95,26 +89,6 @@ public class Conventional {
 	this.sumDepOut = sumDepOut;
     }
 
-    public Execution getExecution() {
-	return this.execution;
-    }
-
-    public Experiment getExperiement() {
-	return experiement;
-    }
-
-    public Integer getIsAll() {
-	return isAll;
-    }
-
-    public void setIsAll(Integer isAll) {
-	this.isAll = isAll;
-    }
-
-    public String getIdSolution() {
-	return this.idSolution;
-    }
-
     public Double getCohesion() {
         return cohesion;
     }
@@ -134,6 +108,8 @@ public class Conventional {
 		+ sumClassesDepOut + ", sumDepIn=" + sumDepIn + ", sumDepOut=" + sumDepOut + "]";
     }
     
-    
+    public Double evaluateMACFitness(){
+	return this.sumClassesDepIn + this.sumClassesDepOut + this.sumDepIn + this.sumDepOut + this.cohesion;
+    }    
 
 }

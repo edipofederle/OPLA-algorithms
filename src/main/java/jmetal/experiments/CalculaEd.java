@@ -53,7 +53,11 @@ public class CalculaEd {
     }
     
     private Double format(Double number){
-	return Double.valueOf(format.format(number));
+	try{
+	    return Double.valueOf(format.format(number));
+	}catch(Exception e){
+	    return new Double(0.00);
+	}
     }
 
 

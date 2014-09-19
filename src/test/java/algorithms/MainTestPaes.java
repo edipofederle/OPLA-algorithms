@@ -19,7 +19,7 @@ public class MainTestPaes{
 	ReaderConfig.load();
 	
    	//Arquitetura(s) de entrada
-	String plas = "/Users/elf/mestrado/sourcesMestrado/architecture-representation/src/test/java/resources/agmfinal/agm.uml";
+	String plas = "/Users/elf/Desktop/MobileMedia2/Papyrus/MobileMedia.uml";
 	//String plas = "/Users/elf/mestrado/sourcesMestrado/architecture-representation/src/test/java/resources/agmfinal/agm.uml";
 	//String plas = "/Users/elf/NetBeansProjects/OPLA-Patterns/BeT/Papyrus/BeT.uml";
    	//Lista de Operadores de mutação a serem utilizados
@@ -28,7 +28,8 @@ public class MainTestPaes{
    		FeatureMutationOperators.FEATURE_MUTATION.getOperatorName(),
    		FeatureMutationOperators.ADD_MANAGER_CLASS_MUTATION.getOperatorName(),
    		FeatureMutationOperators.MOVE_METHOD_MUTATION.getOperatorName(),
-   		FeatureMutationOperators.MOVE_OPERATION_MUTATION.getOperatorName()));
+   		FeatureMutationOperators.MOVE_OPERATION_MUTATION.getOperatorName(),
+   		FeatureMutationOperators.DESIGN_PATTERNS.getOperatorName()));
    	
    	//Intancia a classe de configuracoes
    	PaesConfigs configs = new PaesConfigs();
@@ -36,9 +37,9 @@ public class MainTestPaes{
    	// Seta os parametros desejados
    	configs.setMutationOperators(operators);
    	configs.setPlas(plas);
-   	configs.setNumberOfRuns(30);
+   	configs.setNumberOfRuns(2);
    	//configs.setPopulationSize(10); // somente no nsgaii, migrar para classe concreta
-   	configs.setMaxEvaluations(10000);
+   	configs.setMaxEvaluations(1000);
    	configs.disableCrossover();
    	configs.setMutationProbability(0.9);
    	configs.setArchiveSize(100);
@@ -60,7 +61,7 @@ public class MainTestPaes{
    	OPLAConfigs oplaConfig = new OPLAConfigs();
    	
 	//Quais funções objetivo deseja-se utilizar
-	List<String> selectedObjectiveFunctions = Arrays.asList(Metrics.CONVENTIONAL.getName(), Metrics.FEATURE_DRIVEN.getName());
+	List<String> selectedObjectiveFunctions = Arrays.asList(Metrics.CONVENTIONAL.getName(), Metrics.FEATURE_DRIVEN.getName(), Metrics.PLA_EXTENSIBILIY.getName());
 	
    	oplaConfig.setSelectedObjectiveFunctions(selectedObjectiveFunctions);
 

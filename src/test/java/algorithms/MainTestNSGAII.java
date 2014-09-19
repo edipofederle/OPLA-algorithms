@@ -9,6 +9,7 @@ import jmetal.experiments.Metrics;
 import jmetal.experiments.NSGAIIConfig;
 import jmetal.experiments.NSGAII_OPLA_FeatMutInitializer;
 import jmetal.experiments.OPLAConfigs;
+import jmetal.problems.OPLA;
 import logs.log_log.Logger;
 import arquitetura.io.ReaderConfig;
 
@@ -26,7 +27,7 @@ public class MainTestNSGAII {
 	
 	//Arquitetura(s) de entrada
 	//String plas = "/Users/elf/NetBeansProjects/OPLA-Patterns/MicrowaveOvenSoftware/Papyrus/MicrowaveOvenSoftware.uml";
-	String plas = "/Users/elf/mestrado/sourcesMestrado/architecture-representation/src/test/java/resources/agmfinal/agm.uml";
+	String plas = "/Users/elf/Documents/workspace/PLAS/mm/MobileMedia.uml";
 
 	//Lista de Operadores de mutação a serem utilizados
 	List<String> operators =  new LinkedList<String>(Arrays.asList(FeatureMutationOperators.ADD_CLASS_MUTATION.getOperatorName(),
@@ -42,16 +43,17 @@ public class MainTestNSGAII {
 	// Seta os parametros desejados
 	configs.setMutationOperators(operators);
 	configs.setPlas(plas);
-	configs.setNumberOfRuns(30);
-	configs.setPopulationSize(1000);
-	configs.setMaxEvaluations(10000);
+
+	configs.setNumberOfRuns(2);
+	configs.setPopulationSize(100);
+	configs.setMaxEvaluations(50);
 	configs.disableCrossover();
 	configs.setMutationProbability(0.9);
-	configs.setDescription("30000 eval; pop 200.");
+	configs.setDescription("FCE-M");
 	
-	// OPLA-Patterns Configurations
-	//configs.setPatterns("Mediator", "Strategy", "Bridge");
-	//configs.setDesignPatternStrategy(null);
+	 //OPLA-Patterns Configurations
+//	configs.setPatterns("Mediator", "Strategy", "Bridge");
+//	configs.setDesignPatternStrategy(null);
 	
 	//Configura onde o db esta localizado
 	configs.setPathToDb("/Users/elf/oplatool/db/oplatool.db");
@@ -66,7 +68,7 @@ public class MainTestNSGAII {
 	
 	
 	//Quais funções objetivo deseja-se utilizar
-	List<String> selectedObjectiveFunctions = Arrays.asList(Metrics.CONVENTIONAL.getName(), Metrics.FEATURE_DRIVEN.getName());
+	List<String> selectedObjectiveFunctions = Arrays.asList(Metrics.CONVENTIONAL.getName(), Metrics.FEATURE_DRIVEN.getName(), Metrics.PLA_EXTENSIBILIY.getName());
 	
 	oplaConfig.setSelectedObjectiveFunctions(selectedObjectiveFunctions);
 

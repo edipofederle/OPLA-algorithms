@@ -7,7 +7,7 @@ import results.Experiment;
  * 
  * @author elf
  */
-public class FeatureDriven {
+public class FeatureDriven extends Metrics {
 
     private double cdac;
     private double cdai;
@@ -20,19 +20,19 @@ public class FeatureDriven {
     private double cdaClass;
     private double cibClass;
 
-    private final Execution execution;
-    private final Experiment experiement;
-    private Integer isAll;
-    private String idSolution;
-
     public FeatureDriven(String idSolution, Execution execution, Experiment experiement) {
-	this.execution = execution;
-	this.experiement = experiement;
-	this.idSolution = idSolution;
+	super.setExecution(execution);
+	super.setExperiement(experiement);
+	super.setIdSolution(idSolution);
     }
 
     public double getMsiAggregation() {
 	return this.lcc + this.cdac + this.cdai + this.cdao + this.cibc + this.iibc + this.oobc;
+    }
+
+    public double evaluateMSIFitness() {
+	return this.lcc + this.lccClass + this.cdac + this.cdaClass + this.cdai + this.cdao + this.cibc + this.cibClass
+		+ this.iibc + this.oobc;
     }
 
     public double getCdac() {
@@ -115,28 +115,4 @@ public class FeatureDriven {
 	this.cibClass = cibClass;
     }
 
-    public Execution getExecution() {
-	return this.execution;
-    }
-
-    public Experiment getExperiement() {
-	return this.experiement;
-    }
-
-    public Integer getIsAll() {
-	return isAll;
-    }
-
-    public void setIsAll(Integer isAll) {
-	this.isAll = isAll;
-    }
-
-    public String getIdSolution() {
-        return idSolution;
-    }
-
-    public void setIdSolution(String idSolution) {
-        this.idSolution = idSolution;
-    }
-    
 }
