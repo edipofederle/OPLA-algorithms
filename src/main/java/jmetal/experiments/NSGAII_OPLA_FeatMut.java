@@ -154,7 +154,7 @@ public class NSGAII_OPLA_FeatMut {
 		AllMetrics allMetrics = result.getMetrics(funResults, resultFront.getSolutionSet(), execution,
 			experiement, selectedObjectiveFunctions);
 
-		resultFront.saveVariablesToFile("VAR_" + runs + "_", funResults, this.configs.getLogger(), false);
+		resultFront.saveVariablesToFile("VAR_" + runs + "_", funResults, this.configs.getLogger(), true);
 
 		execution.setFuns(funResults);
 		execution.setInfos(infoResults);
@@ -171,8 +171,8 @@ public class NSGAII_OPLA_FeatMut {
 		// armazena as solucoes de todas runs
 		todasRuns = todasRuns.union(resultFront);
 
-		//Util.copyFolder(experiement.getId(), execution.getId());
-		//Util.moveAllFilesToExecutionDirectory(experiementId, execution.getId());
+		Util.copyFolder(experiement.getId(), execution.getId());
+		Util.moveAllFilesToExecutionDirectory(experiementId, execution.getId());
 		
 		saveHypervolume(experiement.getId(), execution.getId(), resultFront, plaName);
 

@@ -27,7 +27,7 @@ public class MainTestNSGAII {
 	
 	//Arquitetura(s) de entrada
 	//String plas = "/Users/elf/NetBeansProjects/OPLA-Patterns/MicrowaveOvenSoftware/Papyrus/MicrowaveOvenSoftware.uml";
-	String plas = "/Users/elf/Documents/workspace/PLAS/mm/MobileMedia.uml";
+	String plas = "/Users/elf/Desktop/MobileMedia2/Papyrus/MobileMedia.uml";
 
 	//Lista de Operadores de mutação a serem utilizados
 	List<String> operators =  new LinkedList<String>(Arrays.asList(FeatureMutationOperators.ADD_CLASS_MUTATION.getOperatorName(),
@@ -44,12 +44,12 @@ public class MainTestNSGAII {
 	configs.setMutationOperators(operators);
 	configs.setPlas(plas);
 
-	configs.setNumberOfRuns(2);
+	configs.setNumberOfRuns(10);
 	configs.setPopulationSize(100);
-	configs.setMaxEvaluations(50);
+	configs.setMaxEvaluations(2000);
 	configs.disableCrossover();
 	configs.setMutationProbability(0.9);
-	configs.setDescription("FCE-M");
+	configs.setDescription("FCE");
 	
 	 //OPLA-Patterns Configurations
 //	configs.setPatterns("Mediator", "Strategy", "Bridge");

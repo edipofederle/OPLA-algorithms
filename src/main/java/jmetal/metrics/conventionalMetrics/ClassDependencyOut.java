@@ -24,7 +24,6 @@ public class ClassDependencyOut {
 	this.results = 0;
 	int depOut = 0;
 
-	// EDIPO - Mudei para pacote
 	for (Package component : this.architecture.getAllPackages()) {
 
 	    for (arquitetura.representation.Class cls : component.getAllClasses()) {
