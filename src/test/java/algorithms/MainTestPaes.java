@@ -19,7 +19,7 @@ public class MainTestPaes{
 	ReaderConfig.load();
 	
    	//Arquitetura(s) de entrada
-	String plas = "/Users/elf/mestrado/sourcesMestrado/architecture-representation/src/test/java/resources/agmfinal/agm.uml";
+	String plas = "/Users/elf/Documents/workspace/Micro/MicrowaveOvenSoftware.uml";
 	//String plas = "/Users/elf/mestrado/sourcesMestrado/architecture-representation/src/test/java/resources/agmfinal/agm.uml";
 	//String plas = "/Users/elf/NetBeansProjects/OPLA-Patterns/BeT/Papyrus/BeT.uml";
    	//Lista de Operadores de mutação a serem utilizados
@@ -36,13 +36,13 @@ public class MainTestPaes{
    	// Seta os parametros desejados
    	configs.setMutationOperators(operators);
    	configs.setPlas(plas);
-   	configs.setNumberOfRuns(30);
+   	configs.setNumberOfRuns(2);
    	//configs.setPopulationSize(10); // somente no nsgaii, migrar para classe concreta
-   	configs.setMaxEvaluations(10000);
+   	configs.setMaxEvaluations(2);
    	configs.disableCrossover();
-   	configs.setMutationProbability(0.9);
+   	configs.setMutationProbability(0.0);
    	configs.setArchiveSize(100);
-   	configs.setDescription("max evaluations 10000");
+   	configs.setDescription("FC");
    	
 //	// OPLA-Patterns Configurations
 //	configs.setPatterns("Mediator", "Strategy", "Bridge");
