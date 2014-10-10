@@ -181,7 +181,7 @@ public class PAES_OPLA_FeatMut {
 	    configs.getLogger().putLog("------All Runs - Non-dominated solutions --------");
 	    List<FunResults> funResults = result.getObjectives(todasRuns.getSolutionSet(), null, experiement);
 	    
-	    todasRuns.saveVariablesToFile("VAR_All_", funResults, this.configs.getLogger(), true);
+	    todasRuns.saveVariablesToFile("VAR_All_", funResults, this.configs.getLogger(), false);
 	    
 	    mp.saveFunAll(funResults);
 	    
@@ -200,11 +200,11 @@ public class PAES_OPLA_FeatMut {
 	    infoResults = null;
 	    funResults = null;
 	    
-	    Util.moveAllFilesToExecutionDirectory(experiementId, null);
+	    //Util.moveAllFilesToExecutionDirectory(experiementId, null);
 	    saveHypervolume(experiement.getId(), null, todasRuns, plaName);
 	}
 	
-	Util.moveResourceToExperimentFolder(this.experiementId);
+	//Util.moveResourceToExperimentFolder(this.experiementId);
     
     }
 

@@ -1,8 +1,8 @@
 --- !DirTarget
 pathToTemplateModelsDirectory: /Users/elf/Desktop/templates/
 directoryToSaveModels: manipulation/
-directoryToExportModels: /Users/elf/Desktop/output/
-pathToProfile:/Users/elf/Documents/workspace/PLAS/resources/smarty.profile.uml
-pathToProfileConcern:/Users/elf/Documents/workspace/PLAS/resources/concerns.profile.uml
-pathToProfileRelationships:/Users/elf/Documents/workspace/PLAS/resources/relationships.profile.uml
-pathToProfilePatterns:  /Users/elf/Documents/workspace/PLAS/resources/patterns.profile.uml
+directoryToExportModels: /Users/elf/Desktop/output_testes_2/
+pathToProfile:/Users/elf/Desktop/serverUFPR/experiments/PLAS/agm/perfils/smarty.profile.uml
+pathToProfileConcern:/Users/elf/Desktop/serverUFPR/experiments/PLAS/agm/perfils/concerns.profile.uml
+pathToProfileRelationships:""
+pathToProfilePatterns:""

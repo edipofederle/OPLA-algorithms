@@ -7,6 +7,7 @@ import arquitetura.representation.Architecture;
 import arquitetura.representation.Class;
 import arquitetura.representation.Package;
 import arquitetura.representation.relationship.DependencyRelationship;
+import arquitetura.representation.relationship.RealizationRelationship;
 import arquitetura.representation.relationship.Relationship;
 
 public class ClassDependencyIn {
@@ -47,6 +48,18 @@ public class ClassDependencyIn {
 
 		if (relationship instanceof DependencyRelationship) {
 		    DependencyRelationship dependency = (DependencyRelationship) relationship;
+		    if (dependency.getSupplier().equals(source) && (!(depClasses.contains(c)))) {
+			depClasses.add(c);
+		    }
+		}
+		if (relationship instanceof RealizationRelationship) {
+		    RealizationRelationship dependency = (RealizationRelationship) relationship;
+		    if (dependency.getSupplier().equals(source) && (!(depClasses.contains(c)))) {
+			depClasses.add(c);
+		    }
+		}
+		if (relationship instanceof RealizationRelationship) {
+		    RealizationRelationship dependency = (RealizationRelationship) relationship;
 		    if (dependency.getSupplier().equals(source) && (!(depClasses.contains(c)))) {
 			depClasses.add(c);
 		    }

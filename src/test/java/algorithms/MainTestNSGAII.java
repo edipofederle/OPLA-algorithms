@@ -27,8 +27,8 @@ public class MainTestNSGAII {
 	
 	//Arquitetura(s) de entrada
 	//String plas = "/Users/elf/NetBeansProjects/OPLA-Patterns/MicrowaveOvenSoftware/Papyrus/MicrowaveOvenSoftware.uml";
-	String plas = "/Users/elf/Desktop/MobileMedia2/Papyrus/MobileMedia.uml";
-
+	//String plas = "/Users/elf/Documents/workspace/plasMestrado/PLAS/agm/Papyrus/agm.uml";
+	String plas = "/Users/elf/Documents/workspace/plasMestrado/PLAS/MobileMedia/Papyrus/MobileMedia.uml";
 	//Lista de Operadores de mutação a serem utilizados
 	List<String> operators =  new LinkedList<String>(Arrays.asList(FeatureMutationOperators.ADD_CLASS_MUTATION.getOperatorName(),
 		FeatureMutationOperators.MOVE_ATTRIBUTE_MUTATION.getOperatorName(),
@@ -44,11 +44,11 @@ public class MainTestNSGAII {
 	configs.setMutationOperators(operators);
 	configs.setPlas(plas);
 
-	configs.setNumberOfRuns(10);
-	configs.setPopulationSize(100);
-	configs.setMaxEvaluations(2000);
+	configs.setNumberOfRuns(2);
+	configs.setPopulationSize(2);
+	configs.setMaxEvaluations(2);
 	configs.disableCrossover();
-	configs.setMutationProbability(0.9);
+	configs.setMutationProbability(0.0);
 	configs.setDescription("FCE");
 	
 	 //OPLA-Patterns Configurations
@@ -56,7 +56,7 @@ public class MainTestNSGAII {
 //	configs.setDesignPatternStrategy(null);
 	
 	//Configura onde o db esta localizado
-	configs.setPathToDb("/Users/elf/oplatool/db/oplatool.db");
+	configs.setPathToDb("/Users/elf/Desktop/output_testes_2/oplatool.db");
 	
 	//Logs
    	configs.activeLogs();
