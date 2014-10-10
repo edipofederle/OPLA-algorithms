@@ -100,6 +100,13 @@ public class Conventional extends Metrics {
     public void setSumChoesion(Double sumChoesion) {
         this.sumChoesion = sumChoesion;
     }
+
+    @Override
+    public String toString() {
+	return "Conventional [sumChoesion=" + sumChoesion + ", cohesion=" + cohesion + ", meanDepComps=" + meanDepComps
+		+ ", meanNumOps=" + meanNumOps + ", sumClassesDepIn=" + sumClassesDepIn + ", sumClassesDepOut="
+		+ sumClassesDepOut + ", sumDepIn=" + sumDepIn + ", sumDepOut=" + sumDepOut + "]";
+    }
     
     public Double evaluateMACFitness(){
 	return this.sumClassesDepIn + this.sumClassesDepOut + this.sumDepIn + this.sumDepOut + this.cohesion;

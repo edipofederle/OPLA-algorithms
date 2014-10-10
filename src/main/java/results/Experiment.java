@@ -326,8 +326,8 @@ public class Experiment {
 	    conventional.setCohesion(getResultParseDouble(resultSetConventional, "cohesion"));
 	    conventional.setMeanDepComps(getResultParseDouble(resultSetConventional, "meanDepComps"));
 	    conventional.setMeanNumOps(getResultParseDouble(resultSetConventional, "meanNumOps"));
-	    conventional.setSumClassesDepIn(getResultParseDouble(resultSetConventional,"sumClassesDepIn").intValue());
-	    conventional.setSumClassesDepOut(getResultParseDouble(resultSetConventional,"sumClassesDepOut").intValue());
+	    conventional.setSumClassesDepIn(getResultParseDouble(resultSetConventional, "sumClassesDepIn").intValue());
+	    conventional.setSumClassesDepOut(getResultParseDouble(resultSetConventional, "sumClassesDepOut").intValue());
 	    conventional.setSumDepIn(getResultParseDouble(resultSetConventional, "sumDepIn"));
 	    conventional.setSumDepOut(getResultParseDouble(resultSetConventional, "sumDepOut"));
 	    conventional.setIsAll(getResultParseInteger(resultSetConventional, "is_all"));

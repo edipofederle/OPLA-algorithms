@@ -313,15 +313,15 @@ public class PLAFeatureMutation extends Mutation {
 	LOGGER.info("Executand AddClassMutation ");
 	try {
 	    if (PseudoRandom.randDouble() < probability) {
-		if (solution.getDecisionVariables()[0].getVariableType() == java.lang.Class
-			.forName(Architecture.ARCHITECTURE_TYPE)) {
+		if (solution.getDecisionVariables()[0].getVariableType() == java.lang.Class.forName(Architecture.ARCHITECTURE_TYPE)) {
 		    Architecture arch = ((Architecture) solution.getDecisionVariables()[0]);
+		    
 		    Package sourceComp = randomObject(new ArrayList<Package>(arch.getAllPackages()));
-		    List<Class> ClassesComp = new ArrayList<Class>(sourceComp.getAllClasses());
-		    removeClassesInPatternStructureFromArray(ClassesComp);
+		    List<Class> classesPackage = new ArrayList<Class>(sourceComp.getAllClasses());
+		    removeClassesInPatternStructureFromArray(classesPackage);
 
-		    if (ClassesComp.size() >= 1) {
-			Class sourceClass = randomObject(ClassesComp);
+		    if (classesPackage.size() >= 1) {
+			Class sourceClass = randomObject(classesPackage);
 			if ((sourceClass != null) && (!searchForGeneralizations(sourceClass))
 				&& (sourceClass.getAllAttributes().size() > 1)
 				&& (sourceClass.getAllMethods().size() > 1) && (!isVarPoint(arch, sourceClass))
@@ -366,7 +366,7 @@ public class PLAFeatureMutation extends Mutation {
 			    }
 			}
 		    }
-		    ClassesComp.clear();
+		    classesPackage.clear();
 
 		} else {
 		    Configuration.logger_.log(Level.SEVERE, "AddClassMutation.doMutation: invalid type. " + "{0}",

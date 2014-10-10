@@ -340,7 +340,7 @@ public class SolutionSet implements Serializable {
     } // printVariablesToFile
 
     // added by Thelma october/2012
-    public void saveVariablesToFile(String path, List<FunResults> funResults, LogLog logger) {
+    public void saveVariablesToFile(String path, List<FunResults> funResults, LogLog logger, boolean generate) {
 	int numberOfVariables = solutionsList_.get(0).getDecisionVariables().length;
 	
 	if(logger != null)
@@ -350,7 +350,8 @@ public class SolutionSet implements Serializable {
 		Architecture arch = (Architecture) solutionsList_.get(i).getDecisionVariables()[j];
 		String pathToSave = path;
 		funResults.get(i).setSolution_name(pathToSave+arch.getName()+"-"+funResults.get(i).getId());
-		arch.save(arch, pathToSave, "-"+funResults.get(i).getId());
+		if(generate)
+		    arch.save(arch, pathToSave, "-"+funResults.get(i).getId());
 	    }
 	}
     }

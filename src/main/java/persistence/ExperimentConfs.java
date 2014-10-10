@@ -12,7 +12,7 @@ import database.Database;
 import exceptions.MissingConfigurationException;
 
 /**
- * Classe responsável por guardar E persistir/recuperar informções referentes a
+ * Classe responsável por guardar E persistir/recuperar informações referentes a
  * qual configuração o experimento utilizou.
  * 
  * Ex: numero de rodas, funcoes objetivos utilizadas e assim por diante.

@@ -35,3 +35,13 @@ Your pom.xml already include bellow lines.
 		<artifactId>opla-patterns</artifactId>
 		<version>0.0.1</version>
 	</dependency>
+	
+------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+opla-core-run-experiments
+
+
+
+mvn install:install-file -Dfile=target/opla-core-run-experiments-0.0.1.jar -DgroupId=opla -DartifactId=opla-core-run-experiments-0.0.1.jar -Dversion=0.0.1 -Dpackaging=jar
+
+

@@ -45,15 +45,25 @@ public class CalculaEd {
 	
 	double[][] front = ss.writeObjectivesToMatrix();
 	double[] min = mu.getMinimumValues(front, numberObjectives);
-
+	for (int i = 0; i < min.length; i++) {
+	    System.out.println("->"+min[i] + ", ");
+	}
 	for (int i = 0; i < front.length; i++) 
-	    results.put(names[i],  format(mu.distance(min, front[i])));
+	    results.put(names[i],  arredondar(mu.distance(min, front[i]), 4, 0));
 
 	return results;
     }
     
-    private Double format(Double number){
-	return Double.valueOf(format.format(number));
+    private static double arredondar(double valor, int casas, int ceilOrFloor) {
+	double arredondado = valor;
+	arredondado *= (Math.pow(10, casas));
+	if (ceilOrFloor == 0) {
+	    arredondado = Math.ceil(arredondado);
+	} else {
+	    arredondado = Math.floor(arredondado);
+	}
+	arredondado /= (Math.pow(10, casas));
+	return arredondado;
     }
 
 
