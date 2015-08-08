@@ -498,7 +498,7 @@ public class PLAFeatureMutation extends Mutation {
     }
 
     // --------------------------------------------------------------------------
-    public void featureMutation(double probability, Solution solution, String scope) throws JMException {
+    public void featureMutation2(double probability, Solution solution, String scope) throws JMException {
 	try {
 	    if (PseudoRandom.randDouble() < probability) {
 		if (solution.getDecisionVariables()[0].getVariableType().toString()
@@ -545,6 +545,89 @@ public class PLAFeatureMutation extends Mutation {
 	} catch (Exception e) {
 	    e.printStackTrace();
 	}
+    }
+    
+    public void featureMutation(double probability, Solution solution, String scope) throws JMException {
+	try {
+	    if (PseudoRandom.randDouble() < probability) {
+		if (solution.getDecisionVariables()[0].getVariableType().toString()
+			.equals("class " + Architecture.ARCHITECTURE_TYPE)) {
+
+		    final Architecture arch = ((Architecture) solution.getDecisionVariables()[0]);
+		    final List<Package> allComponents = new ArrayList<Package>(arch.getAllPackages());
+		    if (!allComponents.isEmpty()) {
+			final Package selectedComp = randomObject(allComponents);
+			List<Concern> concernsSelectedComp = new ArrayList<Concern>(selectedComp.getAllConcerns());
+                        List<Concern> PriorityConcerns = new ArrayList<Concern> (arch.getPrioritizedConcerns());
+                        Boolean Found = false;
+			if (concernsSelectedComp.size() > 1) { // = somente para
+							       // testes
+                            //int j = 0;
+                            //while(j != PriorityConcerns.size()){
+                            for (Concern cp:PriorityConcerns){
+                                //int i = 0;
+                                //while (i != concernsSelectedComp.size()){
+                                for(Concern c:concernsSelectedComp){
+                                    if (c == cp){
+                                        Found = true;
+                                        final Concern selectedConcern = c;
+                                        List<Package> allComponentsAssignedOnlyToConcern = new ArrayList<Package>(searchComponentsAssignedToConcern(selectedConcern, allComponents));
+                                        if (allComponentsAssignedOnlyToConcern.isEmpty()) {
+                                            OPLA.contComp_++;
+                                            modularizeConcernInComponent(allComponents,arch.createPackage("Package" + OPLA.contComp_ + getSuffix(selectedComp)),selectedConcern, arch);
+                                        }else {
+                                            if (allComponentsAssignedOnlyToConcern.size() == 1){
+                                                modularizeConcernInComponent(allComponents,allComponentsAssignedOnlyToConcern.get(0),selectedConcern, arch);
+                                            }else{
+                                                modularizeConcernInComponent(allComponents,randomObject(allComponentsAssignedOnlyToConcern),selectedConcern,arch);
+                                                
+                                            }
+                                        }
+                                        allComponentsAssignedOnlyToConcern.clear();
+                                    }
+                                    if (Found){
+                                        break;
+                                    }
+                                }
+                                if (Found){
+                                        break;
+                                    }
+                            }
+                            if (!Found){
+                                final Concern selectedConcern = randomObject(concernsSelectedComp);
+                                List<Package> allComponentsAssignedOnlyToConcern = new ArrayList<Package>(
+				    searchComponentsAssignedToConcern(selectedConcern, allComponents));
+                                if (allComponentsAssignedOnlyToConcern.isEmpty()) {
+                                    OPLA.contComp_++;
+                                    modularizeConcernInComponent(allComponents,
+					arch.createPackage("Package" + OPLA.contComp_ + getSuffix(selectedComp)),
+					selectedConcern, arch);
+                                } else {
+                                    if (allComponentsAssignedOnlyToConcern.size() == 1) {
+                                        modularizeConcernInComponent(allComponents,
+					allComponentsAssignedOnlyToConcern.get(0), selectedConcern, arch);
+                                    } else {
+				    modularizeConcernInComponent(allComponents,
+					    randomObject(allComponentsAssignedOnlyToConcern), selectedConcern, arch);
+                                        }
+                                    }
+                                allComponentsAssignedOnlyToConcern.clear();
+                            }
+                        concernsSelectedComp.clear();
+                        allComponents.clear();
+                        }
+                    } else {
+                        Configuration.logger_.log(Level.SEVERE,"FeatureMutation.doMutation: invalid type. " + "{0}",solution.getDecisionVariables()[0].getVariableType());
+                        java.lang.Class<String> cls = java.lang.String.class;
+                        String name = cls.getName();
+                        throw new JMException("Exception in " + name + ".doMutation()");
+                    
+                    }
+                }
+            }
+        } catch (Exception e){
+            e.printStackTrace();
+        }
     }
 
     private List<Package> searchComponentsAssignedToConcern(Concern concern, List<Package> allComponents) {
