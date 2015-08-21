@@ -205,7 +205,7 @@ public class NSGAII_OPLA_FeatMut {
 					todasRuns.getSolutionSet(), null, experiement);
 
 			todasRuns.saveVariablesToFile("VAR_All_", funResults,
-					this.configs.getLogger(), false);
+					this.configs.getLogger(), true);
 
 			mp.saveFunAll(funResults);
 
