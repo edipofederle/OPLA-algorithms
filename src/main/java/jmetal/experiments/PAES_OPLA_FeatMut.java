@@ -206,7 +206,7 @@ public class PAES_OPLA_FeatMut {
 					todasRuns.getSolutionSet(), null, experiement);
 
 			todasRuns.saveVariablesToFile("VAR_All_", funResults,
-					this.configs.getLogger(), false);
+					this.configs.getLogger(), true);
 
 			mp.saveFunAll(funResults);
 
@@ -230,11 +230,11 @@ public class PAES_OPLA_FeatMut {
 			infoResults = null;
 			funResults = null;
 
-			// Util.moveAllFilesToExecutionDirectory(experiementId, null);
+			Util.moveAllFilesToExecutionDirectory(experiementId, null);
 			saveHypervolume(experiement.getId(), null, todasRuns, plaName);
 		}
 
-		// Util.moveResourceToExperimentFolder(this.experiementId);
+		Util.moveResourceToExperimentFolder(this.experiementId);
 
 	}
 

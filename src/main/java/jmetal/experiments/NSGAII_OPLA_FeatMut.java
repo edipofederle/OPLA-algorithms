@@ -168,7 +168,7 @@ public class NSGAII_OPLA_FeatMut {
 						selectedObjectiveFunctions);
 
 				resultFront.saveVariablesToFile("VAR_" + runs + "_",
-						funResults, this.configs.getLogger(), false);
+						funResults, this.configs.getLogger(), true);
 
 				execution.setFuns(funResults);
 				execution.setInfos(infoResults);
