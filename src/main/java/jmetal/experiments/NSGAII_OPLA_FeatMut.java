@@ -186,9 +186,9 @@ public class NSGAII_OPLA_FeatMut {
 				// armazena as solucoes de todas runs
 				todasRuns = todasRuns.union(resultFront);
 
-				// Util.copyFolder(experiement.getId(), execution.getId());
-				// Util.moveAllFilesToExecutionDirectory(experiementId,
-				// execution.getId());
+				 Util.copyFolder(experiement.getId(), execution.getId());
+				 Util.moveAllFilesToExecutionDirectory(experiementId,
+				 execution.getId());
 
 				saveHypervolume(experiement.getId(), execution.getId(),
 						resultFront, plaName);
